@@ -1,0 +1,322 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">
+      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
+      <span>Full Gas Detail</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/inicio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/productos" routerLinkActive="active">Productos</a>
+        </li>
+        <li class="nav-item d-none">
+          <a class="nav-link" routerLink="/admin">Admin</a>
+        </li>
+      </ul>
+      <div class="d-flex gap-2 ms-lg-3 mt-3 mt-lg-0">
+        <a class="btn btn-outline-light btn-sm" routerLink="/login">Ingresar</a>
+        <a class="btn btn-brand btn-sm" routerLink="/register">Crear cuenta</a>
+        <a class="btn btn-brand btn-sm nav-icon-btn" routerLink="/carrito" aria-label="Ver carrito">
+          <i class="bi bi-cart3"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero-section py-5 py-lg-6">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-lg-6">
+          <span class="eyebrow">Coronel, Concepcion</span>
+          <h1 class="display-4 fw-bold mt-3">Llevamos el lavado premium y el detailing profesional hasta tu puerta.</h1>
+          <p class="lead text-white-50 mt-3">Full Gas Detail ofrece carwash a domicilio, limpieza interior y venta de productos especializados para mantener tu vehiculo impecable sin que salgas de casa o del trabajo.</p>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <a class="btn btn-brand btn-lg" routerLink="/servicios">Reservar servicio</a>
+            <a class="btn btn-outline-light btn-lg" routerLink="/productos">Ver catalogo</a>
+          </div>
+          <div class="row g-3 mt-4">
+            <div class="col-6 col-md-4">
+              <div class="stat-card">
+                <strong>24/7</strong>
+                <span>Atencion continua para consultas y reservas</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <div class="stat-card">
+                <strong>Detailing</strong>
+                <span>Servicios, insumos y acabado premium</span>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="stat-card">
+                <strong>Coronel</strong>
+                <span>Despacho local y atencion personalizada</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6 text-center">
+          <div class="hero-card mx-auto position-relative">
+            <img src="assets/logo.jpg" alt="Logo Full Gas Detail" class="hero-logo floating-logo">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="section-heading mb-4">
+        <span class="eyebrow">Nuestra propuesta</span>
+        <h2 class="fw-bold mt-2">Servicios diseñados para cuidar tu auto y tu tiempo</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="feature-card h-100">
+            <h3 class="h5">Lavado exterior</h3>
+            <p>Espuma activa, limpieza de llantas, secado y brillo para la carroceria.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="feature-card h-100">
+            <h3 class="h5">Detalle interior</h3>
+            <p>Aspirado, limpieza de tableros, plásticos y sanitizacion de superficies.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="feature-card h-100">
+            <h3 class="h5">Productos vehiculares</h3>
+            <p>Insumos profesionales para limpieza, proteccion y mantenimiento diario.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="feature-card h-100">
+            <h3 class="h5">Atencion personalizada</h3>
+            <p>Coordinamos la visita, el horario y el tipo de servicio segun tu necesidad.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 bg-shell-soft">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-lg-5">
+          <span class="eyebrow">Por que elegirnos</span>
+          <h2 class="fw-bold mt-2">Experiencia pensada para cuidar tu vehiculo y darte comodidad</h2>
+          <p class="text-white-50 mt-3">Trabajamos con agenda flexible, productos especializados y una experiencia visual clara para que puedas cotizar, reservar y hacer seguimiento sin complicaciones.</p>
+        </div>
+        <div class="col-12 col-lg-7">
+          <div class="row g-3">
+            <div class="col-12 col-md-4">
+              <div class="role-card">
+                <h3 class="h5">Rapidez</h3>
+                <p>Respuesta agil para cotizar, reservar o pedir productos.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="role-card">
+                <h3 class="h5">Confianza</h3>
+                <p>Atencion cercana y seguimiento ordenado de cada solicitud.</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="role-card">
+                <h3 class="h5">Calidad</h3>
+                <p>Terminaciones limpias, cuidado de superficies y productos de alto rendimiento.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="section-heading mb-4">
+        <span class="eyebrow">Servicios destacados</span>
+        <h2 class="fw-bold mt-2">Soluciones para el mantenimiento vehicular</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="service-card h-100">
+            <h3 class="h5">Lavado exterior premium</h3>
+            <p>Incluye espuma activa, secado y acabado brillante.</p>
+            <a class="btn btn-outline-light btn-sm mt-3" routerLink="/servicios">Ver servicios</a>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="service-card h-100">
+            <h3 class="h5">Detalle interior</h3>
+            <p>Limpieza profunda de asientos, tablero y superficies.</p>
+            <a class="btn btn-outline-light btn-sm mt-3" routerLink="/servicios">Ver servicios</a>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-4">
+          <div class="service-card h-100">
+            <h3 class="h5">Linea de productos</h3>
+            <p>Shampoo, cera, desengrasante y accesorios para vehiculos.</p>
+            <a class="btn btn-outline-light btn-sm mt-3" routerLink="/productos">Ver productos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="section-heading mb-4">
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2 class="fw-bold mt-2">Resolvemos las dudas mas comunes antes de reservar</h2>
+      </div>
+      <div class="accordion accordion-flush faq-accordion" id="faqAccordion">
+        <div class="accordion-item bg-transparent text-white border-white border-opacity-10">
+          <h3 class="accordion-header" id="faqOneHeading">
+            <button class="accordion-button collapsed bg-transparent text-white" type="button"
+              data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="false" aria-controls="faqOne">
+              ¿En que zonas trabajan?
+            </button>
+          </h3>
+          <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faqOneHeading" data-bs-parent="#faqAccordion">
+            <div class="accordion-body text-white-50">Atendemos principalmente en Coronel y Concepcion, con coordinacion previa para otros sectores cercanos segun disponibilidad.</div>
+          </div>
+        </div>
+        <div class="accordion-item bg-transparent text-white border-white border-opacity-10">
+          <h3 class="accordion-header" id="faqTwoHeading">
+            <button class="accordion-button collapsed bg-transparent text-white" type="button"
+              data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
+              ¿Puedo pedir solo productos sin agendar un servicio?
+            </button>
+          </h3>
+          <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faqTwoHeading" data-bs-parent="#faqAccordion">
+            <div class="accordion-body text-white-50">Si. El catalogo de productos permite comprar insumos de limpieza, proteccion y accesorios para mantenimiento vehicular.</div>
+          </div>
+        </div>
+        <div class="accordion-item bg-transparent text-white border-white border-opacity-10">
+          <h3 class="accordion-header" id="faqThreeHeading">
+            <button class="accordion-button collapsed bg-transparent text-white" type="button"
+              data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">
+              ¿Como se agenda un lavado a domicilio?
+            </button>
+          </h3>
+          <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faqThreeHeading" data-bs-parent="#faqAccordion">
+            <div class="accordion-body text-white-50">Desde la seccion de servicios puedes elegir el tipo de atencion, completar tus datos y dejar la direccion para coordinar la visita.</div>
+          </div>
+        </div>
+        <div class="accordion-item bg-transparent text-white border-white border-opacity-10">
+          <h3 class="accordion-header" id="faqFourHeading">
+            <button class="accordion-button collapsed bg-transparent text-white" type="button"
+              data-bs-toggle="collapse" data-bs-target="#faqFour" aria-expanded="false" aria-controls="faqFour">
+              ¿Cuales son los metodos de pago?
+            </button>
+          </h3>
+          <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faqFourHeading" data-bs-parent="#faqAccordion">
+            <div class="accordion-body text-white-50">Aceptamos pagos mediante transferencia bancaria, tarjetas de crédito y débito, y plataformas de pago en línea.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 bg-shell-soft">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-9">
+          <div class="panel-card">
+            <div class="section-heading mb-4">
+              <span class="eyebrow">Contacto</span>
+              <h2 class="fw-bold mt-2">Escribenos y coordinamos tu servicio o compra</h2>
+              <p class="text-white-50 mb-0">Completa el formulario y te responderemos lo antes posible con la informacion que necesites.</p>
+            </div>
+            <form class="needs-validation" novalidate>
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="contactName">Nombre completo</label>
+                  <input class="form-control" id="contactName" name="name" required minlength="4">
+                  <div class="invalid-feedback">Ingresa tu nombre completo.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="contactEmail">Correo</label>
+                  <input class="form-control" id="contactEmail" name="email" type="email" required>
+                  <div class="invalid-feedback">Ingresa un correo valido.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="contactPhone">Telefono</label>
+                  <input class="form-control" id="contactPhone" name="phone" type="tel" pattern="[0-9]{9}" required>
+                  <div class="invalid-feedback">Ingresa 9 digitos.</div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="contactTopic">Motivo</label>
+                  <select class="form-select" id="contactTopic" name="topic" required>
+                    <option value="">Selecciona</option>
+                    <option>Reserva de servicio</option>
+                    <option>Compra de productos</option>
+                    <option>Consulta general</option>
+                    <option>Soporte tecnico</option>
+                  </select>
+                  <div class="invalid-feedback">Selecciona un motivo.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="contactMessage">Mensaje</label>
+                  <textarea class="form-control" id="contactMessage" name="message" rows="5" minlength="10" required></textarea>
+                  <div class="invalid-feedback">Escribe un mensaje mas detallado.</div>
+                </div>
+                <div class="col-12 d-grid d-md-flex justify-content-md-end gap-2">
+                  <button class="btn btn-outline-light btn-lg" type="reset">Limpiar</button>
+                  <button class="btn btn-brand btn-lg" type="submit">Enviar mensaje</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer border-top border-white border-opacity-10">
+  <div class="container">
+    <div class="row align-items-center g-4 py-5">
+      <div class="col-12 col-md-4">
+        <a class="d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2" routerLink="/inicio">
+          <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
+          <span>Full Gas Detail</span>
+        </a>
+        <p class="text-white-50 small mb-0">Carwash a domicilio y productos de detailing en Coronel, Concepcion.</p>
+      </div>
+      <div class="col-12 col-md-4 text-md-center">
+        <p class="text-white-50 small mb-2">Siguenos</p>
+        <div class="d-flex gap-3 justify-content-md-center">
+          <a href="#" class="footer-social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="footer-social" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          <a href="#" class="footer-social" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 text-md-end">
+        <div class="d-flex flex-column gap-1 align-items-md-end">
+          <a href="#" class="text-white-50 small footer-link">Politica de Privacidad</a>
+          <a href="#" class="text-white-50 small footer-link">Terminos de Uso</a>
+          <a href="#" class="text-white-50 small footer-link">Contacto</a>
+        </div>
+      </div>
+    </div>
+    <div class="border-top border-white border-opacity-10 py-3 text-center">
+      <span class="text-white-50 small">&copy; 2026 Full Gas Detail &mdash; Coronel, Concepcion. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
