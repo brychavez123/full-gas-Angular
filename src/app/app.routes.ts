@@ -19,6 +19,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/servicios/servicios').then(m => m.ServiciosComponent)
   },
   {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login').then(m => m.LoginComponent)
+  },
+  {
+    path: 'registro',
+    loadComponent: () => import('./pages/registro/registro').then(m => m.RegistroComponent)
+  },
+  {
     path: '**',
     redirectTo: 'inicio'
   }

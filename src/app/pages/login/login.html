@@ -1,0 +1,122 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">
+      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
+      <span>Full Gas Detail</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/inicio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/productos" routerLinkActive="active">Productos</a>
+        </li>
+        <li class="nav-item d-none">
+          <a class="nav-link" routerLink="/admin">Admin</a>
+        </li>
+      </ul>
+      <div class="d-flex gap-2 ms-lg-3 mt-3 mt-lg-0">
+        <a class="btn btn-outline-light btn-sm" routerLink="/login">Ingresar</a>
+        <a class="btn btn-brand btn-sm" routerLink="/registro">Crear cuenta</a>
+        <a class="btn btn-brand btn-sm nav-icon-btn" routerLink="/carrito" aria-label="Ver carrito">
+          <i class="bi bi-cart3"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="auth-section py-5">
+  <div class="container">
+    <div class="row justify-content-center g-4 align-items-center">
+      <div class="col-12 col-lg-5">
+        <div class="panel-card h-100">
+          <span class="eyebrow">Acceso al sistema</span>
+          <h1 class="h2 fw-bold mt-2">Inicio de sesion</h1>
+          <p class="text-white-50">Ingreso de usuario con rol cliente, tecnico o administrador.</p>
+
+          @if (errorMsg()) {
+            <div class="alert alert-danger py-2 px-3 mb-3" role="alert">{{ errorMsg() }}</div>
+          }
+
+          <form class="needs-validation mt-4" novalidate (submit)="iniciarSesion($any($event))">
+            <div class="mb-3">
+              <label class="form-label" for="loginEmail">Correo electronico</label>
+              <input class="form-control form-control-lg" id="loginEmail" name="email" type="email" required>
+              <div class="invalid-feedback">Ingresa un correo valido.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="loginPassword">Contrasena</label>
+              <input class="form-control form-control-lg" id="loginPassword" name="password" type="password" minlength="8" required>
+              <div class="invalid-feedback">Ingresa tu contrasena.</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Recordarme</label>
+              </div>
+              <a class="link-light text-decoration-none" routerLink="/recuperar">Olvide mi contrasena</a>
+            </div>
+            <button class="btn btn-brand btn-lg w-100" type="submit">Ingresar</button>
+            <div class="mt-3 text-center">
+              <span class="text-white-50 small">¿No tienes cuenta? </span>
+              <a class="link-light small" routerLink="/registro">Crear cuenta</a>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-12 col-lg-5">
+        <div class="info-card h-100">
+          <img src="assets/logo.jpg" alt="Logo" class="brand-logo brand-logo-md mb-4">
+          <h2 class="h4 fw-bold">Ingreso pensado para la actividad</h2>
+          <ul class="list-unstyled mt-3 mb-0 text-white-50">
+            <li class="mb-2">Acceso por rol con privilegios diferenciados.</li>
+            <li class="mb-2">Conexion con carrito, pedidos y dashboard administrativo.</li>
+            <li class="mb-2">Validacion de campos y contrasena segura.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer border-top border-white border-opacity-10">
+  <div class="container">
+    <div class="row align-items-center g-4 py-5">
+      <div class="col-12 col-md-4">
+        <a class="d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2" routerLink="/inicio">
+          <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
+          <span>Full Gas Detail</span>
+        </a>
+        <p class="text-white-50 small mb-0">Carwash a domicilio y productos de detailing en Coronel, Concepcion.</p>
+      </div>
+      <div class="col-12 col-md-4 text-md-center">
+        <p class="text-white-50 small mb-2">Siguenos</p>
+        <div class="d-flex gap-3 justify-content-md-center">
+          <a href="#" class="footer-social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="footer-social" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          <a href="#" class="footer-social" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 text-md-end">
+        <div class="d-flex flex-column gap-1 align-items-md-end">
+          <a href="#" class="text-white-50 small footer-link">Politica de Privacidad</a>
+          <a href="#" class="text-white-50 small footer-link">Terminos de Uso</a>
+          <a href="#" class="text-white-50 small footer-link">Contacto</a>
+        </div>
+      </div>
+    </div>
+    <div class="border-top border-white border-opacity-10 py-3 text-center">
+      <span class="text-white-50 small">&copy; 2026 Full Gas Detail &mdash; Coronel, Concepcion. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
