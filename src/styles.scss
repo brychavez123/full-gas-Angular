@@ -217,6 +217,20 @@ a {
   padding: 1.5rem;
 }
 
+.summary-box,
+.session-box,
+.success-box {
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+}
+
+.success-box {
+  border-color: rgba(71, 207, 115, 0.4);
+  background: rgba(71, 207, 115, 0.08);
+}
+
 .price-tag {
   display: inline-flex;
   padding: 0.35rem 0.75rem;
