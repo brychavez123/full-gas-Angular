@@ -1,63 +1,72 @@
-import { Component, computed, signal } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
+/** Valida que la contrasena cumpla: 8-20 chars, mayuscula, minuscula, numero y caracter especial */
+function passwordSeguraValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const v = control.value as string;
+    if (!v) return null;
+    const valida = v.length >= 8 && v.length <= 20 && /[A-Z]/.test(v) && /[a-z]/.test(v) && /[0-9]/.test(v) && /[^A-Za-z0-9]/.test(v);
+    return valida ? null : { passwordDebil: true };
+  };
+}
+
+/** Valida que password y confirmPassword coincidan */
+function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+  const password = group.get('password')?.value;
+  const confirm = group.get('confirmPassword')?.value;
+  return password === confirm ? null : { noCoincide: true };
+}
+
+/**
+ * Pagina de registro de nuevos usuarios.
+ * Formulario reactivo con validaciones de nombre, correo, telefono, direccion y contrasena segura.
+ * Los usuarios registrados se guardan en localStorage con rol Cliente.
+ */
 @Component({
   selector: 'app-registro',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './registro.html',
   styleUrl: './registro.scss',
 })
 export class RegistroComponent {
-  passwordValue = signal('');
-  confirmValue = signal('');
+  /** Formulario reactivo con todos los campos del registro */
+  form: FormGroup;
 
-  passwordValida = computed(() => {
-    const v = this.passwordValue();
-    return v.length >= 8 && v.length <= 20 && /[A-Z]/.test(v) && /[a-z]/.test(v) && /[0-9]/.test(v) && /[^A-Za-z0-9]/.test(v);
-  });
-
-  clavesCoinciden = computed(() => {
-    return this.confirmValue() !== '' && this.passwordValue() === this.confirmValue();
-  });
-
-  constructor(private router: Router) {}
-
-  soloNumeros(evento: KeyboardEvent): void {
-    const teclasSistema = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
-    if (!teclasSistema.includes(evento.key) && !/^[0-9]$/.test(evento.key)) {
-      evento.preventDefault();
-    }
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.form = this.fb.group({
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/)]],
+      lastName:  ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/)]],
+      email:     ['', [Validators.required, Validators.email]],
+      phone:     ['', [Validators.required, Validators.pattern(/^[0-9]{9}$/)]],
+      address:   ['', [Validators.required, Validators.minLength(6)]],
+      password:      ['', [Validators.required, passwordSeguraValidator()]],
+      confirmPassword: ['', [Validators.required]],
+      terms: [false, [Validators.requiredTrue]]
+    }, { validators: passwordMatchValidator });
   }
 
-  registrar(evento: SubmitEvent): void {
-    const form = evento.target as HTMLFormElement;
+  /** Devuelve el control del formulario por nombre */
+  campo(nombre: string): AbstractControl { return this.form.get(nombre)!; }
 
-    const campoClave = form.querySelector<HTMLInputElement>('#registerPassword');
-    const campoConfirm = form.querySelector<HTMLInputElement>('#confirmPassword');
+  get passwordValue(): string { return this.campo('password').value as string; }
 
-    if (campoClave) {
-      campoClave.setCustomValidity(this.passwordValida() ? '' : 'La contrasena no cumple con las reglas de seguridad.');
-    }
-    if (campoConfirm) {
-      campoConfirm.setCustomValidity(this.clavesCoinciden() ? '' : 'No coincide con la contrasena.');
-    }
-
-    if (!form.checkValidity()) {
-      form.classList.add('was-validated');
+  /** Registra el usuario en localStorage y crea sesion */
+  registrar(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
 
-    const datos = new FormData(form);
-    const nombre = (datos.get('firstName') as string).trim();
-    const apellido = (datos.get('lastName') as string).trim();
-
+    const { firstName, lastName, email, phone, address, password } = this.form.value as Record<string, string>;
     const usuario = {
-      name: `${nombre} ${apellido}`.trim(),
-      email: (datos.get('email') as string).trim(),
-      phone: '+56' + (datos.get('phone') as string).trim(),
-      address: (datos.get('address') as string).trim(),
+      name: `${firstName} ${lastName}`.trim(),
+      email: email.trim(),
+      phone: `+56${phone.trim()}`,
+      address: address.trim(),
       role: 'Cliente',
-      password: (datos.get('password') as string).trim(),
+      password: password.trim(),
       creadoEn: new Date().toISOString()
     };
 
@@ -70,6 +79,11 @@ export class RegistroComponent {
 
     this.notificar('Registro creado correctamente.');
     this.router.navigate(['/perfil']);
+  }
+
+  soloNumeros(evento: KeyboardEvent): void {
+    const teclasSistema = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
+    if (!teclasSistema.includes(evento.key) && !/^[0-9]$/.test(evento.key)) evento.preventDefault();
   }
 
   private notificar(mensaje: string): void {

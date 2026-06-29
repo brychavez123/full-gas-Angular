@@ -10,18 +10,9 @@
     </button>
     <div class="collapse navbar-collapse" id="mainNav">
       <ul class="navbar-nav ms-auto gap-lg-1">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/inicio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/productos" routerLinkActive="active">Productos</a>
-        </li>
-        <li class="nav-item d-none">
-          <a class="nav-link" routerLink="/admin">Admin</a>
-        </li>
+        <li class="nav-item"><a class="nav-link" routerLink="/inicio">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/servicios">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/productos">Productos</a></li>
       </ul>
       <div class="d-flex gap-2 ms-lg-3 mt-3 mt-lg-0">
         <a class="btn btn-outline-light btn-sm" routerLink="/login">Ingresar</a>
@@ -45,65 +36,93 @@
               <h1 class="h2 fw-bold">Registro de usuarios</h1>
               <p class="text-white-50">Formulario con validaciones para nombre, correo, telefono, direccion y contrasena. El registro crea solo clientes.</p>
             </div>
+
             <div class="col-12 col-lg-8">
-              <form class="needs-validation" novalidate (submit)="registrar($any($event))">
+              <form [formGroup]="form" (ngSubmit)="registrar()" novalidate>
                 <div class="row g-3">
                   <div class="col-12 col-md-6">
                     <label class="form-label" for="firstName">Nombre</label>
-                    <input class="form-control" id="firstName" name="firstName" required minlength="2" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
-                    <div class="invalid-feedback">Ingresa tu nombre usando solo letras.</div>
+                    <input class="form-control" id="firstName" formControlName="firstName"
+                      [class.is-invalid]="campo('firstName').invalid && campo('firstName').touched"
+                      [class.is-valid]="campo('firstName').valid && campo('firstName').touched">
+                    <div class="invalid-feedback">Ingresa tu nombre usando solo letras (minimo 2).</div>
                   </div>
+
                   <div class="col-12 col-md-6">
                     <label class="form-label" for="lastName">Apellido</label>
-                    <input class="form-control" id="lastName" name="lastName" required minlength="2" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
-                    <div class="invalid-feedback">Ingresa tu apellido usando solo letras.</div>
+                    <input class="form-control" id="lastName" formControlName="lastName"
+                      [class.is-invalid]="campo('lastName').invalid && campo('lastName').touched"
+                      [class.is-valid]="campo('lastName').valid && campo('lastName').touched">
+                    <div class="invalid-feedback">Ingresa tu apellido usando solo letras (minimo 2).</div>
                   </div>
+
                   <div class="col-12 col-md-6">
                     <label class="form-label" for="registerEmail">Correo</label>
-                    <input class="form-control" id="registerEmail" name="email" type="email" required>
+                    <input class="form-control" id="registerEmail" formControlName="email" type="email"
+                      [class.is-invalid]="campo('email').invalid && campo('email').touched"
+                      [class.is-valid]="campo('email').valid && campo('email').touched">
                     <div class="invalid-feedback">Ingresa un correo valido.</div>
                   </div>
+
                   <div class="col-12 col-md-6">
                     <label class="form-label" for="phone">Telefono</label>
-                    <div class="input-group has-validation">
+                    <div class="input-group" [class.has-validation]="campo('phone').touched">
                       <span class="input-group-text">+56</span>
-                      <input class="form-control" id="phone" name="phone" type="tel" placeholder="9XXXXXXXX" pattern="[0-9]{9}" inputmode="numeric" required (keydown)="soloNumeros($any($event))">
+                      <input class="form-control" id="phone" formControlName="phone" type="tel"
+                        placeholder="9XXXXXXXX" inputmode="numeric" (keydown)="soloNumeros($any($event))"
+                        [class.is-invalid]="campo('phone').invalid && campo('phone').touched"
+                        [class.is-valid]="campo('phone').valid && campo('phone').touched">
                       <div class="invalid-feedback">Ingresa 9 digitos.</div>
                     </div>
                   </div>
+
                   <div class="col-12">
                     <label class="form-label" for="address">Direccion</label>
-                    <input class="form-control" id="address" name="address" placeholder="Coronel, Concepcion" minlength="6" required>
-                    <div class="invalid-feedback">Ingresa una direccion.</div>
+                    <input class="form-control" id="address" formControlName="address" placeholder="Coronel, Concepcion"
+                      [class.is-invalid]="campo('address').invalid && campo('address').touched"
+                      [class.is-valid]="campo('address').valid && campo('address').touched">
+                    <div class="invalid-feedback">Ingresa una direccion (minimo 6 caracteres).</div>
                   </div>
+
                   <div class="col-12 col-md-6">
                     <label class="form-label" for="registerPassword">Contrasena</label>
-                    <input class="form-control" id="registerPassword" name="password" type="password" minlength="8" maxlength="20" required
-                      [value]="passwordValue()" (input)="passwordValue.set($any($event.target).value)">
-                    <div class="invalid-feedback">Usa una contrasena segura.</div>
+                    <input class="form-control" id="registerPassword" formControlName="password" type="password"
+                      [class.is-invalid]="campo('password').invalid && campo('password').touched"
+                      [class.is-valid]="campo('password').valid && campo('password').touched">
+                    <div class="invalid-feedback">La contrasena no cumple con las reglas de seguridad.</div>
                   </div>
+
                   <div class="col-12 col-md-6">
-                    <label class="form-label" for="confirmPassword">Confirmar</label>
-                    <input class="form-control" id="confirmPassword" name="confirmPassword" type="password" minlength="8" required
-                      [value]="confirmValue()" (input)="confirmValue.set($any($event.target).value)">
-                    <div class="invalid-feedback">Debe coincidir con la contrasena.</div>
+                    <label class="form-label" for="confirmPassword">Confirmar contrasena</label>
+                    <input class="form-control" id="confirmPassword" formControlName="confirmPassword" type="password"
+                      [class.is-invalid]="(campo('confirmPassword').touched && form.hasError('noCoincide'))"
+                      [class.is-valid]="campo('confirmPassword').touched && !form.hasError('noCoincide') && campo('confirmPassword').value">
+                    @if (campo('confirmPassword').touched && form.hasError('noCoincide')) {
+                      <div class="invalid-feedback d-block">Las contrasenas no coinciden.</div>
+                    }
                   </div>
-                  <div class="col-12">
-                    <div class="password-rules">
-                      <span [class.text-success]="passwordValue().length >= 8 && passwordValue().length <= 20">Minimo 8 caracteres</span> ·
-                      <span [class.text-success]="/[A-Z]/.test(passwordValue())">Una mayuscula</span> ·
-                      <span [class.text-success]="/[a-z]/.test(passwordValue())">Una minuscula</span> ·
-                      <span [class.text-success]="/[0-9]/.test(passwordValue())">Un numero</span> ·
-                      <span [class.text-success]="/[^A-Za-z0-9]/.test(passwordValue())">Un caracter especial</span>
+
+                  @if (passwordValue) {
+                    <div class="col-12">
+                      <div class="password-rules">
+                        <span [class.text-success]="passwordValue.length >= 8 && passwordValue.length <= 20">Minimo 8 caracteres</span> ·
+                        <span [class.text-success]="/[A-Z]/.test(passwordValue)">Una mayuscula</span> ·
+                        <span [class.text-success]="/[a-z]/.test(passwordValue)">Una minuscula</span> ·
+                        <span [class.text-success]="/[0-9]/.test(passwordValue)">Un numero</span> ·
+                        <span [class.text-success]="/[^A-Za-z0-9]/.test(passwordValue)">Un caracter especial</span>
+                      </div>
                     </div>
-                  </div>
+                  }
+
                   <div class="col-12">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                      <input class="form-check-input" type="checkbox" id="terms" formControlName="terms"
+                        [class.is-invalid]="campo('terms').invalid && campo('terms').touched">
                       <label class="form-check-label" for="terms">Acepto las condiciones del servicio</label>
                       <div class="invalid-feedback">Debes aceptar las condiciones.</div>
                     </div>
                   </div>
+
                   <div class="col-12 d-grid d-md-flex gap-2 justify-content-md-end">
                     <button class="btn btn-brand btn-lg" type="submit">Crear cuenta</button>
                     <a class="btn btn-outline-light btn-lg" routerLink="/login">Ya tengo cuenta</a>
