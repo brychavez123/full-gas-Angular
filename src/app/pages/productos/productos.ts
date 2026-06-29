@@ -1,20 +1,16 @@
 import { Component, computed, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ProductoCardComponent, type Producto } from '../../shared/producto-card/producto-card';
 
-interface Producto {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  stock: number;
-  active: boolean;
-  image: string;
-  description: string;
-}
-
+/**
+ * Pagina de productos de limpieza vehicular.
+ * Permite filtrar por categoria y buscar por texto usando ngModel.
+ * Usa ProductoCardComponent para renderizar cada tarjeta.
+ */
 @Component({
   selector: 'app-productos',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, FormsModule, ProductoCardComponent],
   templateUrl: './productos.html',
   styleUrl: './productos.scss',
 })
@@ -33,6 +29,10 @@ export class ProductosComponent {
   filtroActivo = signal('all');
   textoBusqueda = signal('');
 
+  /** Getter/setter para enlazar ngModel con el signal de busqueda */
+  get textoBusquedaModel(): string { return this.textoBusqueda(); }
+  set textoBusquedaModel(v: string) { this.textoBusqueda.set(v); }
+
   productosFiltrados = computed(() => {
     const filtro = this.filtroActivo();
     const texto = this.textoBusqueda().toLowerCase().trim();
@@ -42,20 +42,6 @@ export class ProductosComponent {
       return coincideFiltro && coincideBusqueda && p.active;
     });
   });
-
-  readonly fallbacks: Record<string, string> = {
-    limpieza: 'https://images.pexels.com/photos/29504461/pexels-photo-29504461.jpeg?cs=srgb&dl=pexels-bulat843-1243575272-29504461.jpg&fm=jpg',
-    proteccion: 'https://images.pexels.com/photos/29504459/pexels-photo-29504459.jpeg?cs=srgb&dl=pexels-bulat843-1243575272-29504459.jpg&fm=jpg',
-    accesorios: 'https://images.pexels.com/photos/20042048/pexels-photo-20042048.jpeg?cs=srgb&dl=pexels-wavyvisuals-377312923-20042048.jpg&fm=jpg'
-  };
-
-  imagenFallback(categoria: string): string {
-    return this.fallbacks[categoria] ?? this.fallbacks['limpieza'];
-  }
-
-  formatearMonto(valor: number): string {
-    return new Intl.NumberFormat('es-CL').format(valor);
-  }
 
   agregarAlCarrito(producto: Producto): void {
     const carrito = JSON.parse(localStorage.getItem('fullgas_cart') ?? '[]');

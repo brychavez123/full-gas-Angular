@@ -46,8 +46,8 @@
           class="form-control form-control-lg"
           type="search"
           placeholder="Buscar producto"
-          [value]="textoBusqueda()"
-          (input)="textoBusqueda.set($any($event.target).value)"
+          [(ngModel)]="textoBusquedaModel"
+          name="busqueda"
         >
       </div>
     </div>
@@ -70,18 +70,10 @@
     <div class="row g-4">
       @for (producto of productosFiltrados(); track producto.id) {
         <div class="col-12 col-md-6 col-xl-3">
-          <div class="service-card product-tile h-100 d-flex flex-column">
-            <div class="product-image-wrap mb-3">
-              <img class="product-image" [src]="producto.image || imagenFallback(producto.category)" [alt]="producto.name" loading="lazy">
-            </div>
-            <span class="price-tag">${{ formatearMonto(producto.price) }}</span>
-            <h2 class="h5 mt-3">{{ producto.name }}</h2>
-            <p>{{ producto.description }}</p>
-            <div class="mt-auto d-flex justify-content-between align-items-center gap-2">
-              <small class="text-white-50 text-uppercase">{{ producto.category }}</small>
-              <button class="btn btn-brand btn-sm" (click)="agregarAlCarrito(producto)">Agregar</button>
-            </div>
-          </div>
+          <app-producto-card
+            [producto]="producto"
+            (agregar)="agregarAlCarrito($event)"
+          />
         </div>
       }
       @empty {
