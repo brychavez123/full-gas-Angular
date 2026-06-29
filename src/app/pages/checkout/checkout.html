@@ -1,0 +1,145 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">
+      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
+      <span>Full Gas Detail</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item"><a class="nav-link" routerLink="/inicio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/productos" routerLinkActive="active">Productos</a></li>
+      </ul>
+      <div class="d-flex gap-2 ms-lg-3 mt-3 mt-lg-0">
+        <a class="btn btn-outline-light btn-sm" routerLink="/login">Ingresar</a>
+        <a class="btn btn-brand btn-sm" routerLink="/registro">Crear cuenta</a>
+        <a class="btn btn-brand btn-sm nav-icon-btn" routerLink="/carrito" aria-label="Ver carrito">
+          <i class="bi bi-cart3"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-12 col-lg-7">
+        <div class="panel-card h-100">
+          <h1 class="h3 fw-bold">Confirmacion de pedido</h1>
+          <p class="text-white-50">Simulacion de pago exitoso para cumplir con la consigna sin integrar pasarelas reales.</p>
+          <form class="needs-validation mt-4" novalidate (submit)="simularPago($any($event))">
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="checkoutName">Nombre</label>
+                <input class="form-control" id="checkoutName" name="name" required>
+                <div class="invalid-feedback">Ingresa tu nombre.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="checkoutEmail">Correo</label>
+                <input class="form-control" id="checkoutEmail" name="email" type="email" required>
+                <div class="invalid-feedback">Ingresa un correo valido.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="checkoutPhone">Telefono</label>
+                <input class="form-control" id="checkoutPhone" name="phone" pattern="[0-9]{9}" required>
+                <div class="invalid-feedback">Ingresa 9 digitos.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="checkoutMethod">Metodo</label>
+                <select class="form-select" id="checkoutMethod" name="method" required>
+                  <option value="">Selecciona</option>
+                  <option>Transferencia simulada</option>
+                  <option>Pago en entrega</option>
+                  <option>Tarjeta simulada</option>
+                </select>
+                <div class="invalid-feedback">Selecciona un metodo.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="checkoutNotes">Notas</label>
+                <textarea class="form-control" id="checkoutNotes" name="notes" rows="3"></textarea>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="invoice" required>
+                  <label class="form-check-label" for="invoice">Confirmo los datos del pedido</label>
+                  <div class="invalid-feedback">Debes confirmar los datos.</div>
+                </div>
+              </div>
+              <div class="col-12 d-grid">
+                <button class="btn btn-brand btn-lg" type="submit">Simular pago exitoso</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-5">
+        <div class="panel-card h-100">
+          <h2 class="h4 fw-bold">Resumen del pago</h2>
+          <div class="summary-box mt-3">
+            @for (item of items(); track item.id) {
+              <div class="d-flex justify-content-between mb-2">
+                <span>{{ item.name }} x{{ item.quantity }}</span>
+                <strong>${{ formatearMonto(item.price * item.quantity) }}</strong>
+              </div>
+            }
+            @empty {
+              <p class="text-white-50 mb-0">No hay productos en el carrito.</p>
+            }
+            @if (items().length) {
+              <hr class="border-white border-opacity-10">
+              <div class="d-flex justify-content-between">
+                <span>Total</span>
+                <strong>${{ formatearMonto(total()) }}</strong>
+              </div>
+            }
+          </div>
+          @if (pagado()) {
+            <div class="success-box mt-4">
+              <strong>Pago realizado con exito.</strong>
+              <p class="mb-0 mt-2">La simulacion queda registrada para la presentacion de la actividad.</p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer border-top border-white border-opacity-10">
+  <div class="container">
+    <div class="row align-items-center g-4 py-5">
+      <div class="col-12 col-md-4">
+        <a class="d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2" routerLink="/inicio">
+          <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
+          <span>Full Gas Detail</span>
+        </a>
+        <p class="text-white-50 small mb-0">Carwash a domicilio y productos de detailing en Coronel, Concepcion.</p>
+      </div>
+      <div class="col-12 col-md-4 text-md-center">
+        <p class="text-white-50 small mb-2">Siguenos</p>
+        <div class="d-flex gap-3 justify-content-md-center">
+          <a href="#" class="footer-social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="footer-social" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          <a href="#" class="footer-social" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 text-md-end">
+        <div class="d-flex flex-column gap-1 align-items-md-end">
+          <a href="#" class="text-white-50 small footer-link">Politica de Privacidad</a>
+          <a href="#" class="text-white-50 small footer-link">Terminos de Uso</a>
+          <a href="#" class="text-white-50 small footer-link">Contacto</a>
+        </div>
+      </div>
+    </div>
+    <div class="border-top border-white border-opacity-10 py-3 text-center">
+      <span class="text-white-50 small">&copy; 2026 Full Gas Detail &mdash; Coronel, Concepcion. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
