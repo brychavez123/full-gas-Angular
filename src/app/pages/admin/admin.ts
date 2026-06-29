@@ -22,6 +22,11 @@ const CLIENTES_DEFAULT: Cliente[] = [
   { id: 'c2', name: 'Cliente Demo', email: 'cliente@fullgasdetail.cl', phone: '912345678', address: 'Coronel, Concepcion', vehicle: 'SUV', notes: 'Carga inicial', status: 'Activo' }
 ];
 
+/**
+ * Panel administrativo con gestion de productos, clientes, usuarios y pedidos.
+ * Usa signals para estado reactivo y paneles intercambiables via panelActivo.
+ * Todo el estado se persiste en localStorage simulando un ERP basico.
+ */
 @Component({
   selector: 'app-admin',
   imports: [RouterLink],

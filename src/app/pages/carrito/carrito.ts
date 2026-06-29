@@ -9,6 +9,11 @@ interface CarritoItem {
   quantity: number;
 }
 
+/**
+ * Pagina del carrito de compras.
+ * Carga los items desde localStorage y permite actualizar cantidades o eliminar productos.
+ * El total se recalcula automaticamente mediante signals computed.
+ */
 @Component({
   selector: 'app-carrito',
   imports: [RouterLink],
@@ -16,15 +21,24 @@ interface CarritoItem {
   styleUrl: './carrito.scss',
 })
 export class CarritoComponent implements OnInit {
+  /** Lista reactiva de items en el carrito */
   items = signal<CarritoItem[]>([]);
 
+  /** Precio total calculado en tiempo real */
   total = computed(() => this.items().reduce((s, i) => s + i.price * i.quantity, 0));
+
+  /** Cantidad total de unidades en el carrito */
   totalItems = computed(() => this.items().reduce((s, i) => s + i.quantity, 0));
 
   ngOnInit(): void {
     this.items.set(JSON.parse(localStorage.getItem('fullgas_cart') ?? '[]'));
   }
 
+  /**
+   * Aumenta o disminuye la cantidad de un item. Si llega a 0 lo elimina.
+   * @param id Identificador del item
+   * @param delta Valor a sumar (+1 o -1)
+   */
   actualizar(id: string, delta: number): void {
     this.items.update(lista => {
       const item = lista.find(i => i.id === id);
@@ -35,6 +49,10 @@ export class CarritoComponent implements OnInit {
     this.guardar();
   }
 
+  /**
+   * Elimina un item del carrito por su id.
+   * @param id Identificador del item a eliminar
+   */
   eliminar(id: string): void {
     this.items.update(lista => lista.filter(i => i.id !== id));
     this.guardar();
