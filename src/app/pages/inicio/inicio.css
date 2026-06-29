@@ -1,0 +1,60 @@
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.hero-section .eyebrow {
+  animation: fadeSlideUp 0.55s ease both;
+}
+
+.hero-section h1 {
+  animation: fadeSlideUp 0.65s 0.1s ease both;
+}
+
+.hero-section .lead {
+  animation: fadeSlideUp 0.65s 0.2s ease both;
+}
+
+.hero-section .d-flex.flex-wrap {
+  animation: fadeSlideUp 0.65s 0.3s ease both;
+}
+
+.hero-section .row.g-3 {
+  animation: fadeSlideUp 0.65s 0.4s ease both;
+}
+
+.hero-section .hero-card {
+  animation: fadeIn 0.9s 0.2s ease both;
+}
+
+.stat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
+}
+
+.feature-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(242, 181, 68, 0.4);
+}
+
+.role-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.role-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(44, 194, 216, 0.4);
+}

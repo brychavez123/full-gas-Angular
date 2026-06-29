@@ -1,6 +1,9 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { Component, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { SessionService } from '../../services/session.service';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { ToastService } from '../../services/toast.service';
 
 interface Usuario { name: string; email: string; phone: string; address: string; role: string; password: string; }
 
@@ -12,9 +15,13 @@ interface Usuario { name: string; email: string; phone: string; address: string;
   selector: 'app-login',
   imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.scss',
+  styleUrl: './login.css',
 })
 export class LoginComponent implements OnInit {
+  private readonly toast = inject(ToastService);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly sessionService = inject(SessionService);
+
   /** Formulario reactivo con controles de email y password */
   form!: FormGroup;
 
@@ -35,9 +42,11 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
 
-    const usuarios = JSON.parse(localStorage.getItem('fullgas_users') ?? '[]');
-    if (!usuarios.length) {
-      localStorage.setItem('fullgas_users', JSON.stringify(this.usuariosDemo));
+    if (isPlatformBrowser(this.platformId)) {
+      const usuarios = JSON.parse(localStorage.getItem('fullgas_users') ?? '[]');
+      if (!usuarios.length) {
+        localStorage.setItem('fullgas_users', JSON.stringify(this.usuariosDemo));
+      }
     }
   }
 
@@ -62,8 +71,8 @@ export class LoginComponent implements OnInit {
 
     this.errorMsg.set('');
     const sesion = { name: usuario?.name ?? email.split('@')[0], email, phone: usuario?.phone ?? '', address: usuario?.address ?? 'Coronel, Concepcion', role: usuario?.role ?? 'Cliente' };
-    localStorage.setItem('fullgas_session', JSON.stringify(sesion));
-    this.notificar('Sesion iniciada correctamente.');
+    this.sessionService.set(sesion);
+    this.toast.mostrar('Sesion iniciada correctamente.');
 
     const rol = sesion.role.toLowerCase();
     if (rol === 'administrador' || rol === 'tecnico') {
@@ -71,13 +80,5 @@ export class LoginComponent implements OnInit {
     } else {
       this.router.navigate(['/mis-compras']);
     }
-  }
-
-  private notificar(mensaje: string): void {
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<strong class="d-block mb-1 text-success">Full Gas Detail</strong><span>${mensaje}</span>`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2800);
   }
 }

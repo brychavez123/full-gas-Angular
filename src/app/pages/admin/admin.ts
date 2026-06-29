@@ -1,5 +1,9 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CurrencyClPipe } from '../../shared/pipes/currency-cl.pipe';
+import { FechaClPipe } from '../../shared/pipes/fecha-cl.pipe';
+import { ToastService } from '../../services/toast.service';
 
 interface Producto { id: string; name: string; category: string; price: number; stock: number; active: boolean; description: string; image: string; }
 interface Cliente { id: string; name: string; email: string; phone: string; address: string; vehicle: string; notes: string; status: string; }
@@ -29,11 +33,14 @@ const CLIENTES_DEFAULT: Cliente[] = [
  */
 @Component({
   selector: 'app-admin',
-  imports: [RouterLink],
+  imports: [RouterLink, CurrencyClPipe, FechaClPipe],
   templateUrl: './admin.html',
-  styleUrl: './admin.scss',
+  styleUrl: './admin.css',
 })
 export class AdminComponent implements OnInit {
+  private readonly toast = inject(ToastService);
+  private readonly platformId = inject(PLATFORM_ID);
+
   panelActivo = signal('overview');
   productos = signal<Producto[]>([]);
   clientes = signal<Cliente[]>([]);
@@ -53,6 +60,7 @@ export class AdminComponent implements OnInit {
   }));
 
   ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     if (!localStorage.getItem('fullgas_products')) localStorage.setItem('fullgas_products', JSON.stringify(PRODUCTOS_DEFAULT));
     if (!localStorage.getItem('fullgas_customers')) localStorage.setItem('fullgas_customers', JSON.stringify(CLIENTES_DEFAULT));
     if (!localStorage.getItem('fullgas_users')) localStorage.setItem('fullgas_users', JSON.stringify([
@@ -83,7 +91,7 @@ export class AdminComponent implements OnInit {
     this.productos.set(nueva);
     this.editandoProducto.set(null);
     form.reset(); form.classList.remove('was-validated');
-    this.notificar('Producto guardado.');
+    this.toast.mostrar('Producto guardado.');
   }
 
   editarProducto(producto: Producto): void { this.editandoProducto.set(producto); this.panelActivo.set('products'); }
@@ -92,7 +100,7 @@ export class AdminComponent implements OnInit {
     const nueva = this.productos().filter(p => p.id !== id);
     localStorage.setItem('fullgas_products', JSON.stringify(nueva));
     this.productos.set(nueva);
-    this.notificar('Producto eliminado.');
+    this.toast.mostrar('Producto eliminado.');
   }
 
   guardarCliente(evento: SubmitEvent): void {
@@ -108,7 +116,7 @@ export class AdminComponent implements OnInit {
     this.clientes.set(nueva);
     this.editandoCliente.set(null);
     form.reset(); form.classList.remove('was-validated');
-    this.notificar('Cliente guardado.');
+    this.toast.mostrar('Cliente guardado.');
   }
 
   editarCliente(cliente: Cliente): void { this.editandoCliente.set(cliente); this.panelActivo.set('customers'); }
@@ -117,7 +125,7 @@ export class AdminComponent implements OnInit {
     const nueva = this.clientes().filter(c => c.id !== id);
     localStorage.setItem('fullgas_customers', JSON.stringify(nueva));
     this.clientes.set(nueva);
-    this.notificar('Cliente eliminado.');
+    this.toast.mostrar('Cliente eliminado.');
   }
 
   guardarUsuario(evento: SubmitEvent): void {
@@ -135,7 +143,7 @@ export class AdminComponent implements OnInit {
     this.usuarios.set(nueva);
     this.editandoUsuario.set(null);
     form.reset(); form.classList.remove('was-validated');
-    this.notificar('Usuario guardado.');
+    this.toast.mostrar('Usuario guardado.');
   }
 
   editarUsuario(usuario: Usuario): void { this.editandoUsuario.set(usuario); this.panelActivo.set('users'); }
@@ -144,22 +152,12 @@ export class AdminComponent implements OnInit {
     const nueva = this.usuarios().filter(u => u.email.toLowerCase() !== email.toLowerCase());
     localStorage.setItem('fullgas_users', JSON.stringify(nueva));
     this.usuarios.set(nueva);
-    this.notificar('Usuario eliminado.');
+    this.toast.mostrar('Usuario eliminado.');
   }
 
   pedidosCliente(email: string): number {
     return this.pedidos().filter(p => (p.email ?? '').toLowerCase() === email.toLowerCase()).length;
   }
 
-  formatearMonto(valor: number): string { return new Intl.NumberFormat('es-CL').format(Number(valor ?? 0)); }
-  formatearFecha(iso: string): string { return iso ? new Date(iso).toLocaleString('es-CL') : '-'; }
   itemsCount(items: unknown[]): number { return Array.isArray(items) ? items.length : 0; }
-
-  private notificar(mensaje: string): void {
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<strong class="d-block mb-1 text-success">Full Gas Detail</strong><span>${mensaje}</span>`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2800);
-  }
 }

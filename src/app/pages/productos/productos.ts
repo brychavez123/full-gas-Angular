@@ -1,7 +1,9 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { ProductoCardComponent, type Producto } from '../../shared/producto-card/producto-card';
+import { ToastService } from '../../services/toast.service';
+import { NavbarComponent } from '../../shared/navbar/navbar';
 
 /**
  * Pagina de productos de limpieza vehicular.
@@ -10,11 +12,13 @@ import { ProductoCardComponent, type Producto } from '../../shared/producto-card
  */
 @Component({
   selector: 'app-productos',
-  imports: [RouterLink, RouterLinkActive, FormsModule, ProductoCardComponent],
+  imports: [RouterLink, FormsModule, ProductoCardComponent, NavbarComponent],
   templateUrl: './productos.html',
-  styleUrl: './productos.scss',
+  styleUrl: './productos.css',
 })
 export class ProductosComponent {
+  private readonly toast = inject(ToastService);
+
   readonly productos: Producto[] = [
     { id: 'p1', name: 'Shampoo neutro', category: 'limpieza', price: 8900, stock: 24, active: true, image: 'https://images.pexels.com/photos/4870731/pexels-photo-4870731.jpeg?cs=srgb&dl=pexels-karola-g-4870731.jpg&fm=jpg', description: 'Limpieza segura para pintura y superficies delicadas.' },
     { id: 'p2', name: 'Desengrasante multiuso', category: 'limpieza', price: 12900, stock: 18, active: true, image: 'https://images.pexels.com/photos/17623850/pexels-photo-17623850.jpeg?cs=srgb&dl=pexels-malcolm-garret-3023588-17623850.jpg&fm=jpg', description: 'Ideal para llantas, motor y zonas de alta suciedad.' },
@@ -52,14 +56,6 @@ export class ProductosComponent {
       carrito.push({ id: producto.id, name: producto.name, category: 'Producto', price: producto.price, quantity: 1 });
     }
     localStorage.setItem('fullgas_cart', JSON.stringify(carrito));
-    this.notificar(`${producto.name} agregado al carrito.`);
-  }
-
-  private notificar(mensaje: string): void {
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<strong class="d-block mb-1 text-success">Full Gas Detail</strong><span>${mensaje}</span>`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2800);
+    this.toast.mostrar(`${producto.name} agregado al carrito.`);
   }
 }

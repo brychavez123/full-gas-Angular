@@ -1,30 +1,53 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { NavbarComponent } from '../../shared/navbar/navbar';
+import { CurrencyClPipe } from '../../shared/pipes/currency-cl.pipe';
+import { ToastService } from '../../services/toast.service';
 
+/** Representa un item dentro del carrito de compras */
 interface CarritoItem {
+  /** Identificador unico del item */
   id: string;
+  /** Nombre del producto o servicio */
   name: string;
+  /** Categoria: Producto o Servicio */
   category: string;
+  /** Precio unitario en pesos chilenos */
   price: number;
+  /** Cantidad seleccionada */
   quantity: number;
 }
 
+/**
+ * Pagina de checkout para completar la compra.
+ * Simula el pago, registra el pedido en localStorage y vacia el carrito.
+ */
 @Component({
   selector: 'app-checkout',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, CurrencyClPipe, NavbarComponent],
   templateUrl: './checkout.html',
-  styleUrl: './checkout.scss',
+  styleUrl: './checkout.css',
 })
 export class CheckoutComponent implements OnInit {
+  private readonly toast = inject(ToastService);
+  private readonly platformId = inject(PLATFORM_ID);
+
+  /** Items del carrito a pagar */
   items = signal<CarritoItem[]>([]);
+  /** Indica si el pago fue simulado exitosamente */
   pagado = signal(false);
 
+  /** Total calculado en tiempo real a partir de los items */
   total = computed(() => this.items().reduce((s, i) => s + i.price * i.quantity, 0));
 
   ngOnInit(): void {
-    this.items.set(JSON.parse(localStorage.getItem('fullgas_cart') ?? '[]'));
+    if (isPlatformBrowser(this.platformId)) {
+      this.items.set(JSON.parse(localStorage.getItem('fullgas_cart') ?? '[]'));
+    }
   }
 
+  /** Valida el formulario, genera el pedido en localStorage y limpia el carrito */
   simularPago(evento: SubmitEvent): void {
     const form = evento.target as HTMLFormElement;
     if (!form.checkValidity()) {
@@ -32,7 +55,7 @@ export class CheckoutComponent implements OnInit {
       return;
     }
     if (!this.items().length) {
-      this.notificar('Agrega productos o servicios antes de simular el pago.', 'danger');
+      this.toast.mostrar('Agrega productos o servicios antes de simular el pago.', 'danger');
       return;
     }
 
@@ -55,18 +78,6 @@ export class CheckoutComponent implements OnInit {
     localStorage.setItem('fullgas_cart', '[]');
     this.items.set([]);
     this.pagado.set(true);
-    this.notificar('Pago simulado con exito.', 'success');
-  }
-
-  formatearMonto(valor: number): string {
-    return new Intl.NumberFormat('es-CL').format(valor);
-  }
-
-  private notificar(mensaje: string, tono = 'success'): void {
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<strong class="d-block mb-1 text-${tono === 'danger' ? 'danger' : 'success'}">${tono === 'danger' ? 'Atencion' : 'Full Gas Detail'}</strong><span>${mensaje}</span>`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2800);
+    this.toast.mostrar('Pago simulado con exito.');
   }
 }

@@ -1,13 +1,25 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CurrencyClPipe } from '../pipes/currency-cl.pipe';
 
+/**
+ * Modelo de datos de un producto del catalogo de Full Gas Detail.
+ */
 export interface Producto {
+  /** Identificador unico del producto */
   id: string;
+  /** Nombre del producto */
   name: string;
+  /** Categoria del producto: limpieza, proteccion o accesorios */
   category: string;
+  /** Precio en pesos chilenos */
   price: number;
+  /** Cantidad disponible en inventario */
   stock: number;
+  /** Indica si el producto esta visible en el catalogo */
   active: boolean;
+  /** URL de la imagen del producto */
   image: string;
+  /** Descripcion corta del producto */
   description: string;
 }
 
@@ -17,10 +29,9 @@ export interface Producto {
  */
 @Component({
   selector: 'app-producto-card',
-  standalone: true,
-  imports: [],
+  imports: [CurrencyClPipe],
   templateUrl: './producto-card.html',
-  styleUrl: './producto-card.scss',
+  styleUrl: './producto-card.css',
 })
 export class ProductoCardComponent {
   /** Producto a mostrar en la tarjeta */
@@ -37,9 +48,5 @@ export class ProductoCardComponent {
 
   imagenFallback(categoria: string): string {
     return this.fallbacks[categoria] ?? this.fallbacks['limpieza'];
-  }
-
-  formatearMonto(valor: number): string {
-    return new Intl.NumberFormat('es-CL').format(valor);
   }
 }

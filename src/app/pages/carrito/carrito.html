@@ -1,15 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">
-      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
-      <span>Full Gas Detail</span>
-    </a>
-    <div class="ms-auto d-flex gap-2">
-      <a class="btn btn-outline-light btn-sm" routerLink="/productos">Productos</a>
-      <a class="btn btn-brand btn-sm" routerLink="/checkout">Finalizar</a>
-    </div>
-  </div>
-</nav>
+<app-navbar></app-navbar>
 
 <main class="py-5">
   <div class="container">
@@ -44,7 +33,7 @@
                         <button class="btn btn-outline-light" type="button" (click)="actualizar(item.id, 1)">+</button>
                       </div>
                     </td>
-                    <td>${{ formatearMonto(item.price * item.quantity) }}</td>
+                    <td>${{ item.price * item.quantity | currencyCl }}</td>
                     <td>
                       <button class="btn btn-sm btn-outline-danger" (click)="eliminar(item.id)">Eliminar</button>
                     </td>
@@ -67,7 +56,7 @@
           <div class="summary-box mt-3">
             <div class="d-flex justify-content-between">
               <span>Subtotal</span>
-              <strong>${{ formatearMonto(total()) }}</strong>
+              <strong>${{ total() | currencyCl }}</strong>
             </div>
             <div class="d-flex justify-content-between mt-2">
               <span>Despacho</span>
@@ -76,7 +65,7 @@
             <hr class="border-white border-opacity-10">
             <div class="d-flex justify-content-between">
               <span>Total</span>
-              <strong>${{ formatearMonto(total()) }}</strong>
+              <strong>${{ total() | currencyCl }}</strong>
             </div>
           </div>
           <a class="btn btn-brand w-100 mt-4" routerLink="/checkout">Ir a confirmacion</a>

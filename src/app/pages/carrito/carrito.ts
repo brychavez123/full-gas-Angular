@@ -1,11 +1,20 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { NavbarComponent } from '../../shared/navbar/navbar';
+import { CurrencyClPipe } from '../../shared/pipes/currency-cl.pipe';
 
+/** Representa un item dentro del carrito de compras */
 interface CarritoItem {
+  /** Identificador unico del item */
   id: string;
+  /** Nombre del producto o servicio */
   name: string;
+  /** Categoria: Producto o Servicio */
   category: string;
+  /** Precio unitario en pesos chilenos */
   price: number;
+  /** Cantidad seleccionada por el usuario */
   quantity: number;
 }
 
@@ -16,11 +25,13 @@ interface CarritoItem {
  */
 @Component({
   selector: 'app-carrito',
-  imports: [RouterLink],
+  imports: [RouterLink, CurrencyClPipe, NavbarComponent],
   templateUrl: './carrito.html',
-  styleUrl: './carrito.scss',
+  styleUrl: './carrito.css',
 })
 export class CarritoComponent implements OnInit {
+  private readonly platformId = inject(PLATFORM_ID);
+
   /** Lista reactiva de items en el carrito */
   items = signal<CarritoItem[]>([]);
 
@@ -31,7 +42,9 @@ export class CarritoComponent implements OnInit {
   totalItems = computed(() => this.items().reduce((s, i) => s + i.quantity, 0));
 
   ngOnInit(): void {
-    this.items.set(JSON.parse(localStorage.getItem('fullgas_cart') ?? '[]'));
+    if (isPlatformBrowser(this.platformId)) {
+      this.items.set(JSON.parse(localStorage.getItem('fullgas_cart') ?? '[]'));
+    }
   }
 
   /**
@@ -56,10 +69,6 @@ export class CarritoComponent implements OnInit {
   eliminar(id: string): void {
     this.items.update(lista => lista.filter(i => i.id !== id));
     this.guardar();
-  }
-
-  formatearMonto(valor: number): string {
-    return new Intl.NumberFormat('es-CL').format(valor);
   }
 
   private guardar(): void {

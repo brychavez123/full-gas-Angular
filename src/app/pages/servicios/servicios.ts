@@ -1,25 +1,44 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { ToastService } from '../../services/toast.service';
+import { NavbarComponent } from '../../shared/navbar/navbar';
 
+/**
+ * Modelo de datos de un servicio de detailing ofrecido por Full Gas Detail.
+ */
 interface Servicio {
+  /** Identificador unico del servicio */
   id: string;
+  /** Nombre del servicio */
   name: string;
+  /** Precio base en pesos chilenos */
   price: number;
+  /** Descripcion corta del servicio */
   descripcion: string;
+  /** URL de la imagen representativa */
   imagen: string;
+  /** Texto alternativo para la imagen */
   altImagen: string;
+  /** Texto de precio formateado para mostrar en pantalla */
   precioTexto: string;
 }
 
+/**
+ * Pagina de servicios de detailing.
+ * Muestra el catalogo de servicios disponibles y permite agregarlos al carrito o reservar.
+ */
 @Component({
   selector: 'app-servicios',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, NavbarComponent],
   templateUrl: './servicios.html',
-  styleUrl: './servicios.scss',
+  styleUrl: './servicios.css',
 })
 export class ServiciosComponent {
+  private readonly toast = inject(ToastService);
+
   constructor(private router: Router) {}
 
+  /** Lista de servicios disponibles en el catalogo */
   readonly servicios: Servicio[] = [
     {
       id: 'lavado_exterior',
@@ -59,6 +78,7 @@ export class ServiciosComponent {
     }
   ];
 
+  /** Agrega el servicio al carrito en localStorage e incrementa cantidad si ya existe */
   agregarAlCarrito(servicio: Servicio): void {
     const carrito = JSON.parse(localStorage.getItem('fullgas_cart') ?? '[]');
     const encontrado = carrito.find((item: { id: string; quantity: number }) => item.id === servicio.id);
@@ -68,9 +88,10 @@ export class ServiciosComponent {
       carrito.push({ id: servicio.id, name: servicio.name, category: 'Servicio', price: servicio.price, quantity: 1 });
     }
     localStorage.setItem('fullgas_cart', JSON.stringify(carrito));
-    this.notificar(`${servicio.name} agregado al carrito.`);
+    this.toast.mostrar(`${servicio.name} agregado al carrito.`);
   }
 
+  /** Valida el formulario de reserva y guarda nombre y direccion en la sesion activa */
   reservar(evento: SubmitEvent): void {
     const form = evento.target as HTMLFormElement;
     if (!form.checkValidity()) {
@@ -83,13 +104,5 @@ export class ServiciosComponent {
     sesion.address = datos.get('address') as string;
     localStorage.setItem('fullgas_session', JSON.stringify(sesion));
     this.router.navigate(['/carrito']);
-  }
-
-  private notificar(mensaje: string): void {
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<strong class="d-block mb-1 text-success">Full Gas Detail</strong><span>${mensaje}</span>`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2800);
   }
 }

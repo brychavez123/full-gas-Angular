@@ -1,0 +1,24 @@
+@keyframes navFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+:host {
+  display: block;
+}
+
+nav {
+  animation: navFadeIn 0.4s ease both;
+}
+
+.navbar-brand {
+  transition: opacity 0.2s ease;
+}
+
+.navbar-brand:hover {
+  opacity: 0.85;
+}
+
+.btn-outline-danger {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}

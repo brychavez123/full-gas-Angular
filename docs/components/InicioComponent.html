@@ -1,0 +1,771 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Full Gas Detail</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Full Gas Detail</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  InicioComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/inicio/inicio.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Pagina principal (home) de Full Gas Detail.
+Muestra hero, servicios, por que elegirnos, servicios destacados, FAQ y formulario de contacto.</p>
+
+    </p>
+
+
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-inicio</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>        <code><a href="../components/NavbarComponent.html" target="_self" >NavbarComponent</a></code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./inicio.css</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./inicio.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./inicio.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/NavbarComponent.html" target="_self" >NavbarComponent</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+import { NavbarComponent } from &#x27;../../shared/navbar/navbar&#x27;;
+
+/**
+ * Pagina principal (home) de Full Gas Detail.
+ * Muestra hero, servicios, por que elegirnos, servicios destacados, FAQ y formulario de contacto.
+ */
+@Component({
+  selector: &#x27;app-inicio&#x27;,
+  imports: [RouterLink, NavbarComponent],
+  templateUrl: &#x27;./inicio.html&#x27;,
+  styleUrl: &#x27;./inicio.css&#x27;,
+})
+export class InicioComponent {}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;app-navbar&gt;&lt;/app-navbar&gt;
+
+&lt;main&gt;
+  &lt;section class&#x3D;&quot;hero-section py-5 py-lg-6&quot;&gt;
+    &lt;div class&#x3D;&quot;container&quot;&gt;
+      &lt;div class&#x3D;&quot;row align-items-center g-4&quot;&gt;
+        &lt;div class&#x3D;&quot;col-12 col-lg-6&quot;&gt;
+          &lt;span class&#x3D;&quot;eyebrow&quot;&gt;Coronel, Concepcion&lt;/span&gt;
+          &lt;h1 class&#x3D;&quot;display-4 fw-bold mt-3&quot;&gt;Llevamos el lavado premium y el detailing profesional hasta tu puerta.&lt;/h1&gt;
+          &lt;p class&#x3D;&quot;lead text-white-50 mt-3&quot;&gt;Full Gas Detail ofrece carwash a domicilio, limpieza interior y venta de productos especializados para mantener tu vehiculo impecable sin que salgas de casa o del trabajo.&lt;/p&gt;
+          &lt;div class&#x3D;&quot;d-flex flex-wrap gap-2 mt-4&quot;&gt;
+            &lt;a class&#x3D;&quot;btn btn-brand btn-lg&quot; routerLink&#x3D;&quot;/servicios&quot;&gt;Reservar servicio&lt;/a&gt;
+            &lt;a class&#x3D;&quot;btn btn-outline-light btn-lg&quot; routerLink&#x3D;&quot;/productos&quot;&gt;Ver catalogo&lt;/a&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;row g-3 mt-4&quot;&gt;
+            &lt;div class&#x3D;&quot;col-6 col-md-4&quot;&gt;
+              &lt;div class&#x3D;&quot;stat-card&quot;&gt;
+                &lt;strong&gt;24/7&lt;/strong&gt;
+                &lt;span&gt;Atencion continua para consultas y reservas&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;col-6 col-md-4&quot;&gt;
+              &lt;div class&#x3D;&quot;stat-card&quot;&gt;
+                &lt;strong&gt;Detailing&lt;/strong&gt;
+                &lt;span&gt;Servicios, insumos y acabado premium&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+              &lt;div class&#x3D;&quot;stat-card&quot;&gt;
+                &lt;strong&gt;Coronel&lt;/strong&gt;
+                &lt;span&gt;Despacho local y atencion personalizada&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-12 col-lg-6 text-center&quot;&gt;
+          &lt;div class&#x3D;&quot;hero-card mx-auto position-relative&quot;&gt;
+            &lt;img src&#x3D;&quot;assets/logo.jpg&quot; alt&#x3D;&quot;Logo Full Gas Detail&quot; class&#x3D;&quot;hero-logo floating-logo&quot;&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class&#x3D;&quot;py-5&quot;&gt;
+    &lt;div class&#x3D;&quot;container&quot;&gt;
+      &lt;div class&#x3D;&quot;section-heading mb-4&quot;&gt;
+        &lt;span class&#x3D;&quot;eyebrow&quot;&gt;Nuestra propuesta&lt;/span&gt;
+        &lt;h2 class&#x3D;&quot;fw-bold mt-2&quot;&gt;Servicios diseñados para cuidar tu auto y tu tiempo&lt;/h2&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;row g-4&quot;&gt;
+        &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-3&quot;&gt;
+          &lt;div class&#x3D;&quot;feature-card h-100&quot;&gt;
+            &lt;h3 class&#x3D;&quot;h5&quot;&gt;Lavado exterior&lt;/h3&gt;
+            &lt;p&gt;Espuma activa, limpieza de llantas, secado y brillo para la carroceria.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-3&quot;&gt;
+          &lt;div class&#x3D;&quot;feature-card h-100&quot;&gt;
+            &lt;h3 class&#x3D;&quot;h5&quot;&gt;Detalle interior&lt;/h3&gt;
+            &lt;p&gt;Aspirado, limpieza de tableros, plásticos y sanitizacion de superficies.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-3&quot;&gt;
+          &lt;div class&#x3D;&quot;feature-card h-100&quot;&gt;
+            &lt;h3 class&#x3D;&quot;h5&quot;&gt;Productos vehiculares&lt;/h3&gt;
+            &lt;p&gt;Insumos profesionales para limpieza, proteccion y mantenimiento diario.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-3&quot;&gt;
+          &lt;div class&#x3D;&quot;feature-card h-100&quot;&gt;
+            &lt;h3 class&#x3D;&quot;h5&quot;&gt;Atencion personalizada&lt;/h3&gt;
+            &lt;p&gt;Coordinamos la visita, el horario y el tipo de servicio segun tu necesidad.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class&#x3D;&quot;py-5 bg-shell-soft&quot;&gt;
+    &lt;div class&#x3D;&quot;container&quot;&gt;
+      &lt;div class&#x3D;&quot;row align-items-center g-4&quot;&gt;
+        &lt;div class&#x3D;&quot;col-12 col-lg-5&quot;&gt;
+          &lt;span class&#x3D;&quot;eyebrow&quot;&gt;Por que elegirnos&lt;/span&gt;
+          &lt;h2 class&#x3D;&quot;fw-bold mt-2&quot;&gt;Experiencia pensada para cuidar tu vehiculo y darte comodidad&lt;/h2&gt;
+          &lt;p class&#x3D;&quot;text-white-50 mt-3&quot;&gt;Trabajamos con agenda flexible, productos especializados y una experiencia visual clara para que puedas cotizar, reservar y hacer seguimiento sin complicaciones.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-12 col-lg-7&quot;&gt;
+          &lt;div class&#x3D;&quot;row g-3&quot;&gt;
+            &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+              &lt;div class&#x3D;&quot;role-card&quot;&gt;
+                &lt;h3 class&#x3D;&quot;h5&quot;&gt;Rapidez&lt;/h3&gt;
+                &lt;p&gt;Respuesta agil para cotizar, reservar o pedir productos.&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+              &lt;div class&#x3D;&quot;role-card&quot;&gt;
+                &lt;h3 class&#x3D;&quot;h5&quot;&gt;Confianza&lt;/h3&gt;
+                &lt;p&gt;Atencion cercana y seguimiento ordenado de cada solicitud.&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+              &lt;div class&#x3D;&quot;role-card&quot;&gt;
+                &lt;h3 class&#x3D;&quot;h5&quot;&gt;Calidad&lt;/h3&gt;
+                &lt;p&gt;Terminaciones limpias, cuidado de superficies y productos de alto rendimiento.&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class&#x3D;&quot;py-5&quot;&gt;
+    &lt;div class&#x3D;&quot;container&quot;&gt;
+      &lt;div class&#x3D;&quot;section-heading mb-4&quot;&gt;
+        &lt;span class&#x3D;&quot;eyebrow&quot;&gt;Servicios destacados&lt;/span&gt;
+        &lt;h2 class&#x3D;&quot;fw-bold mt-2&quot;&gt;Soluciones para el mantenimiento vehicular&lt;/h2&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;row g-4&quot;&gt;
+        &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-4&quot;&gt;
+          &lt;div class&#x3D;&quot;service-card h-100&quot;&gt;
+            &lt;h3 class&#x3D;&quot;h5&quot;&gt;Lavado exterior premium&lt;/h3&gt;
+            &lt;p&gt;Incluye espuma activa, secado y acabado brillante.&lt;/p&gt;
+            &lt;a class&#x3D;&quot;btn btn-outline-light btn-sm mt-3&quot; routerLink&#x3D;&quot;/servicios&quot;&gt;Ver servicios&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-4&quot;&gt;
+          &lt;div class&#x3D;&quot;service-card h-100&quot;&gt;
+            &lt;h3 class&#x3D;&quot;h5&quot;&gt;Detalle interior&lt;/h3&gt;
+            &lt;p&gt;Limpieza profunda de asientos, tablero y superficies.&lt;/p&gt;
+            &lt;a class&#x3D;&quot;btn btn-outline-light btn-sm mt-3&quot; routerLink&#x3D;&quot;/servicios&quot;&gt;Ver servicios&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-4&quot;&gt;
+          &lt;div class&#x3D;&quot;service-card h-100&quot;&gt;
+            &lt;h3 class&#x3D;&quot;h5&quot;&gt;Linea de productos&lt;/h3&gt;
+            &lt;p&gt;Shampoo, cera, desengrasante y accesorios para vehiculos.&lt;/p&gt;
+            &lt;a class&#x3D;&quot;btn btn-outline-light btn-sm mt-3&quot; routerLink&#x3D;&quot;/productos&quot;&gt;Ver productos&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class&#x3D;&quot;py-5&quot;&gt;
+    &lt;div class&#x3D;&quot;container&quot;&gt;
+      &lt;div class&#x3D;&quot;section-heading mb-4&quot;&gt;
+        &lt;span class&#x3D;&quot;eyebrow&quot;&gt;Preguntas frecuentes&lt;/span&gt;
+        &lt;h2 class&#x3D;&quot;fw-bold mt-2&quot;&gt;Resolvemos las dudas mas comunes antes de reservar&lt;/h2&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;accordion accordion-flush faq-accordion&quot; id&#x3D;&quot;faqAccordion&quot;&gt;
+        &lt;div class&#x3D;&quot;accordion-item bg-transparent text-white border-white border-opacity-10&quot;&gt;
+          &lt;h3 class&#x3D;&quot;accordion-header&quot; id&#x3D;&quot;faqOneHeading&quot;&gt;
+            &lt;button class&#x3D;&quot;accordion-button collapsed bg-transparent text-white&quot; type&#x3D;&quot;button&quot;
+              data-bs-toggle&#x3D;&quot;collapse&quot; data-bs-target&#x3D;&quot;#faqOne&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;faqOne&quot;&gt;
+              ¿En que zonas trabajan?
+            &lt;/button&gt;
+          &lt;/h3&gt;
+          &lt;div id&#x3D;&quot;faqOne&quot; class&#x3D;&quot;accordion-collapse collapse&quot; aria-labelledby&#x3D;&quot;faqOneHeading&quot; data-bs-parent&#x3D;&quot;#faqAccordion&quot;&gt;
+            &lt;div class&#x3D;&quot;accordion-body text-white-50&quot;&gt;Atendemos principalmente en Coronel y Concepcion, con coordinacion previa para otros sectores cercanos segun disponibilidad.&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;accordion-item bg-transparent text-white border-white border-opacity-10&quot;&gt;
+          &lt;h3 class&#x3D;&quot;accordion-header&quot; id&#x3D;&quot;faqTwoHeading&quot;&gt;
+            &lt;button class&#x3D;&quot;accordion-button collapsed bg-transparent text-white&quot; type&#x3D;&quot;button&quot;
+              data-bs-toggle&#x3D;&quot;collapse&quot; data-bs-target&#x3D;&quot;#faqTwo&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;faqTwo&quot;&gt;
+              ¿Puedo pedir solo productos sin agendar un servicio?
+            &lt;/button&gt;
+          &lt;/h3&gt;
+          &lt;div id&#x3D;&quot;faqTwo&quot; class&#x3D;&quot;accordion-collapse collapse&quot; aria-labelledby&#x3D;&quot;faqTwoHeading&quot; data-bs-parent&#x3D;&quot;#faqAccordion&quot;&gt;
+            &lt;div class&#x3D;&quot;accordion-body text-white-50&quot;&gt;Si. El catalogo de productos permite comprar insumos de limpieza, proteccion y accesorios para mantenimiento vehicular.&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;accordion-item bg-transparent text-white border-white border-opacity-10&quot;&gt;
+          &lt;h3 class&#x3D;&quot;accordion-header&quot; id&#x3D;&quot;faqThreeHeading&quot;&gt;
+            &lt;button class&#x3D;&quot;accordion-button collapsed bg-transparent text-white&quot; type&#x3D;&quot;button&quot;
+              data-bs-toggle&#x3D;&quot;collapse&quot; data-bs-target&#x3D;&quot;#faqThree&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;faqThree&quot;&gt;
+              ¿Como se agenda un lavado a domicilio?
+            &lt;/button&gt;
+          &lt;/h3&gt;
+          &lt;div id&#x3D;&quot;faqThree&quot; class&#x3D;&quot;accordion-collapse collapse&quot; aria-labelledby&#x3D;&quot;faqThreeHeading&quot; data-bs-parent&#x3D;&quot;#faqAccordion&quot;&gt;
+            &lt;div class&#x3D;&quot;accordion-body text-white-50&quot;&gt;Desde la seccion de servicios puedes elegir el tipo de atencion, completar tus datos y dejar la direccion para coordinar la visita.&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;accordion-item bg-transparent text-white border-white border-opacity-10&quot;&gt;
+          &lt;h3 class&#x3D;&quot;accordion-header&quot; id&#x3D;&quot;faqFourHeading&quot;&gt;
+            &lt;button class&#x3D;&quot;accordion-button collapsed bg-transparent text-white&quot; type&#x3D;&quot;button&quot;
+              data-bs-toggle&#x3D;&quot;collapse&quot; data-bs-target&#x3D;&quot;#faqFour&quot; aria-expanded&#x3D;&quot;false&quot; aria-controls&#x3D;&quot;faqFour&quot;&gt;
+              ¿Cuales son los metodos de pago?
+            &lt;/button&gt;
+          &lt;/h3&gt;
+          &lt;div id&#x3D;&quot;faqFour&quot; class&#x3D;&quot;accordion-collapse collapse&quot; aria-labelledby&#x3D;&quot;faqFourHeading&quot; data-bs-parent&#x3D;&quot;#faqAccordion&quot;&gt;
+            &lt;div class&#x3D;&quot;accordion-body text-white-50&quot;&gt;Aceptamos pagos mediante transferencia bancaria, tarjetas de crédito y débito, y plataformas de pago en línea.&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class&#x3D;&quot;py-5 bg-shell-soft&quot;&gt;
+    &lt;div class&#x3D;&quot;container&quot;&gt;
+      &lt;div class&#x3D;&quot;row justify-content-center&quot;&gt;
+        &lt;div class&#x3D;&quot;col-12 col-lg-10 col-xl-9&quot;&gt;
+          &lt;div class&#x3D;&quot;panel-card&quot;&gt;
+            &lt;div class&#x3D;&quot;section-heading mb-4&quot;&gt;
+              &lt;span class&#x3D;&quot;eyebrow&quot;&gt;Contacto&lt;/span&gt;
+              &lt;h2 class&#x3D;&quot;fw-bold mt-2&quot;&gt;Escribenos y coordinamos tu servicio o compra&lt;/h2&gt;
+              &lt;p class&#x3D;&quot;text-white-50 mb-0&quot;&gt;Completa el formulario y te responderemos lo antes posible con la informacion que necesites.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;form class&#x3D;&quot;needs-validation&quot; novalidate&gt;
+              &lt;div class&#x3D;&quot;row g-3&quot;&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-6&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;contactName&quot;&gt;Nombre completo&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;contactName&quot; name&#x3D;&quot;name&quot; required minlength&#x3D;&quot;4&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa tu nombre completo.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-6&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;contactEmail&quot;&gt;Correo&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;contactEmail&quot; name&#x3D;&quot;email&quot; type&#x3D;&quot;email&quot; required&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa un correo valido.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-6&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;contactPhone&quot;&gt;Telefono&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;contactPhone&quot; name&#x3D;&quot;phone&quot; type&#x3D;&quot;tel&quot; pattern&#x3D;&quot;[0-9]{9}&quot; required&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa 9 digitos.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-6&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;contactTopic&quot;&gt;Motivo&lt;/label&gt;
+                  &lt;select class&#x3D;&quot;form-select&quot; id&#x3D;&quot;contactTopic&quot; name&#x3D;&quot;topic&quot; required&gt;
+                    &lt;option value&#x3D;&quot;&quot;&gt;Selecciona&lt;/option&gt;
+                    &lt;option&gt;Reserva de servicio&lt;/option&gt;
+                    &lt;option&gt;Compra de productos&lt;/option&gt;
+                    &lt;option&gt;Consulta general&lt;/option&gt;
+                    &lt;option&gt;Soporte tecnico&lt;/option&gt;
+                  &lt;/select&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Selecciona un motivo.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;contactMessage&quot;&gt;Mensaje&lt;/label&gt;
+                  &lt;textarea class&#x3D;&quot;form-control&quot; id&#x3D;&quot;contactMessage&quot; name&#x3D;&quot;message&quot; rows&#x3D;&quot;5&quot; minlength&#x3D;&quot;10&quot; required&gt;&lt;/textarea&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Escribe un mensaje mas detallado.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 d-grid d-md-flex justify-content-md-end gap-2&quot;&gt;
+                  &lt;button class&#x3D;&quot;btn btn-outline-light btn-lg&quot; type&#x3D;&quot;reset&quot;&gt;Limpiar&lt;/button&gt;
+                  &lt;button class&#x3D;&quot;btn btn-brand btn-lg&quot; type&#x3D;&quot;submit&quot;&gt;Enviar mensaje&lt;/button&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;footer class&#x3D;&quot;site-footer border-top border-white border-opacity-10&quot;&gt;
+  &lt;div class&#x3D;&quot;container&quot;&gt;
+    &lt;div class&#x3D;&quot;row align-items-center g-4 py-5&quot;&gt;
+      &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+        &lt;a class&#x3D;&quot;d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2&quot; routerLink&#x3D;&quot;/inicio&quot;&gt;
+          &lt;img src&#x3D;&quot;assets/logo.jpg&quot; alt&#x3D;&quot;Full Gas Detail&quot; class&#x3D;&quot;brand-logo brand-logo-sm&quot;&gt;
+          &lt;span&gt;Full Gas Detail&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;p class&#x3D;&quot;text-white-50 small mb-0&quot;&gt;Carwash a domicilio y productos de detailing en Coronel, Concepcion.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-12 col-md-4 text-md-center&quot;&gt;
+        &lt;p class&#x3D;&quot;text-white-50 small mb-2&quot;&gt;Siguenos&lt;/p&gt;
+        &lt;div class&#x3D;&quot;d-flex gap-3 justify-content-md-center&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;Instagram&quot;&gt;&lt;i class&#x3D;&quot;bi bi-instagram&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;Facebook&quot;&gt;&lt;i class&#x3D;&quot;bi bi-facebook&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;WhatsApp&quot;&gt;&lt;i class&#x3D;&quot;bi bi-whatsapp&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;TikTok&quot;&gt;&lt;i class&#x3D;&quot;bi bi-tiktok&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-12 col-md-4 text-md-end&quot;&gt;
+        &lt;div class&#x3D;&quot;d-flex flex-column gap-1 align-items-md-end&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;text-white-50 small footer-link&quot;&gt;Politica de Privacidad&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;text-white-50 small footer-link&quot;&gt;Terminos de Uso&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;text-white-50 small footer-link&quot;&gt;Contacto&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;border-top border-white border-opacity-10 py-3 text-center&quot;&gt;
+      &lt;span class&#x3D;&quot;text-white-50 small&quot;&gt;&amp;copy; 2026 Full Gas Detail &amp;mdash; Coronel, Concepcion. Todos los derechos reservados.&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./inicio.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.hero-section .eyebrow {
+  animation: fadeSlideUp 0.55s ease both;
+}
+
+.hero-section h1 {
+  animation: fadeSlideUp 0.65s 0.1s ease both;
+}
+
+.hero-section .lead {
+  animation: fadeSlideUp 0.65s 0.2s ease both;
+}
+
+.hero-section .d-flex.flex-wrap {
+  animation: fadeSlideUp 0.65s 0.3s ease both;
+}
+
+.hero-section .row.g-3 {
+  animation: fadeSlideUp 0.65s 0.4s ease both;
+}
+
+.hero-section .hero-card {
+  animation: fadeIn 0.9s 0.2s ease both;
+}
+
+.stat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
+}
+
+.feature-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(242, 181, 68, 0.4);
+}
+
+.role-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.role-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(44, 194, 216, 0.4);
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><app-navbar></app-navbar><main>  <section class="hero-section py-5 py-lg-6">    <div class="container">      <div class="row align-items-center g-4">        <div class="col-12 col-lg-6">          <span class="eyebrow">Coronel, Concepcion</span>          <h1 class="display-4 fw-bold mt-3">Llevamos el lavado premium y el detailing profesional hasta tu puerta.</h1>          <p class="lead text-white-50 mt-3">Full Gas Detail ofrece carwash a domicilio, limpieza interior y venta de productos especializados para mantener tu vehiculo impecable sin que salgas de casa o del trabajo.</p>          <div class="d-flex flex-wrap gap-2 mt-4">            <a class="btn btn-brand btn-lg" routerLink="/servicios">Reservar servicio</a>            <a class="btn btn-outline-light btn-lg" routerLink="/productos">Ver catalogo</a>          </div>          <div class="row g-3 mt-4">            <div class="col-6 col-md-4">              <div class="stat-card">                <strong>24/7</strong>                <span>Atencion continua para consultas y reservas</span>              </div>            </div>            <div class="col-6 col-md-4">              <div class="stat-card">                <strong>Detailing</strong>                <span>Servicios, insumos y acabado premium</span>              </div>            </div>            <div class="col-12 col-md-4">              <div class="stat-card">                <strong>Coronel</strong>                <span>Despacho local y atencion personalizada</span>              </div>            </div>          </div>        </div>        <div class="col-12 col-lg-6 text-center">          <div class="hero-card mx-auto position-relative">            <img src="assets/logo.jpg" alt="Logo Full Gas Detail" class="hero-logo floating-logo">          </div>        </div>      </div>    </div>  </section>  <section class="py-5">    <div class="container">      <div class="section-heading mb-4">        <span class="eyebrow">Nuestra propuesta</span>        <h2 class="fw-bold mt-2">Servicios diseñados para cuidar tu auto y tu tiempo</h2>      </div>      <div class="row g-4">        <div class="col-12 col-md-6 col-xl-3">          <div class="feature-card h-100">            <h3 class="h5">Lavado exterior</h3>            <p>Espuma activa, limpieza de llantas, secado y brillo para la carroceria.</p>          </div>        </div>        <div class="col-12 col-md-6 col-xl-3">          <div class="feature-card h-100">            <h3 class="h5">Detalle interior</h3>            <p>Aspirado, limpieza de tableros, plásticos y sanitizacion de superficies.</p>          </div>        </div>        <div class="col-12 col-md-6 col-xl-3">          <div class="feature-card h-100">            <h3 class="h5">Productos vehiculares</h3>            <p>Insumos profesionales para limpieza, proteccion y mantenimiento diario.</p>          </div>        </div>        <div class="col-12 col-md-6 col-xl-3">          <div class="feature-card h-100">            <h3 class="h5">Atencion personalizada</h3>            <p>Coordinamos la visita, el horario y el tipo de servicio segun tu necesidad.</p>          </div>        </div>      </div>    </div>  </section>  <section class="py-5 bg-shell-soft">    <div class="container">      <div class="row align-items-center g-4">        <div class="col-12 col-lg-5">          <span class="eyebrow">Por que elegirnos</span>          <h2 class="fw-bold mt-2">Experiencia pensada para cuidar tu vehiculo y darte comodidad</h2>          <p class="text-white-50 mt-3">Trabajamos con agenda flexible, productos especializados y una experiencia visual clara para que puedas cotizar, reservar y hacer seguimiento sin complicaciones.</p>        </div>        <div class="col-12 col-lg-7">          <div class="row g-3">            <div class="col-12 col-md-4">              <div class="role-card">                <h3 class="h5">Rapidez</h3>                <p>Respuesta agil para cotizar, reservar o pedir productos.</p>              </div>            </div>            <div class="col-12 col-md-4">              <div class="role-card">                <h3 class="h5">Confianza</h3>                <p>Atencion cercana y seguimiento ordenado de cada solicitud.</p>              </div>            </div>            <div class="col-12 col-md-4">              <div class="role-card">                <h3 class="h5">Calidad</h3>                <p>Terminaciones limpias, cuidado de superficies y productos de alto rendimiento.</p>              </div>            </div>          </div>        </div>      </div>    </div>  </section>  <section class="py-5">    <div class="container">      <div class="section-heading mb-4">        <span class="eyebrow">Servicios destacados</span>        <h2 class="fw-bold mt-2">Soluciones para el mantenimiento vehicular</h2>      </div>      <div class="row g-4">        <div class="col-12 col-md-6 col-xl-4">          <div class="service-card h-100">            <h3 class="h5">Lavado exterior premium</h3>            <p>Incluye espuma activa, secado y acabado brillante.</p>            <a class="btn btn-outline-light btn-sm mt-3" routerLink="/servicios">Ver servicios</a>          </div>        </div>        <div class="col-12 col-md-6 col-xl-4">          <div class="service-card h-100">            <h3 class="h5">Detalle interior</h3>            <p>Limpieza profunda de asientos, tablero y superficies.</p>            <a class="btn btn-outline-light btn-sm mt-3" routerLink="/servicios">Ver servicios</a>          </div>        </div>        <div class="col-12 col-md-6 col-xl-4">          <div class="service-card h-100">            <h3 class="h5">Linea de productos</h3>            <p>Shampoo, cera, desengrasante y accesorios para vehiculos.</p>            <a class="btn btn-outline-light btn-sm mt-3" routerLink="/productos">Ver productos</a>          </div>        </div>      </div>    </div>  </section>  <section class="py-5">    <div class="container">      <div class="section-heading mb-4">        <span class="eyebrow">Preguntas frecuentes</span>        <h2 class="fw-bold mt-2">Resolvemos las dudas mas comunes antes de reservar</h2>      </div>      <div class="accordion accordion-flush faq-accordion" id="faqAccordion">        <div class="accordion-item bg-transparent text-white border-white border-opacity-10">          <h3 class="accordion-header" id="faqOneHeading">            <button class="accordion-button collapsed bg-transparent text-white" type="button"              data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="false" aria-controls="faqOne">              ¿En que zonas trabajan?            </button>          </h3>          <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faqOneHeading" data-bs-parent="#faqAccordion">            <div class="accordion-body text-white-50">Atendemos principalmente en Coronel y Concepcion, con coordinacion previa para otros sectores cercanos segun disponibilidad.</div>          </div>        </div>        <div class="accordion-item bg-transparent text-white border-white border-opacity-10">          <h3 class="accordion-header" id="faqTwoHeading">            <button class="accordion-button collapsed bg-transparent text-white" type="button"              data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">              ¿Puedo pedir solo productos sin agendar un servicio?            </button>          </h3>          <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faqTwoHeading" data-bs-parent="#faqAccordion">            <div class="accordion-body text-white-50">Si. El catalogo de productos permite comprar insumos de limpieza, proteccion y accesorios para mantenimiento vehicular.</div>          </div>        </div>        <div class="accordion-item bg-transparent text-white border-white border-opacity-10">          <h3 class="accordion-header" id="faqThreeHeading">            <button class="accordion-button collapsed bg-transparent text-white" type="button"              data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">              ¿Como se agenda un lavado a domicilio?            </button>          </h3>          <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faqThreeHeading" data-bs-parent="#faqAccordion">            <div class="accordion-body text-white-50">Desde la seccion de servicios puedes elegir el tipo de atencion, completar tus datos y dejar la direccion para coordinar la visita.</div>          </div>        </div>        <div class="accordion-item bg-transparent text-white border-white border-opacity-10">          <h3 class="accordion-header" id="faqFourHeading">            <button class="accordion-button collapsed bg-transparent text-white" type="button"              data-bs-toggle="collapse" data-bs-target="#faqFour" aria-expanded="false" aria-controls="faqFour">              ¿Cuales son los metodos de pago?            </button>          </h3>          <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faqFourHeading" data-bs-parent="#faqAccordion">            <div class="accordion-body text-white-50">Aceptamos pagos mediante transferencia bancaria, tarjetas de crédito y débito, y plataformas de pago en línea.</div>          </div>        </div>      </div>    </div>  </section>  <section class="py-5 bg-shell-soft">    <div class="container">      <div class="row justify-content-center">        <div class="col-12 col-lg-10 col-xl-9">          <div class="panel-card">            <div class="section-heading mb-4">              <span class="eyebrow">Contacto</span>              <h2 class="fw-bold mt-2">Escribenos y coordinamos tu servicio o compra</h2>              <p class="text-white-50 mb-0">Completa el formulario y te responderemos lo antes posible con la informacion que necesites.</p>            </div>            <form class="needs-validation" novalidate>              <div class="row g-3">                <div class="col-12 col-md-6">                  <label class="form-label" for="contactName">Nombre completo</label>                  <input class="form-control" id="contactName" name="name" required minlength="4">                  <div class="invalid-feedback">Ingresa tu nombre completo.</div>                </div>                <div class="col-12 col-md-6">                  <label class="form-label" for="contactEmail">Correo</label>                  <input class="form-control" id="contactEmail" name="email" type="email" required>                  <div class="invalid-feedback">Ingresa un correo valido.</div>                </div>                <div class="col-12 col-md-6">                  <label class="form-label" for="contactPhone">Telefono</label>                  <input class="form-control" id="contactPhone" name="phone" type="tel" pattern="[0-9]{9}" required>                  <div class="invalid-feedback">Ingresa 9 digitos.</div>                </div>                <div class="col-12 col-md-6">                  <label class="form-label" for="contactTopic">Motivo</label>                  <select class="form-select" id="contactTopic" name="topic" required>                    <option value="">Selecciona</option>                    <option>Reserva de servicio</option>                    <option>Compra de productos</option>                    <option>Consulta general</option>                    <option>Soporte tecnico</option>                  </select>                  <div class="invalid-feedback">Selecciona un motivo.</div>                </div>                <div class="col-12">                  <label class="form-label" for="contactMessage">Mensaje</label>                  <textarea class="form-control" id="contactMessage" name="message" rows="5" minlength="10" required></textarea>                  <div class="invalid-feedback">Escribe un mensaje mas detallado.</div>                </div>                <div class="col-12 d-grid d-md-flex justify-content-md-end gap-2">                  <button class="btn btn-outline-light btn-lg" type="reset">Limpiar</button>                  <button class="btn btn-brand btn-lg" type="submit">Enviar mensaje</button>                </div>              </div>            </form>          </div>        </div>      </div>    </div>  </section></main><footer class="site-footer border-top border-white border-opacity-10">  <div class="container">    <div class="row align-items-center g-4 py-5">      <div class="col-12 col-md-4">        <a class="d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2" routerLink="/inicio">          <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">          <span>Full Gas Detail</span>        </a>        <p class="text-white-50 small mb-0">Carwash a domicilio y productos de detailing en Coronel, Concepcion.</p>      </div>      <div class="col-12 col-md-4 text-md-center">        <p class="text-white-50 small mb-2">Siguenos</p>        <div class="d-flex gap-3 justify-content-md-center">          <a href="#" class="footer-social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>          <a href="#" class="footer-social" aria-label="Facebook"><i class="bi bi-facebook"></i></a>          <a href="#" class="footer-social" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>          <a href="#" class="footer-social" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>        </div>      </div>      <div class="col-12 col-md-4 text-md-end">        <div class="d-flex flex-column gap-1 align-items-md-end">          <a href="#" class="text-white-50 small footer-link">Politica de Privacidad</a>          <a href="#" class="text-white-50 small footer-link">Terminos de Uso</a>          <a href="#" class="text-white-50 small footer-link">Contacto</a>        </div>      </div>    </div>    <div class="border-top border-white border-opacity-10 py-3 text-center">      <span class="text-white-50 small">&copy; 2026 Full Gas Detail &mdash; Coronel, Concepcion. Todos los derechos reservados.</span>    </div>  </div></footer></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'App', 'selector': 'app-root'},{'name': 'CarritoComponent', 'selector': 'app-carrito'},{'name': 'CheckoutComponent', 'selector': 'app-checkout'},{'name': 'InicioComponent', 'selector': 'app-inicio'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MisComprasComponent', 'selector': 'app-mis-compras'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'ProductoCardComponent', 'selector': 'app-producto-card'},{'name': 'ProductosComponent', 'selector': 'app-productos'},{'name': 'RecuperarComponent', 'selector': 'app-recuperar'},{'name': 'RegistroComponent', 'selector': 'app-registro'},{'name': 'ServiciosComponent', 'selector': 'app-servicios'}];
+    var DIRECTIVES = [{'name': 'SoloNumerosDirective', 'selector': '[soloNumeros]'}];
+    var ACTUAL_COMPONENT = {'name': 'InicioComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'InicioComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

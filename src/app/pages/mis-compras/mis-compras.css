@@ -1,0 +1,39 @@
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+main {
+  animation: fadeSlideUp 0.45s ease both;
+}
+
+.stat-card strong {
+  display: block;
+  animation: countUp 0.5s 0.2s ease both;
+}
+
+.stat-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(242, 181, 68, 0.4);
+}
+
+.panel-card {
+  transition: box-shadow 0.25s ease;
+}
+
+.session-box {
+  transition: background-color 0.2s ease;
+}
+
+.session-box:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}

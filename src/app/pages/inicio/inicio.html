@@ -1,38 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">
-      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
-      <span>Full Gas Detail</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-      aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav ms-auto gap-lg-1">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/inicio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/productos" routerLinkActive="active">Productos</a>
-        </li>
-        <li class="nav-item d-none">
-          <a class="nav-link" routerLink="/admin">Admin</a>
-        </li>
-      </ul>
-      <div class="d-flex gap-2 ms-lg-3 mt-3 mt-lg-0">
-        <a class="btn btn-outline-light btn-sm" routerLink="/login">Ingresar</a>
-        <a class="btn btn-brand btn-sm" routerLink="/register">Crear cuenta</a>
-        <a class="btn btn-brand btn-sm nav-icon-btn" routerLink="/carrito" aria-label="Ver carrito">
-          <i class="bi bi-cart3"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-</nav>
+<app-navbar></app-navbar>
 
 <main>
   <section class="hero-section py-5 py-lg-6">

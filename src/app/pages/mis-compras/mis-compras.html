@@ -1,15 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">
-      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
-      <span>Full Gas Detail</span>
-    </a>
-    <div class="ms-auto d-flex gap-2">
-      <a class="btn btn-outline-light btn-sm" routerLink="/perfil">Perfil</a>
-      <a class="btn btn-brand btn-sm" routerLink="/productos">Comprar mas</a>
-    </div>
-  </div>
-</nav>
+<app-navbar></app-navbar>
 
 <main class="py-5">
   <div class="container">
@@ -47,7 +36,7 @@
           </div>
           <div class="col-12 col-md-4">
             <div class="stat-card h-100">
-              <strong>${{ formatearMonto(totalGastado()) }}</strong>
+              <strong>${{ totalGastado() | currencyCl }}</strong>
               <span>Gasto total</span>
             </div>
           </div>
@@ -78,9 +67,9 @@
                   <tr>
                     <td>{{ pedido.type || 'Pedido' }}</td>
                     <td>{{ itemsCount(pedido.items) }}</td>
-                    <td>${{ formatearMonto(pedido.total) }}</td>
+                    <td>${{ pedido.total | currencyCl }}</td>
                     <td>{{ pedido.status || 'Pagado' }}</td>
-                    <td>{{ formatearFecha(pedido.createdAt) }}</td>
+                    <td>{{ pedido.createdAt | fechaCl }}</td>
                   </tr>
                 }
                 @empty {

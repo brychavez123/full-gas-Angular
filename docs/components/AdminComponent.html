@@ -1,0 +1,2326 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Full Gas Detail</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Full Gas Detail</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AdminComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/admin/admin.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Panel administrativo con gestion de productos, clientes, usuarios y pedidos.
+Usa signals para estado reactivo y paneles intercambiables via panelActivo.
+Todo el estado se persiste en localStorage simulando un ERP basico.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-admin</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>    <code>CurrencyClPipe</code>
+</div>
+                        <div>    <code>FechaClPipe</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./admin.css</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./admin.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./admin.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                        <code>CurrencyClPipe</code>
+                                </li>
+                                <li>
+                                        <code>FechaClPipe</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#clientes" >clientes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#editandoCliente" >editandoCliente</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#editandoProducto" >editandoProducto</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#editandoUsuario" >editandoUsuario</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#panelActivo" >panelActivo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#pedidos" >pedidos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#platformId" >platformId</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#productos" >productos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#stats" >stats</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#toast" >toast</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#usuarios" >usuarios</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#cargarTodo" >cargarTodo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#editarCliente" >editarCliente</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#editarProducto" >editarProducto</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#editarUsuario" >editarUsuario</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#eliminarCliente" >eliminarCliente</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#eliminarProducto" >eliminarProducto</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#eliminarUsuario" >eliminarUsuario</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#guardarCliente" >guardarCliente</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#guardarProducto" >guardarProducto</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#guardarUsuario" >guardarUsuario</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#itemsCount" >itemsCount</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#pedidosCliente" >pedidosCliente</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarTodo"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>cargarTodo</b></span>
+                        <a href="#cargarTodo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarTodo()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editarCliente"></a>
+                    <span class="name">
+                        <span ><b>editarCliente</b></span>
+                        <a href="#editarCliente"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editarCliente(cliente: <a href="../interfaces/Cliente.html" target="_self">Cliente</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="122"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:122</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cliente</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Cliente.html" target="_self" >Cliente</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editarProducto"></a>
+                    <span class="name">
+                        <span ><b>editarProducto</b></span>
+                        <a href="#editarProducto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editarProducto(producto: <a href="../interfaces/Producto.html" target="_self">Producto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>producto</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Producto.html" target="_self" >Producto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editarUsuario"></a>
+                    <span class="name">
+                        <span ><b>editarUsuario</b></span>
+                        <a href="#editarUsuario"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editarUsuario(usuario: <a href="../interfaces/Usuario.html" target="_self">Usuario</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="149"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:149</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>usuario</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Usuario.html" target="_self" >Usuario</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="eliminarCliente"></a>
+                    <span class="name">
+                        <span ><b>eliminarCliente</b></span>
+                        <a href="#eliminarCliente"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>eliminarCliente(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="124"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:124</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="eliminarProducto"></a>
+                    <span class="name">
+                        <span ><b>eliminarProducto</b></span>
+                        <a href="#eliminarProducto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>eliminarProducto(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:99</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="eliminarUsuario"></a>
+                    <span class="name">
+                        <span ><b>eliminarUsuario</b></span>
+                        <a href="#eliminarUsuario"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>eliminarUsuario(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:151</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="guardarCliente"></a>
+                    <span class="name">
+                        <span ><b>guardarCliente</b></span>
+                        <a href="#guardarCliente"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>guardarCliente(evento: SubmitEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>evento</td>
+                                            <td>
+                                                        <code>SubmitEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="guardarProducto"></a>
+                    <span class="name">
+                        <span ><b>guardarProducto</b></span>
+                        <a href="#guardarProducto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>guardarProducto(evento: SubmitEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>evento</td>
+                                            <td>
+                                                        <code>SubmitEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="guardarUsuario"></a>
+                    <span class="name">
+                        <span ><b>guardarUsuario</b></span>
+                        <a href="#guardarUsuario"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>guardarUsuario(evento: SubmitEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>evento</td>
+                                            <td>
+                                                        <code>SubmitEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemsCount"></a>
+                    <span class="name">
+                        <span ><b>itemsCount</b></span>
+                        <a href="#itemsCount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>itemsCount(items: unknown[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="162"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:162</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>items</td>
+                                            <td>
+                                                        <code>unknown[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="62"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pedidosCliente"></a>
+                    <span class="name">
+                        <span ><b>pedidosCliente</b></span>
+                        <a href="#pedidosCliente"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>pedidosCliente(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="158"
+                                    class="link-to-prism">src/app/pages/admin/admin.ts:158</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clientes"></a>
+                    <span class="name">
+                        <span ><b>clientes</b></span>
+                        <a href="#clientes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Cliente[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/pages/admin/admin.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editandoCliente"></a>
+                    <span class="name">
+                        <span ><b>editandoCliente</b></span>
+                        <a href="#editandoCliente"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Cliente | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/pages/admin/admin.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editandoProducto"></a>
+                    <span class="name">
+                        <span ><b>editandoProducto</b></span>
+                        <a href="#editandoProducto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Producto | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/pages/admin/admin.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editandoUsuario"></a>
+                    <span class="name">
+                        <span ><b>editandoUsuario</b></span>
+                        <a href="#editandoUsuario"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Usuario | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/pages/admin/admin.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="panelActivo"></a>
+                    <span class="name">
+                        <span ><b>panelActivo</b></span>
+                        <a href="#panelActivo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(&#x27;overview&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/pages/admin/admin.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pedidos"></a>
+                    <span class="name">
+                        <span ><b>pedidos</b></span>
+                        <a href="#pedidos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Pedido[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/pages/admin/admin.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="platformId"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>platformId</b></span>
+                        <a href="#platformId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(PLATFORM_ID)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/pages/admin/admin.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="productos"></a>
+                    <span class="name">
+                        <span ><b>productos</b></span>
+                        <a href="#productos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Producto[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/pages/admin/admin.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stats"></a>
+                    <span class="name">
+                        <span ><b>stats</b></span>
+                        <a href="#stats"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; ({
+    productos: this.productos().length,
+    clientes: this.clientes().length,
+    usuarios: this.usuarios().length,
+    pedidos: this.pedidos().length,
+    stockBajo: this.productos().filter(p &#x3D;&gt; Number(p.stock ?? 0) &lt;&#x3D; 5).length
+  }))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/pages/admin/admin.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toast"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>toast</b></span>
+                        <a href="#toast"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ToastService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/pages/admin/admin.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="usuarios"></a>
+                    <span class="name">
+                        <span ><b>usuarios</b></span>
+                        <a href="#usuarios"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Usuario[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/pages/admin/admin.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from &#x27;@angular/core&#x27;;
+import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+import { CurrencyClPipe } from &#x27;../../shared/pipes/currency-cl.pipe&#x27;;
+import { FechaClPipe } from &#x27;../../shared/pipes/fecha-cl.pipe&#x27;;
+import { ToastService } from &#x27;../../services/toast.service&#x27;;
+
+interface Producto { id: string; name: string; category: string; price: number; stock: number; active: boolean; description: string; image: string; }
+interface Cliente { id: string; name: string; email: string; phone: string; address: string; vehicle: string; notes: string; status: string; }
+interface Usuario { name: string; email: string; phone: string; address: string; role: string; password: string; status?: string; }
+interface Pedido { id: string; type: string; customerName: string; email: string; total: number; items: unknown[]; status: string; createdAt: string; }
+
+const PRODUCTOS_DEFAULT: Producto[] &#x3D; [
+  { id: &#x27;p1&#x27;, name: &#x27;Shampoo neutro&#x27;, category: &#x27;limpieza&#x27;, price: 8900, stock: 24, active: true, image: &#x27;&#x27;, description: &#x27;Limpieza segura para pintura y superficies delicadas.&#x27; },
+  { id: &#x27;p2&#x27;, name: &#x27;Desengrasante multiuso&#x27;, category: &#x27;limpieza&#x27;, price: 12900, stock: 18, active: true, image: &#x27;&#x27;, description: &#x27;Ideal para llantas, motor y zonas de alta suciedad.&#x27; },
+  { id: &#x27;p3&#x27;, name: &#x27;Cera protectora&#x27;, category: &#x27;proteccion&#x27;, price: 15400, stock: 12, active: true, image: &#x27;&#x27;, description: &#x27;Proteccion y brillo duradero para carroceria.&#x27; },
+  { id: &#x27;p4&#x27;, name: &#x27;Microfibra premium&#x27;, category: &#x27;accesorios&#x27;, price: 4900, stock: 40, active: true, image: &#x27;&#x27;, description: &#x27;Toalla suave para secado y detallado.&#x27; },
+  { id: &#x27;p5&#x27;, name: &#x27;Limpiador interior&#x27;, category: &#x27;limpieza&#x27;, price: 11900, stock: 16, active: true, image: &#x27;&#x27;, description: &#x27;Para plasticos, vinilos y tableros.&#x27; },
+  { id: &#x27;p6&#x27;, name: &#x27;Shine de neumaticos&#x27;, category: &#x27;proteccion&#x27;, price: 10900, stock: 20, active: true, image: &#x27;&#x27;, description: &#x27;Acabado negro satinado y proteccion extra.&#x27; },
+  { id: &#x27;p7&#x27;, name: &#x27;Cepillo detailing&#x27;, category: &#x27;accesorios&#x27;, price: 5800, stock: 30, active: true, image: &#x27;&#x27;, description: &#x27;Llega a costuras, emblemas y rincones.&#x27; },
+  { id: &#x27;p8&#x27;, name: &#x27;Aromatizante premium&#x27;, category: &#x27;accesorios&#x27;, price: 6900, stock: 28, active: true, image: &#x27;&#x27;, description: &#x27;Aroma limpio para una experiencia completa.&#x27; }
+];
+
+const CLIENTES_DEFAULT: Cliente[] &#x3D; [
+  { id: &#x27;c1&#x27;, name: &#x27;Bryan Andres Chavez Carreño&#x27;, email: &#x27;bryanandres9@hotmail.com&#x27;, phone: &#x27;927264262&#x27;, address: &#x27;avenida llacolen 4165&#x27;, vehicle: &#x27;Sedan&#x27;, notes: &#x27;Cliente demo&#x27;, status: &#x27;Activo&#x27; },
+  { id: &#x27;c2&#x27;, name: &#x27;Cliente Demo&#x27;, email: &#x27;cliente@fullgasdetail.cl&#x27;, phone: &#x27;912345678&#x27;, address: &#x27;Coronel, Concepcion&#x27;, vehicle: &#x27;SUV&#x27;, notes: &#x27;Carga inicial&#x27;, status: &#x27;Activo&#x27; }
+];
+
+/**
+ * Panel administrativo con gestion de productos, clientes, usuarios y pedidos.
+ * Usa signals para estado reactivo y paneles intercambiables via panelActivo.
+ * Todo el estado se persiste en localStorage simulando un ERP basico.
+ */
+@Component({
+  selector: &#x27;app-admin&#x27;,
+  imports: [RouterLink, CurrencyClPipe, FechaClPipe],
+  templateUrl: &#x27;./admin.html&#x27;,
+  styleUrl: &#x27;./admin.css&#x27;,
+})
+export class AdminComponent implements OnInit {
+  private readonly toast &#x3D; inject(ToastService);
+  private readonly platformId &#x3D; inject(PLATFORM_ID);
+
+  panelActivo &#x3D; signal(&#x27;overview&#x27;);
+  productos &#x3D; signal&lt;Producto[]&gt;([]);
+  clientes &#x3D; signal&lt;Cliente[]&gt;([]);
+  usuarios &#x3D; signal&lt;Usuario[]&gt;([]);
+  pedidos &#x3D; signal&lt;Pedido[]&gt;([]);
+
+  editandoProducto &#x3D; signal&lt;Producto | null&gt;(null);
+  editandoCliente &#x3D; signal&lt;Cliente | null&gt;(null);
+  editandoUsuario &#x3D; signal&lt;Usuario | null&gt;(null);
+
+  stats &#x3D; computed(() &#x3D;&gt; ({
+    productos: this.productos().length,
+    clientes: this.clientes().length,
+    usuarios: this.usuarios().length,
+    pedidos: this.pedidos().length,
+    stockBajo: this.productos().filter(p &#x3D;&gt; Number(p.stock ?? 0) &lt;&#x3D; 5).length
+  }));
+
+  ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (!localStorage.getItem(&#x27;fullgas_products&#x27;)) localStorage.setItem(&#x27;fullgas_products&#x27;, JSON.stringify(PRODUCTOS_DEFAULT));
+    if (!localStorage.getItem(&#x27;fullgas_customers&#x27;)) localStorage.setItem(&#x27;fullgas_customers&#x27;, JSON.stringify(CLIENTES_DEFAULT));
+    if (!localStorage.getItem(&#x27;fullgas_users&#x27;)) localStorage.setItem(&#x27;fullgas_users&#x27;, JSON.stringify([
+      { name: &#x27;Bryan Chavez&#x27;, email: &#x27;bryan@fullgasdetail.cl&#x27;, phone: &#x27;927264262&#x27;, address: &#x27;Avenida Llacolen 4165, Coronel&#x27;, role: &#x27;Cliente&#x27;, password: &#x27;Cliente1!&#x27; },
+      { name: &#x27;Carlos Soto&#x27;, email: &#x27;tecnico@fullgasdetail.cl&#x27;, phone: &#x27;923456789&#x27;, address: &#x27;Calle Los Aromos 321, Coronel&#x27;, role: &#x27;Tecnico&#x27;, password: &#x27;Tecnico1!&#x27; },
+      { name: &#x27;Admin Principal&#x27;, email: &#x27;admin@fullgasdetail.cl&#x27;, phone: &#x27;934567891&#x27;, address: &#x27;Coronel, Concepcion&#x27;, role: &#x27;Administrador&#x27;, password: &#x27;Admin123!&#x27; }
+    ]));
+    this.cargarTodo();
+  }
+
+  private cargarTodo(): void {
+    this.productos.set(JSON.parse(localStorage.getItem(&#x27;fullgas_products&#x27;) ?? &#x27;[]&#x27;));
+    this.clientes.set(JSON.parse(localStorage.getItem(&#x27;fullgas_customers&#x27;) ?? &#x27;[]&#x27;));
+    this.usuarios.set(JSON.parse(localStorage.getItem(&#x27;fullgas_users&#x27;) ?? &#x27;[]&#x27;));
+    this.pedidos.set(JSON.parse(localStorage.getItem(&#x27;fullgas_orders&#x27;) ?? &#x27;[]&#x27;));
+  }
+
+  guardarProducto(evento: SubmitEvent): void {
+    const form &#x3D; evento.target as HTMLFormElement;
+    if (!form.checkValidity()) { form.classList.add(&#x27;was-validated&#x27;); return; }
+    const datos &#x3D; new FormData(form);
+    const lista &#x3D; this.productos();
+    const id &#x3D; (datos.get(&#x27;productId&#x27;) as string) || &#x60;prod_${Date.now()}&#x60;;
+    const producto: Producto &#x3D; { id, name: datos.get(&#x27;productName&#x27;) as string, category: datos.get(&#x27;productCategory&#x27;) as string, price: Number(datos.get(&#x27;productPrice&#x27;)), stock: Number(datos.get(&#x27;productStock&#x27;)), description: datos.get(&#x27;productDescription&#x27;) as string, active: datos.get(&#x27;productActive&#x27;) &#x3D;&#x3D;&#x3D; &#x27;on&#x27;, image: &#x27;&#x27; };
+    const idx &#x3D; lista.findIndex(p &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; id);
+    const nueva &#x3D; idx &gt;&#x3D; 0 ? lista.map((p, i) &#x3D;&gt; i &#x3D;&#x3D;&#x3D; idx ? producto : p) : [producto, ...lista];
+    localStorage.setItem(&#x27;fullgas_products&#x27;, JSON.stringify(nueva));
+    this.productos.set(nueva);
+    this.editandoProducto.set(null);
+    form.reset(); form.classList.remove(&#x27;was-validated&#x27;);
+    this.toast.mostrar(&#x27;Producto guardado.&#x27;);
+  }
+
+  editarProducto(producto: Producto): void { this.editandoProducto.set(producto); this.panelActivo.set(&#x27;products&#x27;); }
+
+  eliminarProducto(id: string): void {
+    const nueva &#x3D; this.productos().filter(p &#x3D;&gt; p.id !&#x3D;&#x3D; id);
+    localStorage.setItem(&#x27;fullgas_products&#x27;, JSON.stringify(nueva));
+    this.productos.set(nueva);
+    this.toast.mostrar(&#x27;Producto eliminado.&#x27;);
+  }
+
+  guardarCliente(evento: SubmitEvent): void {
+    const form &#x3D; evento.target as HTMLFormElement;
+    if (!form.checkValidity()) { form.classList.add(&#x27;was-validated&#x27;); return; }
+    const datos &#x3D; new FormData(form);
+    const lista &#x3D; this.clientes();
+    const id &#x3D; (datos.get(&#x27;customerId&#x27;) as string) || &#x60;cust_${Date.now()}&#x60;;
+    const cliente: Cliente &#x3D; { id, name: datos.get(&#x27;customerName&#x27;) as string, email: datos.get(&#x27;customerEmail&#x27;) as string, phone: datos.get(&#x27;customerPhone&#x27;) as string, address: datos.get(&#x27;customerAddress&#x27;) as string, vehicle: datos.get(&#x27;customerVehicle&#x27;) as string, notes: datos.get(&#x27;customerNotes&#x27;) as string, status: datos.get(&#x27;customerStatus&#x27;) as string };
+    const idx &#x3D; lista.findIndex(c &#x3D;&gt; c.id &#x3D;&#x3D;&#x3D; id);
+    const nueva &#x3D; idx &gt;&#x3D; 0 ? lista.map((c, i) &#x3D;&gt; i &#x3D;&#x3D;&#x3D; idx ? cliente : c) : [cliente, ...lista];
+    localStorage.setItem(&#x27;fullgas_customers&#x27;, JSON.stringify(nueva));
+    this.clientes.set(nueva);
+    this.editandoCliente.set(null);
+    form.reset(); form.classList.remove(&#x27;was-validated&#x27;);
+    this.toast.mostrar(&#x27;Cliente guardado.&#x27;);
+  }
+
+  editarCliente(cliente: Cliente): void { this.editandoCliente.set(cliente); this.panelActivo.set(&#x27;customers&#x27;); }
+
+  eliminarCliente(id: string): void {
+    const nueva &#x3D; this.clientes().filter(c &#x3D;&gt; c.id !&#x3D;&#x3D; id);
+    localStorage.setItem(&#x27;fullgas_customers&#x27;, JSON.stringify(nueva));
+    this.clientes.set(nueva);
+    this.toast.mostrar(&#x27;Cliente eliminado.&#x27;);
+  }
+
+  guardarUsuario(evento: SubmitEvent): void {
+    const form &#x3D; evento.target as HTMLFormElement;
+    if (!form.checkValidity()) { form.classList.add(&#x27;was-validated&#x27;); return; }
+    const datos &#x3D; new FormData(form);
+    const lista &#x3D; this.usuarios();
+    const email &#x3D; (datos.get(&#x27;userEmail&#x27;) as string).trim();
+    const actual &#x3D; lista.find(u &#x3D;&gt; u.email.toLowerCase() &#x3D;&#x3D;&#x3D; email.toLowerCase());
+    const nuevaClave &#x3D; (datos.get(&#x27;userPassword&#x27;) as string).trim();
+    const usuario: Usuario &#x3D; { name: datos.get(&#x27;userName&#x27;) as string, email, phone: datos.get(&#x27;userPhone&#x27;) as string, address: datos.get(&#x27;userAddress&#x27;) as string, role: datos.get(&#x27;userRole&#x27;) as string, status: datos.get(&#x27;userStatus&#x27;) as string, password: nuevaClave || actual?.password || &#x27;Cliente1!&#x27; };
+    const idx &#x3D; lista.findIndex(u &#x3D;&gt; u.email.toLowerCase() &#x3D;&#x3D;&#x3D; email.toLowerCase());
+    const nueva &#x3D; idx &gt;&#x3D; 0 ? lista.map((u, i) &#x3D;&gt; i &#x3D;&#x3D;&#x3D; idx ? { ...u, ...usuario } : u) : [usuario, ...lista];
+    localStorage.setItem(&#x27;fullgas_users&#x27;, JSON.stringify(nueva));
+    this.usuarios.set(nueva);
+    this.editandoUsuario.set(null);
+    form.reset(); form.classList.remove(&#x27;was-validated&#x27;);
+    this.toast.mostrar(&#x27;Usuario guardado.&#x27;);
+  }
+
+  editarUsuario(usuario: Usuario): void { this.editandoUsuario.set(usuario); this.panelActivo.set(&#x27;users&#x27;); }
+
+  eliminarUsuario(email: string): void {
+    const nueva &#x3D; this.usuarios().filter(u &#x3D;&gt; u.email.toLowerCase() !&#x3D;&#x3D; email.toLowerCase());
+    localStorage.setItem(&#x27;fullgas_users&#x27;, JSON.stringify(nueva));
+    this.usuarios.set(nueva);
+    this.toast.mostrar(&#x27;Usuario eliminado.&#x27;);
+  }
+
+  pedidosCliente(email: string): number {
+    return this.pedidos().filter(p &#x3D;&gt; (p.email ?? &#x27;&#x27;).toLowerCase() &#x3D;&#x3D;&#x3D; email.toLowerCase()).length;
+  }
+
+  itemsCount(items: unknown[]): number { return Array.isArray(items) ? items.length : 0; }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;nav class&#x3D;&quot;navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10&quot;&gt;
+  &lt;div class&#x3D;&quot;container&quot;&gt;
+    &lt;a class&#x3D;&quot;navbar-brand d-flex align-items-center gap-2 fw-semibold&quot; routerLink&#x3D;&quot;/inicio&quot;&gt;
+      &lt;img src&#x3D;&quot;assets/logo.jpg&quot; alt&#x3D;&quot;Full Gas Detail&quot; class&#x3D;&quot;brand-logo brand-logo-sm&quot;&gt;
+      &lt;span&gt;Full Gas Detail&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;div class&#x3D;&quot;ms-auto d-flex gap-2&quot;&gt;
+      &lt;a class&#x3D;&quot;btn btn-outline-light btn-sm&quot; routerLink&#x3D;&quot;/mis-compras&quot;&gt;Vista cliente&lt;/a&gt;
+      &lt;a class&#x3D;&quot;btn btn-brand btn-sm&quot; routerLink&#x3D;&quot;/perfil&quot;&gt;Perfil&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+
+&lt;main class&#x3D;&quot;py-4 py-lg-5&quot;&gt;
+  &lt;div class&#x3D;&quot;container-fluid dashboard-shell px-3 px-lg-4&quot;&gt;
+    &lt;div class&#x3D;&quot;dashboard-layout&quot;&gt;
+      &lt;aside class&#x3D;&quot;dashboard-sidebar panel-card&quot;&gt;
+        &lt;div class&#x3D;&quot;d-flex align-items-center gap-3 mb-4&quot;&gt;
+          &lt;img src&#x3D;&quot;assets/logo.jpg&quot; alt&#x3D;&quot;Full Gas Detail&quot; class&#x3D;&quot;brand-logo brand-logo-sm&quot;&gt;
+          &lt;div&gt;
+            &lt;div class&#x3D;&quot;eyebrow&quot;&gt;Panel administrativo&lt;/div&gt;
+            &lt;strong&gt;Full Gas Detail&lt;/strong&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p class&#x3D;&quot;text-white-50 small mb-4&quot;&gt;Menu lateral tipo CRM para navegar por cada modulo del negocio.&lt;/p&gt;
+        &lt;nav class&#x3D;&quot;dashboard-nav&quot; aria-label&#x3D;&quot;Navegacion del dashboard&quot;&gt;
+          &lt;button class&#x3D;&quot;dashboard-nav-item&quot; [class.active]&#x3D;&quot;panelActivo() &#x3D;&#x3D;&#x3D; &#x27;overview&#x27;&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;panelActivo.set(&#x27;overview&#x27;)&quot;&gt;Resumen&lt;/button&gt;
+          &lt;button class&#x3D;&quot;dashboard-nav-item&quot; [class.active]&#x3D;&quot;panelActivo() &#x3D;&#x3D;&#x3D; &#x27;products&#x27;&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;panelActivo.set(&#x27;products&#x27;)&quot;&gt;Productos&lt;/button&gt;
+          &lt;button class&#x3D;&quot;dashboard-nav-item&quot; [class.active]&#x3D;&quot;panelActivo() &#x3D;&#x3D;&#x3D; &#x27;customers&#x27;&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;panelActivo.set(&#x27;customers&#x27;)&quot;&gt;Clientes&lt;/button&gt;
+          &lt;button class&#x3D;&quot;dashboard-nav-item&quot; [class.active]&#x3D;&quot;panelActivo() &#x3D;&#x3D;&#x3D; &#x27;users&#x27;&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;panelActivo.set(&#x27;users&#x27;)&quot;&gt;Usuarios&lt;/button&gt;
+          &lt;button class&#x3D;&quot;dashboard-nav-item&quot; [class.active]&#x3D;&quot;panelActivo() &#x3D;&#x3D;&#x3D; &#x27;orders&#x27;&quot; type&#x3D;&quot;button&quot; (click)&#x3D;&quot;panelActivo.set(&#x27;orders&#x27;)&quot;&gt;Compras&lt;/button&gt;
+        &lt;/nav&gt;
+        &lt;div class&#x3D;&quot;mt-4 pt-4 border-top border-white border-opacity-10&quot;&gt;
+          &lt;a class&#x3D;&quot;btn btn-outline-light w-100 mb-2&quot; routerLink&#x3D;&quot;/mis-compras&quot;&gt;Vista cliente&lt;/a&gt;
+          &lt;a class&#x3D;&quot;btn btn-brand w-100&quot; routerLink&#x3D;&quot;/perfil&quot;&gt;Perfil&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/aside&gt;
+
+      &lt;section class&#x3D;&quot;dashboard-content&quot;&gt;
+        &lt;div class&#x3D;&quot;row align-items-end g-3 mb-4&quot;&gt;
+          &lt;div class&#x3D;&quot;col-12 col-xl-8&quot;&gt;
+            &lt;span class&#x3D;&quot;eyebrow&quot;&gt;Operacion interna&lt;/span&gt;
+            &lt;h1 class&#x3D;&quot;h2 fw-bold mt-2&quot;&gt;Gestion de productos, clientes, usuarios e inventario&lt;/h1&gt;
+            &lt;p class&#x3D;&quot;text-white-50 mb-0&quot;&gt;Todo se guarda en localStorage para simular la operacion interna del negocio sin servidor.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;row g-4 mb-4&quot;&gt;
+          &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-2&quot;&gt;
+            &lt;div class&#x3D;&quot;stat-card h-100&quot;&gt;&lt;strong&gt;{{ stats().productos }}&lt;/strong&gt;&lt;span&gt;Productos&lt;/span&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-2&quot;&gt;
+            &lt;div class&#x3D;&quot;stat-card h-100&quot;&gt;&lt;strong&gt;{{ stats().clientes }}&lt;/strong&gt;&lt;span&gt;Clientes&lt;/span&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-2&quot;&gt;
+            &lt;div class&#x3D;&quot;stat-card h-100&quot;&gt;&lt;strong&gt;{{ stats().usuarios }}&lt;/strong&gt;&lt;span&gt;Usuarios&lt;/span&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-2&quot;&gt;
+            &lt;div class&#x3D;&quot;stat-card h-100&quot;&gt;&lt;strong&gt;{{ stats().pedidos }}&lt;/strong&gt;&lt;span&gt;Compras&lt;/span&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;col-12 col-md-6 col-xl-2&quot;&gt;
+            &lt;div class&#x3D;&quot;stat-card h-100&quot;&gt;&lt;strong&gt;{{ stats().stockBajo }}&lt;/strong&gt;&lt;span&gt;Stock bajo&lt;/span&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        @if (panelActivo() &#x3D;&#x3D;&#x3D; &#x27;overview&#x27;) {
+          &lt;section class&#x3D;&quot;panel-card&quot;&gt;
+            &lt;div class&#x3D;&quot;d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3&quot;&gt;
+              &lt;h2 class&#x3D;&quot;h4 fw-bold mb-0&quot;&gt;Resumen general&lt;/h2&gt;
+              &lt;span class&#x3D;&quot;text-white-50 small&quot;&gt;Indicadores del dia&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;row g-3&quot;&gt;
+              &lt;div class&#x3D;&quot;col-12 col-lg-6&quot;&gt;
+                &lt;div class&#x3D;&quot;summary-box h-100&quot;&gt;
+                  &lt;h3 class&#x3D;&quot;h5 fw-semibold&quot;&gt;Accesos rapidos&lt;/h3&gt;
+                  &lt;p class&#x3D;&quot;mb-0 text-white-50&quot;&gt;Usa el menu lateral para entrar a cada modulo sin saturar la pantalla con todos los formularios.&lt;/p&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;col-12 col-lg-6&quot;&gt;
+                &lt;div class&#x3D;&quot;summary-box h-100&quot;&gt;
+                  &lt;h3 class&#x3D;&quot;h5 fw-semibold&quot;&gt;Estado de la operacion&lt;/h3&gt;
+                  &lt;p class&#x3D;&quot;mb-0 text-white-50&quot;&gt;Productos, clientes, usuarios y compras quedan registrados localmente para la simulacion del ERP.&lt;/p&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/section&gt;
+        }
+
+        @if (panelActivo() &#x3D;&#x3D;&#x3D; &#x27;products&#x27;) {
+          &lt;section class&#x3D;&quot;panel-card&quot;&gt;
+            &lt;div class&#x3D;&quot;d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3&quot;&gt;
+              &lt;h2 class&#x3D;&quot;h4 fw-bold mb-0&quot;&gt;Mantenedor de productos&lt;/h2&gt;
+              &lt;span class&#x3D;&quot;text-white-50 small&quot;&gt;Alta, edicion, baja e inventario&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;form class&#x3D;&quot;needs-validation&quot; novalidate (submit)&#x3D;&quot;guardarProducto($any($event))&quot;&gt;
+              &lt;input type&#x3D;&quot;hidden&quot; name&#x3D;&quot;productId&quot; [value]&#x3D;&quot;editandoProducto()?.id ?? &#x27;&#x27;&quot;&gt;
+              &lt;div class&#x3D;&quot;row g-3&quot;&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;productName&quot;&gt;Nombre&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;productName&quot; name&#x3D;&quot;productName&quot; required [value]&#x3D;&quot;editandoProducto()?.name ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa el nombre.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-2&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;productCategory&quot;&gt;Categoria&lt;/label&gt;
+                  &lt;select class&#x3D;&quot;form-select&quot; id&#x3D;&quot;productCategory&quot; name&#x3D;&quot;productCategory&quot; required&gt;
+                    &lt;option value&#x3D;&quot;&quot;&gt;Selecciona&lt;/option&gt;
+                    &lt;option value&#x3D;&quot;limpieza&quot; [selected]&#x3D;&quot;editandoProducto()?.category &#x3D;&#x3D;&#x3D; &#x27;limpieza&#x27;&quot;&gt;Limpieza&lt;/option&gt;
+                    &lt;option value&#x3D;&quot;proteccion&quot; [selected]&#x3D;&quot;editandoProducto()?.category &#x3D;&#x3D;&#x3D; &#x27;proteccion&#x27;&quot;&gt;Proteccion&lt;/option&gt;
+                    &lt;option value&#x3D;&quot;accesorios&quot; [selected]&#x3D;&quot;editandoProducto()?.category &#x3D;&#x3D;&#x3D; &#x27;accesorios&#x27;&quot;&gt;Accesorios&lt;/option&gt;
+                  &lt;/select&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Selecciona una categoria.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-2&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;productPrice&quot;&gt;Precio&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;productPrice&quot; name&#x3D;&quot;productPrice&quot; type&#x3D;&quot;number&quot; min&#x3D;&quot;0&quot; required [value]&#x3D;&quot;editandoProducto()?.price ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa el precio.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-2&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;productStock&quot;&gt;Stock&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;productStock&quot; name&#x3D;&quot;productStock&quot; type&#x3D;&quot;number&quot; min&#x3D;&quot;0&quot; required [value]&#x3D;&quot;editandoProducto()?.stock ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa el stock.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-2 d-flex align-items-end&quot;&gt;
+                  &lt;div class&#x3D;&quot;form-check mt-4&quot;&gt;
+                    &lt;input class&#x3D;&quot;form-check-input&quot; type&#x3D;&quot;checkbox&quot; id&#x3D;&quot;productActive&quot; name&#x3D;&quot;productActive&quot; [checked]&#x3D;&quot;editandoProducto()?.active !&#x3D;&#x3D; false&quot;&gt;
+                    &lt;label class&#x3D;&quot;form-check-label&quot; for&#x3D;&quot;productActive&quot;&gt;Activo&lt;/label&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;productDescription&quot;&gt;Descripcion&lt;/label&gt;
+                  &lt;textarea class&#x3D;&quot;form-control&quot; id&#x3D;&quot;productDescription&quot; name&#x3D;&quot;productDescription&quot; rows&#x3D;&quot;2&quot; required&gt;{{ editandoProducto()?.description ?? &#x27;&#x27; }}&lt;/textarea&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa una descripcion.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 d-flex justify-content-end gap-2&quot;&gt;
+                  &lt;button class&#x3D;&quot;btn btn-outline-light&quot; type&#x3D;&quot;reset&quot; (click)&#x3D;&quot;editandoProducto.set(null)&quot;&gt;Limpiar&lt;/button&gt;
+                  &lt;button class&#x3D;&quot;btn btn-brand&quot; type&#x3D;&quot;submit&quot;&gt;Guardar producto&lt;/button&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+            &lt;div class&#x3D;&quot;table-responsive mt-4&quot;&gt;
+              &lt;table class&#x3D;&quot;table table-dark table-borderless align-middle&quot;&gt;
+                &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Producto&lt;/th&gt;&lt;th&gt;Precio&lt;/th&gt;&lt;th&gt;Stock&lt;/th&gt;&lt;th&gt;Estado&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+                &lt;tbody&gt;
+                  @for (p of productos(); track p.id) {
+                    &lt;tr&gt;
+                      &lt;td&gt;&lt;strong&gt;{{ p.name }}&lt;/strong&gt;&lt;br&gt;&lt;small class&#x3D;&quot;text-white-50&quot;&gt;{{ p.category }}&lt;/small&gt;&lt;/td&gt;
+                      &lt;td&gt;${{ p.price | currencyCl }}&lt;/td&gt;
+                      &lt;td&gt;{{ p.stock }}&lt;/td&gt;
+                      &lt;td&gt;{{ p.active ? &#x27;Activo&#x27; : &#x27;Inactivo&#x27; }}&lt;/td&gt;
+                      &lt;td class&#x3D;&quot;text-end&quot;&gt;
+                        &lt;button class&#x3D;&quot;btn btn-sm btn-outline-light me-2&quot; (click)&#x3D;&quot;editarProducto(p)&quot;&gt;Editar&lt;/button&gt;
+                        &lt;button class&#x3D;&quot;btn btn-sm btn-outline-danger&quot; (click)&#x3D;&quot;eliminarProducto(p.id)&quot;&gt;Eliminar&lt;/button&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                  }
+                &lt;/tbody&gt;
+              &lt;/table&gt;
+            &lt;/div&gt;
+          &lt;/section&gt;
+        }
+
+        @if (panelActivo() &#x3D;&#x3D;&#x3D; &#x27;customers&#x27;) {
+          &lt;section class&#x3D;&quot;panel-card&quot;&gt;
+            &lt;div class&#x3D;&quot;d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3&quot;&gt;
+              &lt;h2 class&#x3D;&quot;h4 fw-bold mb-0&quot;&gt;Mantenedor de clientes&lt;/h2&gt;
+              &lt;span class&#x3D;&quot;text-white-50 small&quot;&gt;Datos de contacto y vehiculo&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;form class&#x3D;&quot;needs-validation&quot; novalidate (submit)&#x3D;&quot;guardarCliente($any($event))&quot;&gt;
+              &lt;input type&#x3D;&quot;hidden&quot; name&#x3D;&quot;customerId&quot; [value]&#x3D;&quot;editandoCliente()?.id ?? &#x27;&#x27;&quot;&gt;
+              &lt;div class&#x3D;&quot;row g-3&quot;&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;customerName&quot;&gt;Nombre&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;customerName&quot; name&#x3D;&quot;customerName&quot; required [value]&#x3D;&quot;editandoCliente()?.name ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa el nombre.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;customerEmail&quot;&gt;Correo&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;customerEmail&quot; name&#x3D;&quot;customerEmail&quot; type&#x3D;&quot;email&quot; required [value]&#x3D;&quot;editandoCliente()?.email ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa un correo valido.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;customerPhone&quot;&gt;Telefono&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;customerPhone&quot; name&#x3D;&quot;customerPhone&quot; type&#x3D;&quot;tel&quot; required [value]&#x3D;&quot;editandoCliente()?.phone ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa el telefono.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;customerAddress&quot;&gt;Direccion&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;customerAddress&quot; name&#x3D;&quot;customerAddress&quot; required [value]&#x3D;&quot;editandoCliente()?.address ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa la direccion.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;customerVehicle&quot;&gt;Vehiculo&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;customerVehicle&quot; name&#x3D;&quot;customerVehicle&quot; placeholder&#x3D;&quot;SUV, Sedan, etc.&quot; required [value]&#x3D;&quot;editandoCliente()?.vehicle ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa el tipo de vehiculo.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;customerStatus&quot;&gt;Estado&lt;/label&gt;
+                  &lt;select class&#x3D;&quot;form-select&quot; id&#x3D;&quot;customerStatus&quot; name&#x3D;&quot;customerStatus&quot; required&gt;
+                    &lt;option [selected]&#x3D;&quot;editandoCliente()?.status !&#x3D;&#x3D; &#x27;Inactivo&#x27;&quot;&gt;Activo&lt;/option&gt;
+                    &lt;option [selected]&#x3D;&quot;editandoCliente()?.status &#x3D;&#x3D;&#x3D; &#x27;Inactivo&#x27;&quot;&gt;Inactivo&lt;/option&gt;
+                  &lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;customerNotes&quot;&gt;Notas&lt;/label&gt;
+                  &lt;textarea class&#x3D;&quot;form-control&quot; id&#x3D;&quot;customerNotes&quot; name&#x3D;&quot;customerNotes&quot; rows&#x3D;&quot;2&quot;&gt;{{ editandoCliente()?.notes ?? &#x27;&#x27; }}&lt;/textarea&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 d-flex justify-content-end gap-2&quot;&gt;
+                  &lt;button class&#x3D;&quot;btn btn-outline-light&quot; type&#x3D;&quot;reset&quot; (click)&#x3D;&quot;editandoCliente.set(null)&quot;&gt;Limpiar&lt;/button&gt;
+                  &lt;button class&#x3D;&quot;btn btn-brand&quot; type&#x3D;&quot;submit&quot;&gt;Guardar cliente&lt;/button&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+            &lt;div class&#x3D;&quot;table-responsive mt-4&quot;&gt;
+              &lt;table class&#x3D;&quot;table table-dark table-borderless align-middle&quot;&gt;
+                &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Cliente&lt;/th&gt;&lt;th&gt;Telefono&lt;/th&gt;&lt;th&gt;Direccion&lt;/th&gt;&lt;th&gt;Pedidos&lt;/th&gt;&lt;th&gt;Estado&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+                &lt;tbody&gt;
+                  @for (c of clientes(); track c.id) {
+                    &lt;tr&gt;
+                      &lt;td&gt;&lt;strong&gt;{{ c.name }}&lt;/strong&gt;&lt;br&gt;&lt;small class&#x3D;&quot;text-white-50&quot;&gt;{{ c.vehicle || &#x27;Sin vehiculo&#x27; }}&lt;/small&gt;&lt;/td&gt;
+                      &lt;td&gt;{{ c.phone }}&lt;/td&gt;
+                      &lt;td&gt;{{ c.address || &#x27;-&#x27; }}&lt;/td&gt;
+                      &lt;td&gt;{{ pedidosCliente(c.email) }}&lt;/td&gt;
+                      &lt;td&gt;{{ c.status || &#x27;Activo&#x27; }}&lt;/td&gt;
+                      &lt;td class&#x3D;&quot;text-end&quot;&gt;
+                        &lt;button class&#x3D;&quot;btn btn-sm btn-outline-light me-2&quot; (click)&#x3D;&quot;editarCliente(c)&quot;&gt;Editar&lt;/button&gt;
+                        &lt;button class&#x3D;&quot;btn btn-sm btn-outline-danger&quot; (click)&#x3D;&quot;eliminarCliente(c.id)&quot;&gt;Eliminar&lt;/button&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                  }
+                &lt;/tbody&gt;
+              &lt;/table&gt;
+            &lt;/div&gt;
+          &lt;/section&gt;
+        }
+
+        @if (panelActivo() &#x3D;&#x3D;&#x3D; &#x27;users&#x27;) {
+          &lt;section class&#x3D;&quot;panel-card&quot;&gt;
+            &lt;div class&#x3D;&quot;d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3&quot;&gt;
+              &lt;h2 class&#x3D;&quot;h4 fw-bold mb-0&quot;&gt;Mantenedor de usuarios&lt;/h2&gt;
+              &lt;span class&#x3D;&quot;text-white-50 small&quot;&gt;Roles, acceso y estado&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;form class&#x3D;&quot;needs-validation&quot; novalidate (submit)&#x3D;&quot;guardarUsuario($any($event))&quot;&gt;
+              &lt;div class&#x3D;&quot;row g-3&quot;&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-3&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;userName&quot;&gt;Nombre&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;userName&quot; name&#x3D;&quot;userName&quot; required [value]&#x3D;&quot;editandoUsuario()?.name ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa el nombre.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-3&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;userEmail&quot;&gt;Correo&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;userEmail&quot; name&#x3D;&quot;userEmail&quot; type&#x3D;&quot;email&quot; required [value]&#x3D;&quot;editandoUsuario()?.email ?? &#x27;&#x27;&quot;&gt;
+                  &lt;div class&#x3D;&quot;invalid-feedback&quot;&gt;Ingresa un correo valido.&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-2&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;userRole&quot;&gt;Rol&lt;/label&gt;
+                  &lt;select class&#x3D;&quot;form-select&quot; id&#x3D;&quot;userRole&quot; name&#x3D;&quot;userRole&quot; required&gt;
+                    &lt;option [selected]&#x3D;&quot;!editandoUsuario() || editandoUsuario()?.role &#x3D;&#x3D;&#x3D; &#x27;Cliente&#x27;&quot;&gt;Cliente&lt;/option&gt;
+                    &lt;option [selected]&#x3D;&quot;editandoUsuario()?.role &#x3D;&#x3D;&#x3D; &#x27;Tecnico&#x27;&quot;&gt;Tecnico&lt;/option&gt;
+                    &lt;option [selected]&#x3D;&quot;editandoUsuario()?.role &#x3D;&#x3D;&#x3D; &#x27;Administrador&#x27;&quot;&gt;Administrador&lt;/option&gt;
+                  &lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-2&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;userPhone&quot;&gt;Telefono&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;userPhone&quot; name&#x3D;&quot;userPhone&quot; [value]&#x3D;&quot;editandoUsuario()?.phone ?? &#x27;&#x27;&quot;&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-2&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;userStatus&quot;&gt;Estado&lt;/label&gt;
+                  &lt;select class&#x3D;&quot;form-select&quot; id&#x3D;&quot;userStatus&quot; name&#x3D;&quot;userStatus&quot; required&gt;
+                    &lt;option [selected]&#x3D;&quot;editandoUsuario()?.status !&#x3D;&#x3D; &#x27;Bloqueado&#x27;&quot;&gt;Activo&lt;/option&gt;
+                    &lt;option [selected]&#x3D;&quot;editandoUsuario()?.status &#x3D;&#x3D;&#x3D; &#x27;Bloqueado&#x27;&quot;&gt;Bloqueado&lt;/option&gt;
+                  &lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;userAddress&quot;&gt;Direccion&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;userAddress&quot; name&#x3D;&quot;userAddress&quot; [value]&#x3D;&quot;editandoUsuario()?.address ?? &#x27;&#x27;&quot;&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+                  &lt;label class&#x3D;&quot;form-label&quot; for&#x3D;&quot;userPassword&quot;&gt;Contrasena&lt;/label&gt;
+                  &lt;input class&#x3D;&quot;form-control&quot; id&#x3D;&quot;userPassword&quot; name&#x3D;&quot;userPassword&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Dejar en blanco para mantener&quot;&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;col-12 d-flex justify-content-end gap-2&quot;&gt;
+                  &lt;button class&#x3D;&quot;btn btn-outline-light&quot; type&#x3D;&quot;reset&quot; (click)&#x3D;&quot;editandoUsuario.set(null)&quot;&gt;Limpiar&lt;/button&gt;
+                  &lt;button class&#x3D;&quot;btn btn-brand&quot; type&#x3D;&quot;submit&quot;&gt;Guardar usuario&lt;/button&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+            &lt;div class&#x3D;&quot;table-responsive mt-4&quot;&gt;
+              &lt;table class&#x3D;&quot;table table-dark table-borderless align-middle&quot;&gt;
+                &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Usuario&lt;/th&gt;&lt;th&gt;Rol&lt;/th&gt;&lt;th&gt;Telefono&lt;/th&gt;&lt;th&gt;Direccion&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+                &lt;tbody&gt;
+                  @for (u of usuarios(); track u.email) {
+                    &lt;tr&gt;
+                      &lt;td&gt;&lt;strong&gt;{{ u.name }}&lt;/strong&gt;&lt;br&gt;&lt;small class&#x3D;&quot;text-white-50&quot;&gt;{{ u.email }}&lt;/small&gt;&lt;/td&gt;
+                      &lt;td&gt;{{ u.role }}&lt;/td&gt;
+                      &lt;td&gt;{{ u.phone || &#x27;-&#x27; }}&lt;/td&gt;
+                      &lt;td&gt;{{ u.address || &#x27;-&#x27; }}&lt;/td&gt;
+                      &lt;td class&#x3D;&quot;text-end&quot;&gt;
+                        &lt;button class&#x3D;&quot;btn btn-sm btn-outline-light me-2&quot; (click)&#x3D;&quot;editarUsuario(u)&quot;&gt;Editar&lt;/button&gt;
+                        &lt;button class&#x3D;&quot;btn btn-sm btn-outline-danger&quot; (click)&#x3D;&quot;eliminarUsuario(u.email)&quot;&gt;Eliminar&lt;/button&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                  }
+                &lt;/tbody&gt;
+              &lt;/table&gt;
+            &lt;/div&gt;
+          &lt;/section&gt;
+        }
+
+        @if (panelActivo() &#x3D;&#x3D;&#x3D; &#x27;orders&#x27;) {
+          &lt;section class&#x3D;&quot;panel-card&quot;&gt;
+            &lt;div class&#x3D;&quot;d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3&quot;&gt;
+              &lt;h2 class&#x3D;&quot;h4 fw-bold mb-0&quot;&gt;Monitoreo de compras&lt;/h2&gt;
+              &lt;span class&#x3D;&quot;text-white-50 small&quot;&gt;Pedidos registrados por checkout&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;table-responsive&quot;&gt;
+              &lt;table class&#x3D;&quot;table table-dark table-borderless align-middle&quot;&gt;
+                &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Cliente&lt;/th&gt;&lt;th&gt;Tipo&lt;/th&gt;&lt;th&gt;Items&lt;/th&gt;&lt;th&gt;Total&lt;/th&gt;&lt;th&gt;Estado&lt;/th&gt;&lt;th&gt;Fecha&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+                &lt;tbody&gt;
+                  @for (p of pedidos(); track p.id) {
+                    &lt;tr&gt;
+                      &lt;td&gt;&lt;strong&gt;{{ p.customerName || &#x27;Cliente&#x27; }}&lt;/strong&gt;&lt;br&gt;&lt;small class&#x3D;&quot;text-white-50&quot;&gt;{{ p.email || &#x27;-&#x27; }}&lt;/small&gt;&lt;/td&gt;
+                      &lt;td&gt;{{ p.type || &#x27;Pedido&#x27; }}&lt;/td&gt;
+                      &lt;td&gt;{{ itemsCount(p.items) }}&lt;/td&gt;
+                      &lt;td&gt;${{ p.total | currencyCl }}&lt;/td&gt;
+                      &lt;td&gt;{{ p.status || &#x27;Pagado&#x27; }}&lt;/td&gt;
+                      &lt;td&gt;{{ p.createdAt | fechaCl }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                  }
+                  @empty {
+                    &lt;tr&gt;&lt;td colspan&#x3D;&quot;6&quot; class&#x3D;&quot;text-center text-white-50 py-4&quot;&gt;No hay compras registradas.&lt;/td&gt;&lt;/tr&gt;
+                  }
+                &lt;/tbody&gt;
+              &lt;/table&gt;
+            &lt;/div&gt;
+          &lt;/section&gt;
+        }
+      &lt;/section&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/main&gt;
+
+&lt;footer class&#x3D;&quot;site-footer border-top border-white border-opacity-10&quot;&gt;
+  &lt;div class&#x3D;&quot;container&quot;&gt;
+    &lt;div class&#x3D;&quot;row align-items-center g-4 py-5&quot;&gt;
+      &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+        &lt;a class&#x3D;&quot;d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2&quot; routerLink&#x3D;&quot;/inicio&quot;&gt;
+          &lt;img src&#x3D;&quot;assets/logo.jpg&quot; alt&#x3D;&quot;Full Gas Detail&quot; class&#x3D;&quot;brand-logo brand-logo-sm&quot;&gt;
+          &lt;span&gt;Full Gas Detail&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;p class&#x3D;&quot;text-white-50 small mb-0&quot;&gt;Carwash a domicilio y productos de detailing en Coronel, Concepcion.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-12 col-md-4 text-md-center&quot;&gt;
+        &lt;p class&#x3D;&quot;text-white-50 small mb-2&quot;&gt;Siguenos&lt;/p&gt;
+        &lt;div class&#x3D;&quot;d-flex gap-3 justify-content-md-center&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;Instagram&quot;&gt;&lt;i class&#x3D;&quot;bi bi-instagram&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;Facebook&quot;&gt;&lt;i class&#x3D;&quot;bi bi-facebook&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;WhatsApp&quot;&gt;&lt;i class&#x3D;&quot;bi bi-whatsapp&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;TikTok&quot;&gt;&lt;i class&#x3D;&quot;bi bi-tiktok&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-12 col-md-4 text-md-end&quot;&gt;
+        &lt;div class&#x3D;&quot;d-flex flex-column gap-1 align-items-md-end&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;text-white-50 small footer-link&quot;&gt;Politica de Privacidad&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;text-white-50 small footer-link&quot;&gt;Terminos de Uso&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;text-white-50 small footer-link&quot;&gt;Contacto&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;border-top border-white border-opacity-10 py-3 text-center&quot;&gt;
+      &lt;span class&#x3D;&quot;text-white-50 small&quot;&gt;&amp;copy; 2026 Full Gas Detail &amp;mdash; Coronel, Concepcion. Todos los derechos reservados.&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./admin.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.dashboard-sidebar {
+  animation: slideInLeft 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.dashboard-content {
+  animation: fadeSlideUp 0.45s 0.1s ease both;
+}
+
+.stat-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(242, 181, 68, 0.4);
+}
+
+.panel-card table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.panel-card table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.btn {
+  transition: transform 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">  <div class="container">    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">      <span>Full Gas Detail</span>    </a>    <div class="ms-auto d-flex gap-2">      <a class="btn btn-outline-light btn-sm" routerLink="/mis-compras">Vista cliente</a>      <a class="btn btn-brand btn-sm" routerLink="/perfil">Perfil</a>    </div>  </div></nav><main class="py-4 py-lg-5">  <div class="container-fluid dashboard-shell px-3 px-lg-4">    <div class="dashboard-layout">      <aside class="dashboard-sidebar panel-card">        <div class="d-flex align-items-center gap-3 mb-4">          <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">          <div>            <div class="eyebrow">Panel administrativo</div>            <strong>Full Gas Detail</strong>          </div>        </div>        <p class="text-white-50 small mb-4">Menu lateral tipo CRM para navegar por cada modulo del negocio.</p>        <nav class="dashboard-nav" aria-label="Navegacion del dashboard">          <button class="dashboard-nav-item" [class.active]="panelActivo() === \'overview\'" type="button" (click)="panelActivo.set(\'overview\')">Resumen</button>          <button class="dashboard-nav-item" [class.active]="panelActivo() === \'products\'" type="button" (click)="panelActivo.set(\'products\')">Productos</button>          <button class="dashboard-nav-item" [class.active]="panelActivo() === \'customers\'" type="button" (click)="panelActivo.set(\'customers\')">Clientes</button>          <button class="dashboard-nav-item" [class.active]="panelActivo() === \'users\'" type="button" (click)="panelActivo.set(\'users\')">Usuarios</button>          <button class="dashboard-nav-item" [class.active]="panelActivo() === \'orders\'" type="button" (click)="panelActivo.set(\'orders\')">Compras</button>        </nav>        <div class="mt-4 pt-4 border-top border-white border-opacity-10">          <a class="btn btn-outline-light w-100 mb-2" routerLink="/mis-compras">Vista cliente</a>          <a class="btn btn-brand w-100" routerLink="/perfil">Perfil</a>        </div>      </aside>      <section class="dashboard-content">        <div class="row align-items-end g-3 mb-4">          <div class="col-12 col-xl-8">            <span class="eyebrow">Operacion interna</span>            <h1 class="h2 fw-bold mt-2">Gestion de productos, clientes, usuarios e inventario</h1>            <p class="text-white-50 mb-0">Todo se guarda en localStorage para simular la operacion interna del negocio sin servidor.</p>          </div>        </div>        <div class="row g-4 mb-4">          <div class="col-12 col-md-6 col-xl-2">            <div class="stat-card h-100"><strong>{{ stats().productos }}</strong><span>Productos</span></div>          </div>          <div class="col-12 col-md-6 col-xl-2">            <div class="stat-card h-100"><strong>{{ stats().clientes }}</strong><span>Clientes</span></div>          </div>          <div class="col-12 col-md-6 col-xl-2">            <div class="stat-card h-100"><strong>{{ stats().usuarios }}</strong><span>Usuarios</span></div>          </div>          <div class="col-12 col-md-6 col-xl-2">            <div class="stat-card h-100"><strong>{{ stats().pedidos }}</strong><span>Compras</span></div>          </div>          <div class="col-12 col-md-6 col-xl-2">            <div class="stat-card h-100"><strong>{{ stats().stockBajo }}</strong><span>Stock bajo</span></div>          </div>        </div>        @if (panelActivo() === \'overview\') {          <section class="panel-card">            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">              <h2 class="h4 fw-bold mb-0">Resumen general</h2>              <span class="text-white-50 small">Indicadores del dia</span>            </div>            <div class="row g-3">              <div class="col-12 col-lg-6">                <div class="summary-box h-100">                  <h3 class="h5 fw-semibold">Accesos rapidos</h3>                  <p class="mb-0 text-white-50">Usa el menu lateral para entrar a cada modulo sin saturar la pantalla con todos los formularios.</p>                </div>              </div>              <div class="col-12 col-lg-6">                <div class="summary-box h-100">                  <h3 class="h5 fw-semibold">Estado de la operacion</h3>                  <p class="mb-0 text-white-50">Productos, clientes, usuarios y compras quedan registrados localmente para la simulacion del ERP.</p>                </div>              </div>            </div>          </section>        }        @if (panelActivo() === \'products\') {          <section class="panel-card">            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">              <h2 class="h4 fw-bold mb-0">Mantenedor de productos</h2>              <span class="text-white-50 small">Alta, edicion, baja e inventario</span>            </div>            <form class="needs-validation" novalidate (submit)="guardarProducto($any($event))">              <input type="hidden" name="productId" [value]="editandoProducto()?.id ?? \'\'">              <div class="row g-3">                <div class="col-12 col-md-4">                  <label class="form-label" for="productName">Nombre</label>                  <input class="form-control" id="productName" name="productName" required [value]="editandoProducto()?.name ?? \'\'">                  <div class="invalid-feedback">Ingresa el nombre.</div>                </div>                <div class="col-12 col-md-2">                  <label class="form-label" for="productCategory">Categoria</label>                  <select class="form-select" id="productCategory" name="productCategory" required>                    <option value="">Selecciona</option>                    <option value="limpieza" [selected]="editandoProducto()?.category === \'limpieza\'">Limpieza</option>                    <option value="proteccion" [selected]="editandoProducto()?.category === \'proteccion\'">Proteccion</option>                    <option value="accesorios" [selected]="editandoProducto()?.category === \'accesorios\'">Accesorios</option>                  </select>                  <div class="invalid-feedback">Selecciona una categoria.</div>                </div>                <div class="col-12 col-md-2">                  <label class="form-label" for="productPrice">Precio</label>                  <input class="form-control" id="productPrice" name="productPrice" type="number" min="0" required [value]="editandoProducto()?.price ?? \'\'">                  <div class="invalid-feedback">Ingresa el precio.</div>                </div>                <div class="col-12 col-md-2">                  <label class="form-label" for="productStock">Stock</label>                  <input class="form-control" id="productStock" name="productStock" type="number" min="0" required [value]="editandoProducto()?.stock ?? \'\'">                  <div class="invalid-feedback">Ingresa el stock.</div>                </div>                <div class="col-12 col-md-2 d-flex align-items-end">                  <div class="form-check mt-4">                    <input class="form-check-input" type="checkbox" id="productActive" name="productActive" [checked]="editandoProducto()?.active !== false">                    <label class="form-check-label" for="productActive">Activo</label>                  </div>                </div>                <div class="col-12">                  <label class="form-label" for="productDescription">Descripcion</label>                  <textarea class="form-control" id="productDescription" name="productDescription" rows="2" required>{{ editandoProducto()?.description ?? \'\' }}</textarea>                  <div class="invalid-feedback">Ingresa una descripcion.</div>                </div>                <div class="col-12 d-flex justify-content-end gap-2">                  <button class="btn btn-outline-light" type="reset" (click)="editandoProducto.set(null)">Limpiar</button>                  <button class="btn btn-brand" type="submit">Guardar producto</button>                </div>              </div>            </form>            <div class="table-responsive mt-4">              <table class="table table-dark table-borderless align-middle">                <thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Estado</th><th></th></tr></thead>                <tbody>                  @for (p of productos(); track p.id) {                    <tr>                      <td><strong>{{ p.name }}</strong><br><small class="text-white-50">{{ p.category }}</small></td>                      <td>${{ p.price | currencyCl }}</td>                      <td>{{ p.stock }}</td>                      <td>{{ p.active ? \'Activo\' : \'Inactivo\' }}</td>                      <td class="text-end">                        <button class="btn btn-sm btn-outline-light me-2" (click)="editarProducto(p)">Editar</button>                        <button class="btn btn-sm btn-outline-danger" (click)="eliminarProducto(p.id)">Eliminar</button>                      </td>                    </tr>                  }                </tbody>              </table>            </div>          </section>        }        @if (panelActivo() === \'customers\') {          <section class="panel-card">            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">              <h2 class="h4 fw-bold mb-0">Mantenedor de clientes</h2>              <span class="text-white-50 small">Datos de contacto y vehiculo</span>            </div>            <form class="needs-validation" novalidate (submit)="guardarCliente($any($event))">              <input type="hidden" name="customerId" [value]="editandoCliente()?.id ?? \'\'">              <div class="row g-3">                <div class="col-12 col-md-4">                  <label class="form-label" for="customerName">Nombre</label>                  <input class="form-control" id="customerName" name="customerName" required [value]="editandoCliente()?.name ?? \'\'">                  <div class="invalid-feedback">Ingresa el nombre.</div>                </div>                <div class="col-12 col-md-4">                  <label class="form-label" for="customerEmail">Correo</label>                  <input class="form-control" id="customerEmail" name="customerEmail" type="email" required [value]="editandoCliente()?.email ?? \'\'">                  <div class="invalid-feedback">Ingresa un correo valido.</div>                </div>                <div class="col-12 col-md-4">                  <label class="form-label" for="customerPhone">Telefono</label>                  <input class="form-control" id="customerPhone" name="customerPhone" type="tel" required [value]="editandoCliente()?.phone ?? \'\'">                  <div class="invalid-feedback">Ingresa el telefono.</div>                </div>                <div class="col-12 col-md-4">                  <label class="form-label" for="customerAddress">Direccion</label>                  <input class="form-control" id="customerAddress" name="customerAddress" required [value]="editandoCliente()?.address ?? \'\'">                  <div class="invalid-feedback">Ingresa la direccion.</div>                </div>                <div class="col-12 col-md-4">                  <label class="form-label" for="customerVehicle">Vehiculo</label>                  <input class="form-control" id="customerVehicle" name="customerVehicle" placeholder="SUV, Sedan, etc." required [value]="editandoCliente()?.vehicle ?? \'\'">                  <div class="invalid-feedback">Ingresa el tipo de vehiculo.</div>                </div>                <div class="col-12 col-md-4">                  <label class="form-label" for="customerStatus">Estado</label>                  <select class="form-select" id="customerStatus" name="customerStatus" required>                    <option [selected]="editandoCliente()?.status !== \'Inactivo\'">Activo</option>                    <option [selected]="editandoCliente()?.status === \'Inactivo\'">Inactivo</option>                  </select>                </div>                <div class="col-12">                  <label class="form-label" for="customerNotes">Notas</label>                  <textarea class="form-control" id="customerNotes" name="customerNotes" rows="2">{{ editandoCliente()?.notes ?? \'\' }}</textarea>                </div>                <div class="col-12 d-flex justify-content-end gap-2">                  <button class="btn btn-outline-light" type="reset" (click)="editandoCliente.set(null)">Limpiar</button>                  <button class="btn btn-brand" type="submit">Guardar cliente</button>                </div>              </div>            </form>            <div class="table-responsive mt-4">              <table class="table table-dark table-borderless align-middle">                <thead><tr><th>Cliente</th><th>Telefono</th><th>Direccion</th><th>Pedidos</th><th>Estado</th><th></th></tr></thead>                <tbody>                  @for (c of clientes(); track c.id) {                    <tr>                      <td><strong>{{ c.name }}</strong><br><small class="text-white-50">{{ c.vehicle || \'Sin vehiculo\' }}</small></td>                      <td>{{ c.phone }}</td>                      <td>{{ c.address || \'-\' }}</td>                      <td>{{ pedidosCliente(c.email) }}</td>                      <td>{{ c.status || \'Activo\' }}</td>                      <td class="text-end">                        <button class="btn btn-sm btn-outline-light me-2" (click)="editarCliente(c)">Editar</button>                        <button class="btn btn-sm btn-outline-danger" (click)="eliminarCliente(c.id)">Eliminar</button>                      </td>                    </tr>                  }                </tbody>              </table>            </div>          </section>        }        @if (panelActivo() === \'users\') {          <section class="panel-card">            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">              <h2 class="h4 fw-bold mb-0">Mantenedor de usuarios</h2>              <span class="text-white-50 small">Roles, acceso y estado</span>            </div>            <form class="needs-validation" novalidate (submit)="guardarUsuario($any($event))">              <div class="row g-3">                <div class="col-12 col-md-3">                  <label class="form-label" for="userName">Nombre</label>                  <input class="form-control" id="userName" name="userName" required [value]="editandoUsuario()?.name ?? \'\'">                  <div class="invalid-feedback">Ingresa el nombre.</div>                </div>                <div class="col-12 col-md-3">                  <label class="form-label" for="userEmail">Correo</label>                  <input class="form-control" id="userEmail" name="userEmail" type="email" required [value]="editandoUsuario()?.email ?? \'\'">                  <div class="invalid-feedback">Ingresa un correo valido.</div>                </div>                <div class="col-12 col-md-2">                  <label class="form-label" for="userRole">Rol</label>                  <select class="form-select" id="userRole" name="userRole" required>                    <option [selected]="!editandoUsuario() || editandoUsuario()?.role === \'Cliente\'">Cliente</option>                    <option [selected]="editandoUsuario()?.role === \'Tecnico\'">Tecnico</option>                    <option [selected]="editandoUsuario()?.role === \'Administrador\'">Administrador</option>                  </select>                </div>                <div class="col-12 col-md-2">                  <label class="form-label" for="userPhone">Telefono</label>                  <input class="form-control" id="userPhone" name="userPhone" [value]="editandoUsuario()?.phone ?? \'\'">                </div>                <div class="col-12 col-md-2">                  <label class="form-label" for="userStatus">Estado</label>                  <select class="form-select" id="userStatus" name="userStatus" required>                    <option [selected]="editandoUsuario()?.status !== \'Bloqueado\'">Activo</option>                    <option [selected]="editandoUsuario()?.status === \'Bloqueado\'">Bloqueado</option>                  </select>                </div>                <div class="col-12 col-md-4">                  <label class="form-label" for="userAddress">Direccion</label>                  <input class="form-control" id="userAddress" name="userAddress" [value]="editandoUsuario()?.address ?? \'\'">                </div>                <div class="col-12 col-md-4">                  <label class="form-label" for="userPassword">Contrasena</label>                  <input class="form-control" id="userPassword" name="userPassword" type="text" placeholder="Dejar en blanco para mantener">                </div>                <div class="col-12 d-flex justify-content-end gap-2">                  <button class="btn btn-outline-light" type="reset" (click)="editandoUsuario.set(null)">Limpiar</button>                  <button class="btn btn-brand" type="submit">Guardar usuario</button>                </div>              </div>            </form>            <div class="table-responsive mt-4">              <table class="table table-dark table-borderless align-middle">                <thead><tr><th>Usuario</th><th>Rol</th><th>Telefono</th><th>Direccion</th><th></th></tr></thead>                <tbody>                  @for (u of usuarios(); track u.email) {                    <tr>                      <td><strong>{{ u.name }}</strong><br><small class="text-white-50">{{ u.email }}</small></td>                      <td>{{ u.role }}</td>                      <td>{{ u.phone || \'-\' }}</td>                      <td>{{ u.address || \'-\' }}</td>                      <td class="text-end">                        <button class="btn btn-sm btn-outline-light me-2" (click)="editarUsuario(u)">Editar</button>                        <button class="btn btn-sm btn-outline-danger" (click)="eliminarUsuario(u.email)">Eliminar</button>                      </td>                    </tr>                  }                </tbody>              </table>            </div>          </section>        }        @if (panelActivo() === \'orders\') {          <section class="panel-card">            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">              <h2 class="h4 fw-bold mb-0">Monitoreo de compras</h2>              <span class="text-white-50 small">Pedidos registrados por checkout</span>            </div>            <div class="table-responsive">              <table class="table table-dark table-borderless align-middle">                <thead><tr><th>Cliente</th><th>Tipo</th><th>Items</th><th>Total</th><th>Estado</th><th>Fecha</th></tr></thead>                <tbody>                  @for (p of pedidos(); track p.id) {                    <tr>                      <td><strong>{{ p.customerName || \'Cliente\' }}</strong><br><small class="text-white-50">{{ p.email || \'-\' }}</small></td>                      <td>{{ p.type || \'Pedido\' }}</td>                      <td>{{ itemsCount(p.items) }}</td>                      <td>${{ p.total | currencyCl }}</td>                      <td>{{ p.status || \'Pagado\' }}</td>                      <td>{{ p.createdAt | fechaCl }}</td>                    </tr>                  }                  @empty {                    <tr><td colspan="6" class="text-center text-white-50 py-4">No hay compras registradas.</td></tr>                  }                </tbody>              </table>            </div>          </section>        }      </section>    </div>  </div></main><footer class="site-footer border-top border-white border-opacity-10">  <div class="container">    <div class="row align-items-center g-4 py-5">      <div class="col-12 col-md-4">        <a class="d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2" routerLink="/inicio">          <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">          <span>Full Gas Detail</span>        </a>        <p class="text-white-50 small mb-0">Carwash a domicilio y productos de detailing en Coronel, Concepcion.</p>      </div>      <div class="col-12 col-md-4 text-md-center">        <p class="text-white-50 small mb-2">Siguenos</p>        <div class="d-flex gap-3 justify-content-md-center">          <a href="#" class="footer-social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>          <a href="#" class="footer-social" aria-label="Facebook"><i class="bi bi-facebook"></i></a>          <a href="#" class="footer-social" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>          <a href="#" class="footer-social" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>        </div>      </div>      <div class="col-12 col-md-4 text-md-end">        <div class="d-flex flex-column gap-1 align-items-md-end">          <a href="#" class="text-white-50 small footer-link">Politica de Privacidad</a>          <a href="#" class="text-white-50 small footer-link">Terminos de Uso</a>          <a href="#" class="text-white-50 small footer-link">Contacto</a>        </div>      </div>    </div>    <div class="border-top border-white border-opacity-10 py-3 text-center">      <span class="text-white-50 small">&copy; 2026 Full Gas Detail &mdash; Coronel, Concepcion. Todos los derechos reservados.</span>    </div>  </div></footer></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'App', 'selector': 'app-root'},{'name': 'CarritoComponent', 'selector': 'app-carrito'},{'name': 'CheckoutComponent', 'selector': 'app-checkout'},{'name': 'InicioComponent', 'selector': 'app-inicio'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MisComprasComponent', 'selector': 'app-mis-compras'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'ProductoCardComponent', 'selector': 'app-producto-card'},{'name': 'ProductosComponent', 'selector': 'app-productos'},{'name': 'RecuperarComponent', 'selector': 'app-recuperar'},{'name': 'RegistroComponent', 'selector': 'app-registro'},{'name': 'ServiciosComponent', 'selector': 'app-servicios'}];
+    var DIRECTIVES = [{'name': 'SoloNumerosDirective', 'selector': '[soloNumeros]'}];
+    var ACTUAL_COMPONENT = {'name': 'AdminComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AdminComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

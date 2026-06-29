@@ -144,7 +144,7 @@
                   @for (p of productos(); track p.id) {
                     <tr>
                       <td><strong>{{ p.name }}</strong><br><small class="text-white-50">{{ p.category }}</small></td>
-                      <td>${{ formatearMonto(p.price) }}</td>
+                      <td>${{ p.price | currencyCl }}</td>
                       <td>{{ p.stock }}</td>
                       <td>{{ p.active ? 'Activo' : 'Inactivo' }}</td>
                       <td class="text-end">
@@ -321,9 +321,9 @@
                       <td><strong>{{ p.customerName || 'Cliente' }}</strong><br><small class="text-white-50">{{ p.email || '-' }}</small></td>
                       <td>{{ p.type || 'Pedido' }}</td>
                       <td>{{ itemsCount(p.items) }}</td>
-                      <td>${{ formatearMonto(p.total) }}</td>
+                      <td>${{ p.total | currencyCl }}</td>
                       <td>{{ p.status || 'Pagado' }}</td>
-                      <td>{{ formatearFecha(p.createdAt) }}</td>
+                      <td>{{ p.createdAt | fechaCl }}</td>
                     </tr>
                   }
                   @empty {

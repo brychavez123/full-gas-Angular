@@ -1,15 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">
-      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
-      <span>Full Gas Detail</span>
-    </a>
-    <div class="ms-auto d-flex gap-2">
-      <a class="btn btn-outline-light btn-sm" routerLink="/mis-compras">Mis compras</a>
-      <a class="btn btn-brand btn-sm" routerLink="/productos">Productos</a>
-    </div>
-  </div>
-</nav>
+<app-navbar></app-navbar>
 
 <main class="py-5">
   <div class="container">
@@ -48,7 +37,7 @@
                 <label class="form-label" for="profilePhone">Telefono</label>
                 <div class="input-group has-validation">
                   <span class="input-group-text">+56</span>
-                  <input class="form-control" id="profilePhone" name="phone" type="tel" pattern="[0-9]{9}" inputmode="numeric" required [value]="sesion()?.phone ?? ''" (keydown)="soloNumeros($any($event))">
+                  <input class="form-control" id="profilePhone" name="phone" type="tel" pattern="[0-9]{9}" inputmode="numeric" required [value]="sesion()?.phone ?? ''" soloNumeros>
                   <div class="invalid-feedback">Ingresa 9 digitos.</div>
                 </div>
               </div>

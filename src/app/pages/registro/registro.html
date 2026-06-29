@@ -69,7 +69,7 @@
                     <div class="input-group" [class.has-validation]="campo('phone').touched">
                       <span class="input-group-text">+56</span>
                       <input class="form-control" id="phone" formControlName="phone" type="tel"
-                        placeholder="9XXXXXXXX" inputmode="numeric" (keydown)="soloNumeros($any($event))"
+                        placeholder="9XXXXXXXX" inputmode="numeric" soloNumeros
                         [class.is-invalid]="campo('phone').invalid && campo('phone').touched"
                         [class.is-valid]="campo('phone').valid && campo('phone').touched">
                       <div class="invalid-feedback">Ingresa 9 digitos.</div>

@@ -1,0 +1,1058 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Full Gas Detail</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Full Gas Detail</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  MisComprasComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/mis-compras/mis-compras.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Pagina de historial de compras del usuario autenticado.
+Muestra los pedidos filtrados por el email de la sesion activa y el total gastado.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+    <p class="comment">
+        <h3>Example</h3>
+    </p>
+    <div class="io-description">
+    </div>
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-mis-compras</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>    <code>CurrencyClPipe</code>
+</div>
+                        <div>    <code>FechaClPipe</code>
+</div>
+                        <div>        <code><a href="../components/NavbarComponent.html" target="_self" >NavbarComponent</a></code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./mis-compras.css</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./mis-compras.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./mis-compras.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                        <code>CurrencyClPipe</code>
+                                </li>
+                                <li>
+                                        <code>FechaClPipe</code>
+                                </li>
+                                <li>
+                                            <code><a href="../components/NavbarComponent.html" target="_self" >NavbarComponent</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnInit" target="_blank" >OnInit</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#pedidos" >pedidos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#platformId" >platformId</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#sesion" >sesion</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#totalGastado" >totalGastado</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#vehiculo" >vehiculo</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#itemsCount" >itemsCount</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemsCount"></a>
+                    <span class="name">
+                        <span ><b>itemsCount</b></span>
+                        <a href="#itemsCount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>itemsCount(items: unknown[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="92"
+                                    class="link-to-prism">src/app/pages/mis-compras/mis-compras.ts:92</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retorna la cantidad de items en un pedido</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>items</td>
+                                            <td>
+                                                        <code>unknown[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/pages/mis-compras/mis-compras.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pedidos"></a>
+                    <span class="name">
+                        <span ><b>pedidos</b></span>
+                        <a href="#pedidos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Pedido[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/pages/mis-compras/mis-compras.ts:70</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista de pedidos del usuario autenticado</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="platformId"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>platformId</b></span>
+                        <a href="#platformId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(PLATFORM_ID)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/pages/mis-compras/mis-compras.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sesion"></a>
+                    <span class="name">
+                        <span ><b>sesion</b></span>
+                        <a href="#sesion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;Sesion | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/pages/mis-compras/mis-compras.ts:68</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Datos de la sesion activa del usuario</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="totalGastado"></a>
+                    <span class="name">
+                        <span ><b>totalGastado</b></span>
+                        <a href="#totalGastado"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; this.pedidos().reduce((s, p) &#x3D;&gt; s + Number(p.total ?? 0), 0))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/pages/mis-compras/mis-compras.ts:75</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Suma total de todos los pedidos del usuario</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="vehiculo"></a>
+                    <span class="name">
+                        <span ><b>vehiculo</b></span>
+                        <a href="#vehiculo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(&#x27;No registrado&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/pages/mis-compras/mis-compras.ts:72</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Tipo de vehiculo registrado del usuario</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from &#x27;@angular/core&#x27;;
+import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+import { NavbarComponent } from &#x27;../../shared/navbar/navbar&#x27;;
+import { CurrencyClPipe } from &#x27;../../shared/pipes/currency-cl.pipe&#x27;;
+import { FechaClPipe } from &#x27;../../shared/pipes/fecha-cl.pipe&#x27;;
+
+/** Datos de la sesion activa del usuario */
+interface Sesion {
+  /** Nombre completo del usuario */
+  name: string;
+  /** Correo electronico del usuario */
+  email: string;
+  /** Numero de telefono */
+  phone: string;
+  /** Direccion de domicilio */
+  address: string;
+  /** Rol del usuario: Cliente, Tecnico o Administrador */
+  role: string;
+}
+
+/** Representa una orden de compra o servicio registrada en el sistema */
+interface Pedido {
+  /** Identificador unico del pedido */
+  id: string;
+  /** Tipo de pedido: Pedido o Servicio */
+  type: string;
+  /** Nombre del cliente que realizo el pedido */
+  customerName: string;
+  /** Correo electronico del cliente */
+  email: string;
+  /** Monto total del pedido en pesos chilenos */
+  total: number;
+  /** Lista de items incluidos en el pedido */
+  items: unknown[];
+  /** Estado actual del pedido */
+  status: string;
+  /** Fecha de creacion en formato ISO 8601 */
+  createdAt: string;
+}
+
+/** Datos del cliente registrado en el sistema */
+interface Cliente {
+  /** Identificador unico del cliente */
+  id: string;
+  /** Nombre completo del cliente */
+  name: string;
+  /** Correo electronico del cliente */
+  email: string;
+  /** Tipo de vehiculo del cliente */
+  vehicle?: string;
+}
+
+/**
+ * Pagina de historial de compras del usuario autenticado.
+ * Muestra los pedidos filtrados por el email de la sesion activa y el total gastado.
+ */
+@Component({
+  selector: &#x27;app-mis-compras&#x27;,
+  imports: [RouterLink, CurrencyClPipe, FechaClPipe, NavbarComponent],
+  templateUrl: &#x27;./mis-compras.html&#x27;,
+  styleUrl: &#x27;./mis-compras.css&#x27;,
+})
+export class MisComprasComponent implements OnInit {
+  private readonly platformId &#x3D; inject(PLATFORM_ID);
+
+  /** Datos de la sesion activa del usuario */
+  sesion &#x3D; signal&lt;Sesion | null&gt;(null);
+  /** Lista de pedidos del usuario autenticado */
+  pedidos &#x3D; signal&lt;Pedido[]&gt;([]);
+  /** Tipo de vehiculo registrado del usuario */
+  vehiculo &#x3D; signal(&#x27;No registrado&#x27;);
+
+  /** Suma total de todos los pedidos del usuario */
+  totalGastado &#x3D; computed(() &#x3D;&gt; this.pedidos().reduce((s, p) &#x3D;&gt; s + Number(p.total ?? 0), 0));
+
+  ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const sesion: Sesion &#x3D; JSON.parse(localStorage.getItem(&#x27;fullgas_session&#x27;) ?? &#x27;null&#x27;) ?? { name: &#x27;Cliente Demo&#x27;, email: &#x27;cliente@fullgasdetail.cl&#x27;, phone: &#x27;912345678&#x27;, address: &#x27;Coronel, Concepcion&#x27;, role: &#x27;Cliente&#x27; };
+    this.sesion.set(sesion);
+
+    const todosLosPedidos: Pedido[] &#x3D; JSON.parse(localStorage.getItem(&#x27;fullgas_orders&#x27;) ?? &#x27;[]&#x27;);
+    this.pedidos.set(todosLosPedidos.filter(p &#x3D;&gt; (p.email ?? &#x27;&#x27;).toLowerCase() &#x3D;&#x3D;&#x3D; sesion.email.toLowerCase()));
+
+    const clientes: Cliente[] &#x3D; JSON.parse(localStorage.getItem(&#x27;fullgas_customers&#x27;) ?? &#x27;[]&#x27;);
+    const cliente &#x3D; clientes.find(c &#x3D;&gt; c.email.toLowerCase() &#x3D;&#x3D;&#x3D; sesion.email.toLowerCase());
+    if (cliente?.vehicle) this.vehiculo.set(cliente.vehicle);
+  }
+
+  /** Retorna la cantidad de items en un pedido */
+  itemsCount(items: unknown[]): number {
+    return Array.isArray(items) ? items.length : 0;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;app-navbar&gt;&lt;/app-navbar&gt;
+
+&lt;main class&#x3D;&quot;py-5&quot;&gt;
+  &lt;div class&#x3D;&quot;container&quot;&gt;
+    &lt;div class&#x3D;&quot;row align-items-end g-3 mb-4&quot;&gt;
+      &lt;div class&#x3D;&quot;col-12 col-lg-8&quot;&gt;
+        &lt;span class&#x3D;&quot;eyebrow&quot;&gt;Vista del cliente&lt;/span&gt;
+        &lt;h1 class&#x3D;&quot;h2 fw-bold mt-2&quot;&gt;Monitoreo de mis compras y servicios&lt;/h1&gt;
+        &lt;p class&#x3D;&quot;text-white-50 mb-0&quot;&gt;Aqui puedes ver el historial asociado a tu sesion, el estado de tus pedidos y el resumen general de tu actividad.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;row g-4&quot;&gt;
+      &lt;div class&#x3D;&quot;col-12 col-lg-4&quot;&gt;
+        &lt;div class&#x3D;&quot;panel-card h-100&quot;&gt;
+          &lt;h2 class&#x3D;&quot;h4 fw-bold&quot;&gt;Mi perfil&lt;/h2&gt;
+          &lt;div class&#x3D;&quot;session-box mt-3&quot;&gt;
+            @if (sesion(); as s) {
+              &lt;div class&#x3D;&quot;mb-2&quot;&gt;&lt;strong&gt;Nombre:&lt;/strong&gt; {{ s.name }}&lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-2&quot;&gt;&lt;strong&gt;Correo:&lt;/strong&gt; {{ s.email }}&lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-2&quot;&gt;&lt;strong&gt;Telefono:&lt;/strong&gt; {{ s.phone || &#x27;-&#x27; }}&lt;/div&gt;
+              &lt;div class&#x3D;&quot;mb-2&quot;&gt;&lt;strong&gt;Direccion:&lt;/strong&gt; {{ s.address || &#x27;-&#x27; }}&lt;/div&gt;
+              &lt;div&gt;&lt;strong&gt;Vehiculo:&lt;/strong&gt; {{ vehiculo() }}&lt;/div&gt;
+            }
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;col-12 col-lg-8&quot;&gt;
+        &lt;div class&#x3D;&quot;row g-3&quot;&gt;
+          &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+            &lt;div class&#x3D;&quot;stat-card h-100&quot;&gt;
+              &lt;strong&gt;{{ pedidos().length }}&lt;/strong&gt;
+              &lt;span&gt;Compras&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+            &lt;div class&#x3D;&quot;stat-card h-100&quot;&gt;
+              &lt;strong&gt;${{ totalGastado() | currencyCl }}&lt;/strong&gt;
+              &lt;span&gt;Gasto total&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+            &lt;div class&#x3D;&quot;stat-card h-100&quot;&gt;
+              &lt;strong&gt;{{ sesion()?.role || &#x27;Cliente&#x27; }}&lt;/strong&gt;
+              &lt;span&gt;Rol&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;row mt-4&quot;&gt;
+      &lt;div class&#x3D;&quot;col-12&quot;&gt;
+        &lt;div class&#x3D;&quot;panel-card&quot;&gt;
+          &lt;div class&#x3D;&quot;d-flex justify-content-between align-items-center mb-3&quot;&gt;
+            &lt;h2 class&#x3D;&quot;h4 fw-bold mb-0&quot;&gt;Historial de compras&lt;/h2&gt;
+            &lt;span class&#x3D;&quot;text-white-50 small&quot;&gt;Pedidos, servicios y pagos simulados&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;table-responsive&quot;&gt;
+            &lt;table class&#x3D;&quot;table table-dark table-borderless align-middle mb-0&quot;&gt;
+              &lt;thead&gt;
+                &lt;tr&gt;&lt;th&gt;Tipo&lt;/th&gt;&lt;th&gt;Items&lt;/th&gt;&lt;th&gt;Total&lt;/th&gt;&lt;th&gt;Estado&lt;/th&gt;&lt;th&gt;Fecha&lt;/th&gt;&lt;/tr&gt;
+              &lt;/thead&gt;
+              &lt;tbody&gt;
+                @for (pedido of pedidos(); track pedido.id) {
+                  &lt;tr&gt;
+                    &lt;td&gt;{{ pedido.type || &#x27;Pedido&#x27; }}&lt;/td&gt;
+                    &lt;td&gt;{{ itemsCount(pedido.items) }}&lt;/td&gt;
+                    &lt;td&gt;${{ pedido.total | currencyCl }}&lt;/td&gt;
+                    &lt;td&gt;{{ pedido.status || &#x27;Pagado&#x27; }}&lt;/td&gt;
+                    &lt;td&gt;{{ pedido.createdAt | fechaCl }}&lt;/td&gt;
+                  &lt;/tr&gt;
+                }
+                @empty {
+                  &lt;tr&gt;
+                    &lt;td colspan&#x3D;&quot;5&quot; class&#x3D;&quot;text-center text-white-50 py-4&quot;&gt;Todavia no tienes compras registradas.&lt;/td&gt;
+                  &lt;/tr&gt;
+                }
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/main&gt;
+
+&lt;footer class&#x3D;&quot;site-footer border-top border-white border-opacity-10&quot;&gt;
+  &lt;div class&#x3D;&quot;container&quot;&gt;
+    &lt;div class&#x3D;&quot;row align-items-center g-4 py-5&quot;&gt;
+      &lt;div class&#x3D;&quot;col-12 col-md-4&quot;&gt;
+        &lt;a class&#x3D;&quot;d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2&quot; routerLink&#x3D;&quot;/inicio&quot;&gt;
+          &lt;img src&#x3D;&quot;assets/logo.jpg&quot; alt&#x3D;&quot;Full Gas Detail&quot; class&#x3D;&quot;brand-logo brand-logo-sm&quot;&gt;
+          &lt;span&gt;Full Gas Detail&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;p class&#x3D;&quot;text-white-50 small mb-0&quot;&gt;Carwash a domicilio y productos de detailing en Coronel, Concepcion.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-12 col-md-4 text-md-center&quot;&gt;
+        &lt;p class&#x3D;&quot;text-white-50 small mb-2&quot;&gt;Siguenos&lt;/p&gt;
+        &lt;div class&#x3D;&quot;d-flex gap-3 justify-content-md-center&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;Instagram&quot;&gt;&lt;i class&#x3D;&quot;bi bi-instagram&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;Facebook&quot;&gt;&lt;i class&#x3D;&quot;bi bi-facebook&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;WhatsApp&quot;&gt;&lt;i class&#x3D;&quot;bi bi-whatsapp&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;footer-social&quot; aria-label&#x3D;&quot;TikTok&quot;&gt;&lt;i class&#x3D;&quot;bi bi-tiktok&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;col-12 col-md-4 text-md-end&quot;&gt;
+        &lt;div class&#x3D;&quot;d-flex flex-column gap-1 align-items-md-end&quot;&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;text-white-50 small footer-link&quot;&gt;Politica de Privacidad&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;text-white-50 small footer-link&quot;&gt;Terminos de Uso&lt;/a&gt;
+          &lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;text-white-50 small footer-link&quot;&gt;Contacto&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;border-top border-white border-opacity-10 py-3 text-center&quot;&gt;
+      &lt;span class&#x3D;&quot;text-white-50 small&quot;&gt;&amp;copy; 2026 Full Gas Detail &amp;mdash; Coronel, Concepcion. Todos los derechos reservados.&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./mis-compras.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+main {
+  animation: fadeSlideUp 0.45s ease both;
+}
+
+.stat-card strong {
+  display: block;
+  animation: countUp 0.5s 0.2s ease both;
+}
+
+.stat-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(242, 181, 68, 0.4);
+}
+
+.panel-card {
+  transition: box-shadow 0.25s ease;
+}
+
+.session-box {
+  transition: background-color 0.2s ease;
+}
+
+.session-box:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><app-navbar></app-navbar><main class="py-5">  <div class="container">    <div class="row align-items-end g-3 mb-4">      <div class="col-12 col-lg-8">        <span class="eyebrow">Vista del cliente</span>        <h1 class="h2 fw-bold mt-2">Monitoreo de mis compras y servicios</h1>        <p class="text-white-50 mb-0">Aqui puedes ver el historial asociado a tu sesion, el estado de tus pedidos y el resumen general de tu actividad.</p>      </div>    </div>    <div class="row g-4">      <div class="col-12 col-lg-4">        <div class="panel-card h-100">          <h2 class="h4 fw-bold">Mi perfil</h2>          <div class="session-box mt-3">            @if (sesion(); as s) {              <div class="mb-2"><strong>Nombre:</strong> {{ s.name }}</div>              <div class="mb-2"><strong>Correo:</strong> {{ s.email }}</div>              <div class="mb-2"><strong>Telefono:</strong> {{ s.phone || \'-\' }}</div>              <div class="mb-2"><strong>Direccion:</strong> {{ s.address || \'-\' }}</div>              <div><strong>Vehiculo:</strong> {{ vehiculo() }}</div>            }          </div>        </div>      </div>      <div class="col-12 col-lg-8">        <div class="row g-3">          <div class="col-12 col-md-4">            <div class="stat-card h-100">              <strong>{{ pedidos().length }}</strong>              <span>Compras</span>            </div>          </div>          <div class="col-12 col-md-4">            <div class="stat-card h-100">              <strong>${{ totalGastado() | currencyCl }}</strong>              <span>Gasto total</span>            </div>          </div>          <div class="col-12 col-md-4">            <div class="stat-card h-100">              <strong>{{ sesion()?.role || \'Cliente\' }}</strong>              <span>Rol</span>            </div>          </div>        </div>      </div>    </div>    <div class="row mt-4">      <div class="col-12">        <div class="panel-card">          <div class="d-flex justify-content-between align-items-center mb-3">            <h2 class="h4 fw-bold mb-0">Historial de compras</h2>            <span class="text-white-50 small">Pedidos, servicios y pagos simulados</span>          </div>          <div class="table-responsive">            <table class="table table-dark table-borderless align-middle mb-0">              <thead>                <tr><th>Tipo</th><th>Items</th><th>Total</th><th>Estado</th><th>Fecha</th></tr>              </thead>              <tbody>                @for (pedido of pedidos(); track pedido.id) {                  <tr>                    <td>{{ pedido.type || \'Pedido\' }}</td>                    <td>{{ itemsCount(pedido.items) }}</td>                    <td>${{ pedido.total | currencyCl }}</td>                    <td>{{ pedido.status || \'Pagado\' }}</td>                    <td>{{ pedido.createdAt | fechaCl }}</td>                  </tr>                }                @empty {                  <tr>                    <td colspan="5" class="text-center text-white-50 py-4">Todavia no tienes compras registradas.</td>                  </tr>                }              </tbody>            </table>          </div>        </div>      </div>    </div>  </div></main><footer class="site-footer border-top border-white border-opacity-10">  <div class="container">    <div class="row align-items-center g-4 py-5">      <div class="col-12 col-md-4">        <a class="d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2" routerLink="/inicio">          <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">          <span>Full Gas Detail</span>        </a>        <p class="text-white-50 small mb-0">Carwash a domicilio y productos de detailing en Coronel, Concepcion.</p>      </div>      <div class="col-12 col-md-4 text-md-center">        <p class="text-white-50 small mb-2">Siguenos</p>        <div class="d-flex gap-3 justify-content-md-center">          <a href="#" class="footer-social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>          <a href="#" class="footer-social" aria-label="Facebook"><i class="bi bi-facebook"></i></a>          <a href="#" class="footer-social" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>          <a href="#" class="footer-social" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>        </div>      </div>      <div class="col-12 col-md-4 text-md-end">        <div class="d-flex flex-column gap-1 align-items-md-end">          <a href="#" class="text-white-50 small footer-link">Politica de Privacidad</a>          <a href="#" class="text-white-50 small footer-link">Terminos de Uso</a>          <a href="#" class="text-white-50 small footer-link">Contacto</a>        </div>      </div>    </div>    <div class="border-top border-white border-opacity-10 py-3 text-center">      <span class="text-white-50 small">&copy; 2026 Full Gas Detail &mdash; Coronel, Concepcion. Todos los derechos reservados.</span>    </div>  </div></footer></div>'
+    var COMPONENTS = [{'name': 'AdminComponent', 'selector': 'app-admin'},{'name': 'App', 'selector': 'app-root'},{'name': 'CarritoComponent', 'selector': 'app-carrito'},{'name': 'CheckoutComponent', 'selector': 'app-checkout'},{'name': 'InicioComponent', 'selector': 'app-inicio'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MisComprasComponent', 'selector': 'app-mis-compras'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'ProductoCardComponent', 'selector': 'app-producto-card'},{'name': 'ProductosComponent', 'selector': 'app-productos'},{'name': 'RecuperarComponent', 'selector': 'app-recuperar'},{'name': 'RegistroComponent', 'selector': 'app-registro'},{'name': 'ServiciosComponent', 'selector': 'app-servicios'}];
+    var DIRECTIVES = [{'name': 'SoloNumerosDirective', 'selector': '[soloNumeros]'}];
+    var ACTUAL_COMPONENT = {'name': 'MisComprasComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'MisComprasComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

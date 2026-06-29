@@ -1,0 +1,29 @@
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(32px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.panel-card {
+  animation: panelIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.form-control-lg {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-brand {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-brand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(242, 181, 68, 0.35);
+}
+
+.btn-brand:active {
+  transform: translateY(0);
+}
+
+.alert-danger {
+  animation: panelIn 0.3s ease both;
+}

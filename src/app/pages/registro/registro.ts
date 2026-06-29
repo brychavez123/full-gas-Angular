@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { SoloNumerosDirective } from '../../shared/directives/solo-numeros.directive';
+import { ToastService } from '../../services/toast.service';
+import { SessionService } from '../../services/session.service';
 
 /** Valida que la contrasena cumpla: 8-20 chars, mayuscula, minuscula, numero y caracter especial */
 function passwordSeguraValidator(): ValidatorFn {
@@ -26,11 +29,14 @@ function passwordMatchValidator(group: AbstractControl): ValidationErrors | null
  */
 @Component({
   selector: 'app-registro',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, SoloNumerosDirective],
   templateUrl: './registro.html',
-  styleUrl: './registro.scss',
+  styleUrl: './registro.css',
 })
 export class RegistroComponent {
+  private readonly toast = inject(ToastService);
+  private readonly sessionService = inject(SessionService);
+
   /** Formulario reactivo con todos los campos del registro */
   form: FormGroup;
 
@@ -75,22 +81,9 @@ export class RegistroComponent {
     localStorage.setItem('fullgas_users', JSON.stringify(usuarios));
 
     const sesion = { name: usuario.name, email: usuario.email, phone: usuario.phone, address: usuario.address, role: 'Cliente' };
-    localStorage.setItem('fullgas_session', JSON.stringify(sesion));
+    this.sessionService.set(sesion);
 
-    this.notificar('Registro creado correctamente.');
+    this.toast.mostrar('Registro creado correctamente.');
     this.router.navigate(['/perfil']);
-  }
-
-  soloNumeros(evento: KeyboardEvent): void {
-    const teclasSistema = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
-    if (!teclasSistema.includes(evento.key) && !/^[0-9]$/.test(evento.key)) evento.preventDefault();
-  }
-
-  private notificar(mensaje: string): void {
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<strong class="d-block mb-1 text-success">Full Gas Detail</strong><span>${mensaje}</span>`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2800);
   }
 }

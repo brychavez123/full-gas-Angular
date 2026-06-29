@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+:host .service-card {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+:host .service-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(242, 181, 68, 0.45);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.45);
+}
+
+:host .product-image-wrap {
+  overflow: hidden;
+}
+
+:host .product-image {
+  transition: transform 0.45s ease;
+}
+
+:host .service-card:hover .product-image {
+  transform: scale(1.06);
+}
+
+:host .btn-brand {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+:host .btn-brand:hover {
+  transform: scale(1.07);
+  box-shadow: 0 10px 24px rgba(242, 181, 68, 0.4);
+}
+
+:host .btn-brand:active {
+  transform: scale(0.97);
+}

@@ -1,0 +1,802 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Full Gas Detail</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Full Gas Detail</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  Pedido</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/admin/admin.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" 
+                class="nav-link"
+                
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+            </div>
+
+    <div class="tab-pane fade " id="api"><section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-3">
+                    <h6><b>Properties</b></h6>
+                </td>
+                <td class="col-md-9">
+                    <ul class="index-list">
+                        <li>
+                                <a href="#createdAt" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">createdAt</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#customerName" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">customerName</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#email" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">email</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#id" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">id</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#items" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">items</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#status" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">status</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#total" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">total</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#type" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">type</span>
+                                </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+    <section data-compodoc="block-properties">
+        <h3 id="inputs">Properties</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="createdAt"></a>
+                                <span class="name "><b>createdAt</b>
+                                    <a href="#createdAt">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>createdAt:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/pages/admin/admin.ts:11</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="customerName"></a>
+                                <span class="name "><b>customerName</b>
+                                    <a href="#customerName">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>customerName:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/pages/admin/admin.ts:11</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="email"></a>
+                                <span class="name "><b>email</b>
+                                    <a href="#email">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>email:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/pages/admin/admin.ts:11</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="id"></a>
+                                <span class="name "><b>id</b>
+                                    <a href="#id">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/pages/admin/admin.ts:11</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="items"></a>
+                                <span class="name "><b>items</b>
+                                    <a href="#items">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>items:     <code>unknown[]</code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Type : </i>    <code>unknown[]</code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/pages/admin/admin.ts:11</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="status"></a>
+                                <span class="name "><b>status</b>
+                                    <a href="#status">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>status:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/pages/admin/admin.ts:11</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="total"></a>
+                                <span class="name "><b>total</b>
+                                    <a href="#total">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>total:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/pages/admin/admin.ts:11</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="type"></a>
+                                <span class="name "><b>type</b>
+                                    <a href="#type">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>type:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/pages/admin/admin.ts:11</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+    </section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from &#x27;@angular/core&#x27;;
+import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+import { CurrencyClPipe } from &#x27;../../shared/pipes/currency-cl.pipe&#x27;;
+import { FechaClPipe } from &#x27;../../shared/pipes/fecha-cl.pipe&#x27;;
+import { ToastService } from &#x27;../../services/toast.service&#x27;;
+
+interface Producto { id: string; name: string; category: string; price: number; stock: number; active: boolean; description: string; image: string; }
+interface Cliente { id: string; name: string; email: string; phone: string; address: string; vehicle: string; notes: string; status: string; }
+interface Usuario { name: string; email: string; phone: string; address: string; role: string; password: string; status?: string; }
+interface Pedido { id: string; type: string; customerName: string; email: string; total: number; items: unknown[]; status: string; createdAt: string; }
+
+const PRODUCTOS_DEFAULT: Producto[] &#x3D; [
+  { id: &#x27;p1&#x27;, name: &#x27;Shampoo neutro&#x27;, category: &#x27;limpieza&#x27;, price: 8900, stock: 24, active: true, image: &#x27;&#x27;, description: &#x27;Limpieza segura para pintura y superficies delicadas.&#x27; },
+  { id: &#x27;p2&#x27;, name: &#x27;Desengrasante multiuso&#x27;, category: &#x27;limpieza&#x27;, price: 12900, stock: 18, active: true, image: &#x27;&#x27;, description: &#x27;Ideal para llantas, motor y zonas de alta suciedad.&#x27; },
+  { id: &#x27;p3&#x27;, name: &#x27;Cera protectora&#x27;, category: &#x27;proteccion&#x27;, price: 15400, stock: 12, active: true, image: &#x27;&#x27;, description: &#x27;Proteccion y brillo duradero para carroceria.&#x27; },
+  { id: &#x27;p4&#x27;, name: &#x27;Microfibra premium&#x27;, category: &#x27;accesorios&#x27;, price: 4900, stock: 40, active: true, image: &#x27;&#x27;, description: &#x27;Toalla suave para secado y detallado.&#x27; },
+  { id: &#x27;p5&#x27;, name: &#x27;Limpiador interior&#x27;, category: &#x27;limpieza&#x27;, price: 11900, stock: 16, active: true, image: &#x27;&#x27;, description: &#x27;Para plasticos, vinilos y tableros.&#x27; },
+  { id: &#x27;p6&#x27;, name: &#x27;Shine de neumaticos&#x27;, category: &#x27;proteccion&#x27;, price: 10900, stock: 20, active: true, image: &#x27;&#x27;, description: &#x27;Acabado negro satinado y proteccion extra.&#x27; },
+  { id: &#x27;p7&#x27;, name: &#x27;Cepillo detailing&#x27;, category: &#x27;accesorios&#x27;, price: 5800, stock: 30, active: true, image: &#x27;&#x27;, description: &#x27;Llega a costuras, emblemas y rincones.&#x27; },
+  { id: &#x27;p8&#x27;, name: &#x27;Aromatizante premium&#x27;, category: &#x27;accesorios&#x27;, price: 6900, stock: 28, active: true, image: &#x27;&#x27;, description: &#x27;Aroma limpio para una experiencia completa.&#x27; }
+];
+
+const CLIENTES_DEFAULT: Cliente[] &#x3D; [
+  { id: &#x27;c1&#x27;, name: &#x27;Bryan Andres Chavez Carreño&#x27;, email: &#x27;bryanandres9@hotmail.com&#x27;, phone: &#x27;927264262&#x27;, address: &#x27;avenida llacolen 4165&#x27;, vehicle: &#x27;Sedan&#x27;, notes: &#x27;Cliente demo&#x27;, status: &#x27;Activo&#x27; },
+  { id: &#x27;c2&#x27;, name: &#x27;Cliente Demo&#x27;, email: &#x27;cliente@fullgasdetail.cl&#x27;, phone: &#x27;912345678&#x27;, address: &#x27;Coronel, Concepcion&#x27;, vehicle: &#x27;SUV&#x27;, notes: &#x27;Carga inicial&#x27;, status: &#x27;Activo&#x27; }
+];
+
+/**
+ * Panel administrativo con gestion de productos, clientes, usuarios y pedidos.
+ * Usa signals para estado reactivo y paneles intercambiables via panelActivo.
+ * Todo el estado se persiste en localStorage simulando un ERP basico.
+ */
+@Component({
+  selector: &#x27;app-admin&#x27;,
+  imports: [RouterLink, CurrencyClPipe, FechaClPipe],
+  templateUrl: &#x27;./admin.html&#x27;,
+  styleUrl: &#x27;./admin.css&#x27;,
+})
+export class AdminComponent implements OnInit {
+  private readonly toast &#x3D; inject(ToastService);
+  private readonly platformId &#x3D; inject(PLATFORM_ID);
+
+  panelActivo &#x3D; signal(&#x27;overview&#x27;);
+  productos &#x3D; signal&lt;Producto[]&gt;([]);
+  clientes &#x3D; signal&lt;Cliente[]&gt;([]);
+  usuarios &#x3D; signal&lt;Usuario[]&gt;([]);
+  pedidos &#x3D; signal&lt;Pedido[]&gt;([]);
+
+  editandoProducto &#x3D; signal&lt;Producto | null&gt;(null);
+  editandoCliente &#x3D; signal&lt;Cliente | null&gt;(null);
+  editandoUsuario &#x3D; signal&lt;Usuario | null&gt;(null);
+
+  stats &#x3D; computed(() &#x3D;&gt; ({
+    productos: this.productos().length,
+    clientes: this.clientes().length,
+    usuarios: this.usuarios().length,
+    pedidos: this.pedidos().length,
+    stockBajo: this.productos().filter(p &#x3D;&gt; Number(p.stock ?? 0) &lt;&#x3D; 5).length
+  }));
+
+  ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (!localStorage.getItem(&#x27;fullgas_products&#x27;)) localStorage.setItem(&#x27;fullgas_products&#x27;, JSON.stringify(PRODUCTOS_DEFAULT));
+    if (!localStorage.getItem(&#x27;fullgas_customers&#x27;)) localStorage.setItem(&#x27;fullgas_customers&#x27;, JSON.stringify(CLIENTES_DEFAULT));
+    if (!localStorage.getItem(&#x27;fullgas_users&#x27;)) localStorage.setItem(&#x27;fullgas_users&#x27;, JSON.stringify([
+      { name: &#x27;Bryan Chavez&#x27;, email: &#x27;bryan@fullgasdetail.cl&#x27;, phone: &#x27;927264262&#x27;, address: &#x27;Avenida Llacolen 4165, Coronel&#x27;, role: &#x27;Cliente&#x27;, password: &#x27;Cliente1!&#x27; },
+      { name: &#x27;Carlos Soto&#x27;, email: &#x27;tecnico@fullgasdetail.cl&#x27;, phone: &#x27;923456789&#x27;, address: &#x27;Calle Los Aromos 321, Coronel&#x27;, role: &#x27;Tecnico&#x27;, password: &#x27;Tecnico1!&#x27; },
+      { name: &#x27;Admin Principal&#x27;, email: &#x27;admin@fullgasdetail.cl&#x27;, phone: &#x27;934567891&#x27;, address: &#x27;Coronel, Concepcion&#x27;, role: &#x27;Administrador&#x27;, password: &#x27;Admin123!&#x27; }
+    ]));
+    this.cargarTodo();
+  }
+
+  private cargarTodo(): void {
+    this.productos.set(JSON.parse(localStorage.getItem(&#x27;fullgas_products&#x27;) ?? &#x27;[]&#x27;));
+    this.clientes.set(JSON.parse(localStorage.getItem(&#x27;fullgas_customers&#x27;) ?? &#x27;[]&#x27;));
+    this.usuarios.set(JSON.parse(localStorage.getItem(&#x27;fullgas_users&#x27;) ?? &#x27;[]&#x27;));
+    this.pedidos.set(JSON.parse(localStorage.getItem(&#x27;fullgas_orders&#x27;) ?? &#x27;[]&#x27;));
+  }
+
+  guardarProducto(evento: SubmitEvent): void {
+    const form &#x3D; evento.target as HTMLFormElement;
+    if (!form.checkValidity()) { form.classList.add(&#x27;was-validated&#x27;); return; }
+    const datos &#x3D; new FormData(form);
+    const lista &#x3D; this.productos();
+    const id &#x3D; (datos.get(&#x27;productId&#x27;) as string) || &#x60;prod_${Date.now()}&#x60;;
+    const producto: Producto &#x3D; { id, name: datos.get(&#x27;productName&#x27;) as string, category: datos.get(&#x27;productCategory&#x27;) as string, price: Number(datos.get(&#x27;productPrice&#x27;)), stock: Number(datos.get(&#x27;productStock&#x27;)), description: datos.get(&#x27;productDescription&#x27;) as string, active: datos.get(&#x27;productActive&#x27;) &#x3D;&#x3D;&#x3D; &#x27;on&#x27;, image: &#x27;&#x27; };
+    const idx &#x3D; lista.findIndex(p &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; id);
+    const nueva &#x3D; idx &gt;&#x3D; 0 ? lista.map((p, i) &#x3D;&gt; i &#x3D;&#x3D;&#x3D; idx ? producto : p) : [producto, ...lista];
+    localStorage.setItem(&#x27;fullgas_products&#x27;, JSON.stringify(nueva));
+    this.productos.set(nueva);
+    this.editandoProducto.set(null);
+    form.reset(); form.classList.remove(&#x27;was-validated&#x27;);
+    this.toast.mostrar(&#x27;Producto guardado.&#x27;);
+  }
+
+  editarProducto(producto: Producto): void { this.editandoProducto.set(producto); this.panelActivo.set(&#x27;products&#x27;); }
+
+  eliminarProducto(id: string): void {
+    const nueva &#x3D; this.productos().filter(p &#x3D;&gt; p.id !&#x3D;&#x3D; id);
+    localStorage.setItem(&#x27;fullgas_products&#x27;, JSON.stringify(nueva));
+    this.productos.set(nueva);
+    this.toast.mostrar(&#x27;Producto eliminado.&#x27;);
+  }
+
+  guardarCliente(evento: SubmitEvent): void {
+    const form &#x3D; evento.target as HTMLFormElement;
+    if (!form.checkValidity()) { form.classList.add(&#x27;was-validated&#x27;); return; }
+    const datos &#x3D; new FormData(form);
+    const lista &#x3D; this.clientes();
+    const id &#x3D; (datos.get(&#x27;customerId&#x27;) as string) || &#x60;cust_${Date.now()}&#x60;;
+    const cliente: Cliente &#x3D; { id, name: datos.get(&#x27;customerName&#x27;) as string, email: datos.get(&#x27;customerEmail&#x27;) as string, phone: datos.get(&#x27;customerPhone&#x27;) as string, address: datos.get(&#x27;customerAddress&#x27;) as string, vehicle: datos.get(&#x27;customerVehicle&#x27;) as string, notes: datos.get(&#x27;customerNotes&#x27;) as string, status: datos.get(&#x27;customerStatus&#x27;) as string };
+    const idx &#x3D; lista.findIndex(c &#x3D;&gt; c.id &#x3D;&#x3D;&#x3D; id);
+    const nueva &#x3D; idx &gt;&#x3D; 0 ? lista.map((c, i) &#x3D;&gt; i &#x3D;&#x3D;&#x3D; idx ? cliente : c) : [cliente, ...lista];
+    localStorage.setItem(&#x27;fullgas_customers&#x27;, JSON.stringify(nueva));
+    this.clientes.set(nueva);
+    this.editandoCliente.set(null);
+    form.reset(); form.classList.remove(&#x27;was-validated&#x27;);
+    this.toast.mostrar(&#x27;Cliente guardado.&#x27;);
+  }
+
+  editarCliente(cliente: Cliente): void { this.editandoCliente.set(cliente); this.panelActivo.set(&#x27;customers&#x27;); }
+
+  eliminarCliente(id: string): void {
+    const nueva &#x3D; this.clientes().filter(c &#x3D;&gt; c.id !&#x3D;&#x3D; id);
+    localStorage.setItem(&#x27;fullgas_customers&#x27;, JSON.stringify(nueva));
+    this.clientes.set(nueva);
+    this.toast.mostrar(&#x27;Cliente eliminado.&#x27;);
+  }
+
+  guardarUsuario(evento: SubmitEvent): void {
+    const form &#x3D; evento.target as HTMLFormElement;
+    if (!form.checkValidity()) { form.classList.add(&#x27;was-validated&#x27;); return; }
+    const datos &#x3D; new FormData(form);
+    const lista &#x3D; this.usuarios();
+    const email &#x3D; (datos.get(&#x27;userEmail&#x27;) as string).trim();
+    const actual &#x3D; lista.find(u &#x3D;&gt; u.email.toLowerCase() &#x3D;&#x3D;&#x3D; email.toLowerCase());
+    const nuevaClave &#x3D; (datos.get(&#x27;userPassword&#x27;) as string).trim();
+    const usuario: Usuario &#x3D; { name: datos.get(&#x27;userName&#x27;) as string, email, phone: datos.get(&#x27;userPhone&#x27;) as string, address: datos.get(&#x27;userAddress&#x27;) as string, role: datos.get(&#x27;userRole&#x27;) as string, status: datos.get(&#x27;userStatus&#x27;) as string, password: nuevaClave || actual?.password || &#x27;Cliente1!&#x27; };
+    const idx &#x3D; lista.findIndex(u &#x3D;&gt; u.email.toLowerCase() &#x3D;&#x3D;&#x3D; email.toLowerCase());
+    const nueva &#x3D; idx &gt;&#x3D; 0 ? lista.map((u, i) &#x3D;&gt; i &#x3D;&#x3D;&#x3D; idx ? { ...u, ...usuario } : u) : [usuario, ...lista];
+    localStorage.setItem(&#x27;fullgas_users&#x27;, JSON.stringify(nueva));
+    this.usuarios.set(nueva);
+    this.editandoUsuario.set(null);
+    form.reset(); form.classList.remove(&#x27;was-validated&#x27;);
+    this.toast.mostrar(&#x27;Usuario guardado.&#x27;);
+  }
+
+  editarUsuario(usuario: Usuario): void { this.editandoUsuario.set(usuario); this.panelActivo.set(&#x27;users&#x27;); }
+
+  eliminarUsuario(email: string): void {
+    const nueva &#x3D; this.usuarios().filter(u &#x3D;&gt; u.email.toLowerCase() !&#x3D;&#x3D; email.toLowerCase());
+    localStorage.setItem(&#x27;fullgas_users&#x27;, JSON.stringify(nueva));
+    this.usuarios.set(nueva);
+    this.toast.mostrar(&#x27;Usuario eliminado.&#x27;);
+  }
+
+  pedidosCliente(email: string): number {
+    return this.pedidos().filter(p &#x3D;&gt; (p.email ?? &#x27;&#x27;).toLowerCase() &#x3D;&#x3D;&#x3D; email.toLowerCase()).length;
+  }
+
+  itemsCount(items: unknown[]): number { return Array.isArray(items) ? items.length : 0; }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'Pedido.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

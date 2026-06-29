@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">
+      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
+      <span>Full Gas Detail</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+      aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto gap-lg-1">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/inicio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/productos" routerLinkActive="active">Productos</a>
+        </li>
+        @if (session.sesion()?.role === 'Administrador' || session.sesion()?.role === 'Tecnico') {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin" routerLinkActive="active">Panel admin</a>
+          </li>
+        }
+      </ul>
+
+      <div class="d-flex align-items-center gap-2 ms-lg-3 mt-3 mt-lg-0">
+        @if (session.sesion(); as s) {
+          <span class="text-white-50 small d-none d-lg-inline">
+            Hola, <strong class="text-white">{{ s.name.split(' ')[0] }}</strong>
+          </span>
+          <a class="btn btn-outline-light btn-sm" routerLink="/mis-compras" routerLinkActive="active">Mis compras</a>
+          <a class="btn btn-outline-light btn-sm" routerLink="/perfil" routerLinkActive="active">Perfil</a>
+          <a class="btn btn-outline-light btn-sm nav-icon-btn" routerLink="/carrito" aria-label="Ver carrito">
+            <i class="bi bi-cart3"></i>
+          </a>
+          <button class="btn btn-sm btn-outline-danger" type="button" (click)="session.cerrar()" title="Cerrar sesion">
+            <i class="bi bi-box-arrow-right me-1"></i><span class="d-none d-lg-inline">Salir</span>
+          </button>
+        } @else {
+          <a class="btn btn-outline-light btn-sm" routerLink="/login">Ingresar</a>
+          <a class="btn btn-brand btn-sm" routerLink="/registro">Crear cuenta</a>
+          <a class="btn btn-outline-light btn-sm nav-icon-btn" routerLink="/carrito" aria-label="Ver carrito">
+            <i class="bi bi-cart3"></i>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</nav>
