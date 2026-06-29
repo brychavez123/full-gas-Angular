@@ -339,6 +339,60 @@ a {
   color: var(--brand) !important;
 }
 
+.dashboard-shell {
+  max-width: 100%;
+}
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.dashboard-sidebar {
+  position: sticky;
+  top: 94px;
+}
+
+.dashboard-nav {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.dashboard-nav-item {
+  width: 100%;
+  text-align: left;
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.dashboard-nav-item:hover,
+.dashboard-nav-item.active {
+  background: rgba(242, 181, 68, 0.14);
+  border-color: rgba(242, 181, 68, 0.55);
+  transform: translateX(2px);
+}
+
+.dashboard-content {
+  min-width: 0;
+}
+
+@media (max-width: 991.98px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-sidebar {
+    position: static;
+  }
+}
+
 @keyframes floatY {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-14px); }
