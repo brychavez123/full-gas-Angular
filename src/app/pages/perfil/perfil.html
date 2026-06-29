@@ -1,0 +1,126 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-shell sticky-top border-bottom border-white border-opacity-10">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-semibold" routerLink="/inicio">
+      <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
+      <span>Full Gas Detail</span>
+    </a>
+    <div class="ms-auto d-flex gap-2">
+      <a class="btn btn-outline-light btn-sm" routerLink="/mis-compras">Mis compras</a>
+      <a class="btn btn-brand btn-sm" routerLink="/productos">Productos</a>
+    </div>
+  </div>
+</nav>
+
+<main class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-12 col-lg-4">
+        <div class="panel-card h-100">
+          <img src="assets/logo.jpg" alt="Logo" class="brand-logo brand-logo-md mb-4">
+          <h1 class="h3 fw-bold">Modificacion de perfil</h1>
+          <p class="text-white-50">Actualiza tus datos, preferencias y tipo de usuario activo.</p>
+          <div class="session-box mt-4">
+            @if (sesion(); as s) {
+              <div class="mb-2"><strong>Nombre:</strong> {{ s.name }}</div>
+              <div class="mb-2"><strong>Correo:</strong> {{ s.email }}</div>
+              <div class="mb-2"><strong>Rol:</strong> {{ s.role }}</div>
+              <div><strong>Direccion:</strong> {{ s.address || '-' }}</div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-8">
+        <div class="panel-card">
+          <form class="needs-validation" novalidate (submit)="guardar($any($event))">
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="profileName">Nombre completo</label>
+                <input class="form-control" id="profileName" name="name" required minlength="4" [value]="sesion()?.name ?? ''">
+                <div class="invalid-feedback">Ingresa tu nombre completo.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="profileEmail">Correo</label>
+                <input class="form-control" id="profileEmail" name="email" type="email" required [value]="sesion()?.email ?? ''">
+                <div class="invalid-feedback">Ingresa un correo valido.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="profilePhone">Telefono</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text">+56</span>
+                  <input class="form-control" id="profilePhone" name="phone" type="tel" pattern="[0-9]{9}" inputmode="numeric" required [value]="sesion()?.phone ?? ''" (keydown)="soloNumeros($any($event))">
+                  <div class="invalid-feedback">Ingresa 9 digitos.</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="profileAddress">Direccion</label>
+                <input class="form-control" id="profileAddress" name="address" required minlength="6" [value]="sesion()?.address ?? ''">
+                <div class="invalid-feedback">Ingresa una direccion.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="profilePassword">Nueva contrasena</label>
+                <input class="form-control" id="profilePassword" name="password" type="password" minlength="8" maxlength="20"
+                  [value]="passwordValue()" (input)="passwordValue.set($any($event.target).value)">
+                <div class="invalid-feedback">La contrasena no cumple las reglas.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="profileConfirm">Confirmar contrasena</label>
+                <input class="form-control" id="profileConfirm" name="confirmPassword" type="password" minlength="8"
+                  [value]="confirmValue()" (input)="confirmValue.set($any($event.target).value)">
+                <div class="invalid-feedback">Debe coincidir con la nueva contrasena.</div>
+              </div>
+              @if (passwordValue()) {
+                <div class="col-12">
+                  <div class="password-rules">
+                    <span [class.text-success]="passwordValue().length >= 8 && passwordValue().length <= 20">Minimo 8 caracteres</span> ·
+                    <span [class.text-success]="/[A-Z]/.test(passwordValue())">Una mayuscula</span> ·
+                    <span [class.text-success]="/[a-z]/.test(passwordValue())">Una minuscula</span> ·
+                    <span [class.text-success]="/[0-9]/.test(passwordValue())">Un numero</span> ·
+                    <span [class.text-success]="/[^A-Za-z0-9]/.test(passwordValue())">Un caracter especial</span>
+                  </div>
+                </div>
+              }
+              <div class="col-12 d-grid d-md-flex justify-content-md-end gap-2">
+                <button class="btn btn-outline-light btn-lg" type="reset">Limpiar</button>
+                <button class="btn btn-brand btn-lg" type="submit">Guardar cambios</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer border-top border-white border-opacity-10">
+  <div class="container">
+    <div class="row align-items-center g-4 py-5">
+      <div class="col-12 col-md-4">
+        <a class="d-flex align-items-center gap-2 fw-semibold text-white text-decoration-none mb-2" routerLink="/inicio">
+          <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-sm">
+          <span>Full Gas Detail</span>
+        </a>
+        <p class="text-white-50 small mb-0">Carwash a domicilio y productos de detailing en Coronel, Concepcion.</p>
+      </div>
+      <div class="col-12 col-md-4 text-md-center">
+        <p class="text-white-50 small mb-2">Siguenos</p>
+        <div class="d-flex gap-3 justify-content-md-center">
+          <a href="#" class="footer-social" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="footer-social" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+          <a href="#" class="footer-social" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 text-md-end">
+        <div class="d-flex flex-column gap-1 align-items-md-end">
+          <a href="#" class="text-white-50 small footer-link">Politica de Privacidad</a>
+          <a href="#" class="text-white-50 small footer-link">Terminos de Uso</a>
+          <a href="#" class="text-white-50 small footer-link">Contacto</a>
+        </div>
+      </div>
+    </div>
+    <div class="border-top border-white border-opacity-10 py-3 text-center">
+      <span class="text-white-50 small">&copy; 2026 Full Gas Detail &mdash; Coronel, Concepcion. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>

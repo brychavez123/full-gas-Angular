@@ -43,6 +43,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/mis-compras/mis-compras').then(m => m.MisComprasComponent)
   },
   {
+    path: 'perfil',
+    loadComponent: () => import('./pages/perfil/perfil').then(m => m.PerfilComponent)
+  },
+  {
     path: '**',
     redirectTo: 'inicio'
   }
