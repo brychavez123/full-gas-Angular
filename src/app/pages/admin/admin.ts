@@ -1,6 +1,7 @@
 import { Component, OnInit, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CurrencyClPipe } from '../../shared/pipes/currency-cl.pipe';
 import { FechaClPipe } from '../../shared/pipes/fecha-cl.pipe';
 import { ToastService } from '../../services/toast.service';
@@ -28,18 +29,20 @@ const CLIENTES_DEFAULT: Cliente[] = [
 
 /**
  * Panel administrativo con gestion de productos, clientes, usuarios y pedidos.
- * Usa signals para estado reactivo y paneles intercambiables via panelActivo.
+ * Usa formularios reactivos (FormGroup/FormBuilder) para los tres mantenedores,
+ * signals para estado reactivo y paneles intercambiables via panelActivo.
  * Todo el estado se persiste en localStorage simulando un ERP basico.
  */
 @Component({
   selector: 'app-admin',
-  imports: [RouterLink, CurrencyClPipe, FechaClPipe],
+  imports: [RouterLink, ReactiveFormsModule, CurrencyClPipe, FechaClPipe],
   templateUrl: './admin.html',
   styleUrl: './admin.css',
 })
 export class AdminComponent implements OnInit {
   private readonly toast = inject(ToastService);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly fb = inject(FormBuilder);
 
   panelActivo = signal('overview');
   productos = signal<Producto[]>([]);
@@ -59,7 +62,45 @@ export class AdminComponent implements OnInit {
     stockBajo: this.productos().filter(p => Number(p.stock ?? 0) <= 5).length
   }));
 
+  /** Formulario reactivo para el mantenedor de productos */
+  formProducto!: FormGroup;
+  /** Formulario reactivo para el mantenedor de clientes */
+  formCliente!: FormGroup;
+  /** Formulario reactivo para el mantenedor de usuarios */
+  formUsuario!: FormGroup;
+
   ngOnInit(): void {
+    this.formProducto = this.fb.group({
+      productId: [''],
+      productName: ['', [Validators.required]],
+      productCategory: ['', [Validators.required]],
+      productPrice: ['', [Validators.required, Validators.min(0)]],
+      productStock: ['', [Validators.required, Validators.min(0)]],
+      productActive: [true],
+      productDescription: ['', [Validators.required]]
+    });
+
+    this.formCliente = this.fb.group({
+      customerId: [''],
+      customerName: ['', [Validators.required]],
+      customerEmail: ['', [Validators.required, Validators.email]],
+      customerPhone: ['', [Validators.required]],
+      customerAddress: ['', [Validators.required]],
+      customerVehicle: ['', [Validators.required]],
+      customerStatus: ['Activo', [Validators.required]],
+      customerNotes: ['']
+    });
+
+    this.formUsuario = this.fb.group({
+      userName: ['', [Validators.required]],
+      userEmail: ['', [Validators.required, Validators.email]],
+      userRole: ['Cliente', [Validators.required]],
+      userPhone: [''],
+      userStatus: ['Activo', [Validators.required]],
+      userAddress: [''],
+      userPassword: ['']
+    });
+
     if (!isPlatformBrowser(this.platformId)) return;
     if (!localStorage.getItem('fullgas_products')) localStorage.setItem('fullgas_products', JSON.stringify(PRODUCTOS_DEFAULT));
     if (!localStorage.getItem('fullgas_customers')) localStorage.setItem('fullgas_customers', JSON.stringify(CLIENTES_DEFAULT));
@@ -78,23 +119,41 @@ export class AdminComponent implements OnInit {
     this.pedidos.set(JSON.parse(localStorage.getItem('fullgas_orders') ?? '[]'));
   }
 
-  guardarProducto(evento: SubmitEvent): void {
-    const form = evento.target as HTMLFormElement;
-    if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
-    const datos = new FormData(form);
+  /** Devuelve el control de formProducto por nombre */
+  campoP(nombre: string): AbstractControl { return this.formProducto.get(nombre)!; }
+  /** Devuelve el control de formCliente por nombre */
+  campoC(nombre: string): AbstractControl { return this.formCliente.get(nombre)!; }
+  /** Devuelve el control de formUsuario por nombre */
+  campoU(nombre: string): AbstractControl { return this.formUsuario.get(nombre)!; }
+
+  guardarProducto(): void {
+    if (this.formProducto.invalid) { this.formProducto.markAllAsTouched(); return; }
+    const v = this.formProducto.value as { productId: string; productName: string; productCategory: string; productPrice: string; productStock: string; productActive: boolean; productDescription: string };
     const lista = this.productos();
-    const id = (datos.get('productId') as string) || `prod_${Date.now()}`;
-    const producto: Producto = { id, name: datos.get('productName') as string, category: datos.get('productCategory') as string, price: Number(datos.get('productPrice')), stock: Number(datos.get('productStock')), description: datos.get('productDescription') as string, active: datos.get('productActive') === 'on', image: '' };
+    const id = v.productId || `prod_${Date.now()}`;
+    const producto: Producto = { id, name: v.productName, category: v.productCategory, price: Number(v.productPrice), stock: Number(v.productStock), description: v.productDescription, active: !!v.productActive, image: '' };
     const idx = lista.findIndex(p => p.id === id);
     const nueva = idx >= 0 ? lista.map((p, i) => i === idx ? producto : p) : [producto, ...lista];
     localStorage.setItem('fullgas_products', JSON.stringify(nueva));
     this.productos.set(nueva);
     this.editandoProducto.set(null);
-    form.reset(); form.classList.remove('was-validated');
+    this.formProducto.reset({ productActive: true });
     this.toast.mostrar('Producto guardado.');
   }
 
-  editarProducto(producto: Producto): void { this.editandoProducto.set(producto); this.panelActivo.set('products'); }
+  editarProducto(producto: Producto): void {
+    this.editandoProducto.set(producto);
+    this.formProducto.patchValue({
+      productId: producto.id,
+      productName: producto.name,
+      productCategory: producto.category,
+      productPrice: producto.price,
+      productStock: producto.stock,
+      productActive: producto.active,
+      productDescription: producto.description
+    });
+    this.panelActivo.set('products');
+  }
 
   eliminarProducto(id: string): void {
     const nueva = this.productos().filter(p => p.id !== id);
@@ -103,23 +162,35 @@ export class AdminComponent implements OnInit {
     this.toast.mostrar('Producto eliminado.');
   }
 
-  guardarCliente(evento: SubmitEvent): void {
-    const form = evento.target as HTMLFormElement;
-    if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
-    const datos = new FormData(form);
+  guardarCliente(): void {
+    if (this.formCliente.invalid) { this.formCliente.markAllAsTouched(); return; }
+    const v = this.formCliente.value as { customerId: string; customerName: string; customerEmail: string; customerPhone: string; customerAddress: string; customerVehicle: string; customerStatus: string; customerNotes: string };
     const lista = this.clientes();
-    const id = (datos.get('customerId') as string) || `cust_${Date.now()}`;
-    const cliente: Cliente = { id, name: datos.get('customerName') as string, email: datos.get('customerEmail') as string, phone: datos.get('customerPhone') as string, address: datos.get('customerAddress') as string, vehicle: datos.get('customerVehicle') as string, notes: datos.get('customerNotes') as string, status: datos.get('customerStatus') as string };
+    const id = v.customerId || `cust_${Date.now()}`;
+    const cliente: Cliente = { id, name: v.customerName, email: v.customerEmail, phone: v.customerPhone, address: v.customerAddress, vehicle: v.customerVehicle, notes: v.customerNotes, status: v.customerStatus };
     const idx = lista.findIndex(c => c.id === id);
     const nueva = idx >= 0 ? lista.map((c, i) => i === idx ? cliente : c) : [cliente, ...lista];
     localStorage.setItem('fullgas_customers', JSON.stringify(nueva));
     this.clientes.set(nueva);
     this.editandoCliente.set(null);
-    form.reset(); form.classList.remove('was-validated');
+    this.formCliente.reset({ customerStatus: 'Activo' });
     this.toast.mostrar('Cliente guardado.');
   }
 
-  editarCliente(cliente: Cliente): void { this.editandoCliente.set(cliente); this.panelActivo.set('customers'); }
+  editarCliente(cliente: Cliente): void {
+    this.editandoCliente.set(cliente);
+    this.formCliente.patchValue({
+      customerId: cliente.id,
+      customerName: cliente.name,
+      customerEmail: cliente.email,
+      customerPhone: cliente.phone,
+      customerAddress: cliente.address,
+      customerVehicle: cliente.vehicle,
+      customerStatus: cliente.status,
+      customerNotes: cliente.notes
+    });
+    this.panelActivo.set('customers');
+  }
 
   eliminarCliente(id: string): void {
     const nueva = this.clientes().filter(c => c.id !== id);
@@ -128,25 +199,36 @@ export class AdminComponent implements OnInit {
     this.toast.mostrar('Cliente eliminado.');
   }
 
-  guardarUsuario(evento: SubmitEvent): void {
-    const form = evento.target as HTMLFormElement;
-    if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
-    const datos = new FormData(form);
+  guardarUsuario(): void {
+    if (this.formUsuario.invalid) { this.formUsuario.markAllAsTouched(); return; }
+    const v = this.formUsuario.value as { userName: string; userEmail: string; userRole: string; userPhone: string; userStatus: string; userAddress: string; userPassword: string };
     const lista = this.usuarios();
-    const email = (datos.get('userEmail') as string).trim();
+    const email = v.userEmail.trim();
     const actual = lista.find(u => u.email.toLowerCase() === email.toLowerCase());
-    const nuevaClave = (datos.get('userPassword') as string).trim();
-    const usuario: Usuario = { name: datos.get('userName') as string, email, phone: datos.get('userPhone') as string, address: datos.get('userAddress') as string, role: datos.get('userRole') as string, status: datos.get('userStatus') as string, password: nuevaClave || actual?.password || 'Cliente1!' };
+    const nuevaClave = v.userPassword?.trim();
+    const usuario: Usuario = { name: v.userName, email, phone: v.userPhone, address: v.userAddress, role: v.userRole, status: v.userStatus, password: nuevaClave || actual?.password || 'Cliente1!' };
     const idx = lista.findIndex(u => u.email.toLowerCase() === email.toLowerCase());
     const nueva = idx >= 0 ? lista.map((u, i) => i === idx ? { ...u, ...usuario } : u) : [usuario, ...lista];
     localStorage.setItem('fullgas_users', JSON.stringify(nueva));
     this.usuarios.set(nueva);
     this.editandoUsuario.set(null);
-    form.reset(); form.classList.remove('was-validated');
+    this.formUsuario.reset({ userRole: 'Cliente', userStatus: 'Activo' });
     this.toast.mostrar('Usuario guardado.');
   }
 
-  editarUsuario(usuario: Usuario): void { this.editandoUsuario.set(usuario); this.panelActivo.set('users'); }
+  editarUsuario(usuario: Usuario): void {
+    this.editandoUsuario.set(usuario);
+    this.formUsuario.patchValue({
+      userName: usuario.name,
+      userEmail: usuario.email,
+      userRole: usuario.role,
+      userPhone: usuario.phone,
+      userStatus: usuario.status ?? 'Activo',
+      userAddress: usuario.address,
+      userPassword: ''
+    });
+    this.panelActivo.set('users');
+  }
 
   eliminarUsuario(email: string): void {
     const nueva = this.usuarios().filter(u => u.email.toLowerCase() !== email.toLowerCase());

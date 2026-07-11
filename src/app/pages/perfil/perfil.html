@@ -21,56 +21,61 @@
 
       <div class="col-12 col-lg-8">
         <div class="panel-card">
-          <form class="needs-validation" novalidate (submit)="guardar($any($event))">
+          <form [formGroup]="form" (ngSubmit)="guardar()">
             <div class="row g-3">
               <div class="col-12 col-md-6">
                 <label class="form-label" for="profileName">Nombre completo</label>
-                <input class="form-control" id="profileName" name="name" required minlength="4" [value]="sesion()?.name ?? ''">
-                <div class="invalid-feedback">Ingresa tu nombre completo.</div>
+                <input class="form-control" [class.is-invalid]="campo('name').invalid && campo('name').touched"
+                  id="profileName" formControlName="name">
+                <div class="invalid-feedback">Ingresa tu nombre completo (minimo 4 caracteres).</div>
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="profileEmail">Correo</label>
-                <input class="form-control" id="profileEmail" name="email" type="email" required [value]="sesion()?.email ?? ''">
+                <input class="form-control" [class.is-invalid]="campo('email').invalid && campo('email').touched"
+                  id="profileEmail" type="email" formControlName="email">
                 <div class="invalid-feedback">Ingresa un correo valido.</div>
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="profilePhone">Telefono</label>
                 <div class="input-group has-validation">
                   <span class="input-group-text">+56</span>
-                  <input class="form-control" id="profilePhone" name="phone" type="tel" pattern="[0-9]{9}" inputmode="numeric" required [value]="sesion()?.phone ?? ''" soloNumeros>
+                  <input class="form-control" [class.is-invalid]="campo('phone').invalid && campo('phone').touched"
+                    id="profilePhone" type="tel" inputmode="numeric" formControlName="phone" soloNumeros>
                   <div class="invalid-feedback">Ingresa 9 digitos.</div>
                 </div>
               </div>
               <div class="col-12">
                 <label class="form-label" for="profileAddress">Direccion</label>
-                <input class="form-control" id="profileAddress" name="address" required minlength="6" [value]="sesion()?.address ?? ''">
-                <div class="invalid-feedback">Ingresa una direccion.</div>
+                <input class="form-control" [class.is-invalid]="campo('address').invalid && campo('address').touched"
+                  id="profileAddress" formControlName="address">
+                <div class="invalid-feedback">Ingresa una direccion (minimo 6 caracteres).</div>
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="profilePassword">Nueva contrasena</label>
-                <input class="form-control" id="profilePassword" name="password" type="password" minlength="8" maxlength="20"
-                  [value]="passwordValue()" (input)="passwordValue.set($any($event.target).value)">
-                <div class="invalid-feedback">La contrasena no cumple las reglas.</div>
+                <input class="form-control" [class.is-invalid]="campo('password').invalid && campo('password').touched"
+                  id="profilePassword" type="password" formControlName="password">
+                <div class="invalid-feedback">La contrasena no cumple las reglas de seguridad.</div>
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="profileConfirm">Confirmar contrasena</label>
-                <input class="form-control" id="profileConfirm" name="confirmPassword" type="password" minlength="8"
-                  [value]="confirmValue()" (input)="confirmValue.set($any($event.target).value)">
+                <input class="form-control"
+                  [class.is-invalid]="form.hasError('noCoinciden') && campo('confirmPassword').touched"
+                  id="profileConfirm" type="password" formControlName="confirmPassword">
                 <div class="invalid-feedback">Debe coincidir con la nueva contrasena.</div>
               </div>
-              @if (passwordValue()) {
+              @if (pwValue) {
                 <div class="col-12">
                   <div class="password-rules">
-                    <span [class.text-success]="passwordValue().length >= 8 && passwordValue().length <= 20">Minimo 8 caracteres</span> ·
-                    <span [class.text-success]="/[A-Z]/.test(passwordValue())">Una mayuscula</span> ·
-                    <span [class.text-success]="/[a-z]/.test(passwordValue())">Una minuscula</span> ·
-                    <span [class.text-success]="/[0-9]/.test(passwordValue())">Un numero</span> ·
-                    <span [class.text-success]="/[^A-Za-z0-9]/.test(passwordValue())">Un caracter especial</span>
+                    <span [class.text-success]="pwValue.length >= 8 && pwValue.length <= 20">Minimo 8 caracteres</span> ·
+                    <span [class.text-success]="/[A-Z]/.test(pwValue)">Una mayuscula</span> ·
+                    <span [class.text-success]="/[a-z]/.test(pwValue)">Una minuscula</span> ·
+                    <span [class.text-success]="/[0-9]/.test(pwValue)">Un numero</span> ·
+                    <span [class.text-success]="/[^A-Za-z0-9]/.test(pwValue)">Un caracter especial</span>
                   </div>
                 </div>
               }
               <div class="col-12 d-grid d-md-flex justify-content-md-end gap-2">
-                <button class="btn btn-outline-light btn-lg" type="reset">Limpiar</button>
+                <button class="btn btn-outline-light btn-lg" type="button" (click)="form.reset()">Limpiar</button>
                 <button class="btn btn-brand btn-lg" type="submit">Guardar cambios</button>
               </div>
             </div>

@@ -36,26 +36,30 @@
       <div class="col-12 col-xl-4">
         <div class="panel-card h-100">
           <h2 class="h4 fw-bold">Reservar servicio</h2>
-          <form class="needs-validation mt-3" novalidate (submit)="reservar($any($event))">
+          <form [formGroup]="form" (ngSubmit)="reservar()" class="mt-3">
             <div class="mb-3">
               <label class="form-label" for="serviceName">Nombre</label>
-              <input class="form-control" id="serviceName" name="name" required>
-              <div class="invalid-feedback">Ingresa tu nombre.</div>
+              <input class="form-control" [class.is-invalid]="campo('name').invalid && campo('name').touched"
+                id="serviceName" formControlName="name">
+              <div class="invalid-feedback">Ingresa tu nombre (minimo 3 caracteres).</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="serviceDate">Fecha</label>
-              <input class="form-control" id="serviceDate" name="date" type="date" required>
+              <input class="form-control" [class.is-invalid]="campo('date').invalid && campo('date').touched"
+                id="serviceDate" type="date" formControlName="date">
               <div class="invalid-feedback">Selecciona una fecha.</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="serviceTime">Hora</label>
-              <input class="form-control" id="serviceTime" name="time" type="time" required>
+              <input class="form-control" [class.is-invalid]="campo('time').invalid && campo('time').touched"
+                id="serviceTime" type="time" formControlName="time">
               <div class="invalid-feedback">Selecciona una hora.</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="serviceLocation">Direccion</label>
-              <textarea class="form-control" id="serviceLocation" name="address" rows="3" required></textarea>
-              <div class="invalid-feedback">Ingresa la direccion.</div>
+              <textarea class="form-control" [class.is-invalid]="campo('address').invalid && campo('address').touched"
+                id="serviceLocation" rows="3" formControlName="address"></textarea>
+              <div class="invalid-feedback">Ingresa la direccion (minimo 6 caracteres).</div>
             </div>
             <button class="btn btn-brand w-100" type="submit">Reservar ahora</button>
           </form>

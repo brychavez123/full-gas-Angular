@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { SoloNumerosDirective } from '../../shared/directives/solo-numeros.directive';
 import { ToastService } from '../../services/toast.service';
 import { SessionService } from '../../services/session.service';
+import { RegionesService, Region } from '../../services/regiones.service';
 
 /** Valida que la contrasena cumpla: 8-20 chars, mayuscula, minuscula, numero y caracter especial */
 function passwordSeguraValidator(): ValidatorFn {
@@ -33,12 +34,22 @@ function passwordMatchValidator(group: AbstractControl): ValidationErrors | null
   templateUrl: './registro.html',
   styleUrl: './registro.css',
 })
-export class RegistroComponent {
+export class RegistroComponent implements OnInit {
   private readonly toast = inject(ToastService);
   private readonly sessionService = inject(SessionService);
+  private readonly regionesService = inject(RegionesService);
 
   /** Formulario reactivo con todos los campos del registro */
   form: FormGroup;
+
+  /** Regiones de Chile obtenidas desde la API */
+  regiones: Region[] = [];
+
+  /** Comunas de la region seleccionada */
+  comunas: string[] = [];
+
+  /** Indica si hubo un error al cargar las regiones desde la API */
+  errorRegiones = false;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.form = this.fb.group({
@@ -46,11 +57,28 @@ export class RegistroComponent {
       lastName:  ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/)]],
       email:     ['', [Validators.required, Validators.email]],
       phone:     ['', [Validators.required, Validators.pattern(/^[0-9]{9}$/)]],
+      region:    ['', [Validators.required]],
+      comuna:    [{ value: '', disabled: true }, [Validators.required]],
       address:   ['', [Validators.required, Validators.minLength(6)]],
       password:      ['', [Validators.required, passwordSeguraValidator()]],
       confirmPassword: ['', [Validators.required]],
       terms: [false, [Validators.requiredTrue]]
     }, { validators: passwordMatchValidator });
+  }
+
+  ngOnInit(): void {
+    this.regionesService.getRegiones().subscribe({
+      next: (regiones) => { this.regiones = regiones; },
+      error: () => { this.errorRegiones = true; }
+    });
+
+    this.campo('region').valueChanges.subscribe((nombreRegion: string) => {
+      const region = this.regiones.find(r => r.nombre === nombreRegion);
+      this.comunas = region?.comunas ?? [];
+      const comunaCtrl = this.campo('comuna');
+      comunaCtrl.setValue('');
+      if (region) comunaCtrl.enable(); else comunaCtrl.disable();
+    });
   }
 
   /** Devuelve el control del formulario por nombre */
@@ -65,11 +93,13 @@ export class RegistroComponent {
       return;
     }
 
-    const { firstName, lastName, email, phone, address, password } = this.form.value as Record<string, string>;
+    const { firstName, lastName, email, phone, region, comuna, address, password } = this.form.value as Record<string, string>;
     const usuario = {
       name: `${firstName} ${lastName}`.trim(),
       email: email.trim(),
       phone: `+56${phone.trim()}`,
+      region,
+      comuna,
       address: address.trim(),
       role: 'Cliente',
       password: password.trim(),

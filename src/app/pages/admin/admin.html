@@ -92,47 +92,52 @@
               <h2 class="h4 fw-bold mb-0">Mantenedor de productos</h2>
               <span class="text-white-50 small">Alta, edicion, baja e inventario</span>
             </div>
-            <form class="needs-validation" novalidate (submit)="guardarProducto($any($event))">
-              <input type="hidden" name="productId" [value]="editandoProducto()?.id ?? ''">
+            <form [formGroup]="formProducto" (ngSubmit)="guardarProducto()">
+              <input type="hidden" formControlName="productId">
               <div class="row g-3">
                 <div class="col-12 col-md-4">
                   <label class="form-label" for="productName">Nombre</label>
-                  <input class="form-control" id="productName" name="productName" required [value]="editandoProducto()?.name ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoP('productName').invalid && campoP('productName').touched"
+                    id="productName" formControlName="productName">
                   <div class="invalid-feedback">Ingresa el nombre.</div>
                 </div>
                 <div class="col-12 col-md-2">
                   <label class="form-label" for="productCategory">Categoria</label>
-                  <select class="form-select" id="productCategory" name="productCategory" required>
+                  <select class="form-select" [class.is-invalid]="campoP('productCategory').invalid && campoP('productCategory').touched"
+                    id="productCategory" formControlName="productCategory">
                     <option value="">Selecciona</option>
-                    <option value="limpieza" [selected]="editandoProducto()?.category === 'limpieza'">Limpieza</option>
-                    <option value="proteccion" [selected]="editandoProducto()?.category === 'proteccion'">Proteccion</option>
-                    <option value="accesorios" [selected]="editandoProducto()?.category === 'accesorios'">Accesorios</option>
+                    <option value="limpieza">Limpieza</option>
+                    <option value="proteccion">Proteccion</option>
+                    <option value="accesorios">Accesorios</option>
                   </select>
                   <div class="invalid-feedback">Selecciona una categoria.</div>
                 </div>
                 <div class="col-12 col-md-2">
                   <label class="form-label" for="productPrice">Precio</label>
-                  <input class="form-control" id="productPrice" name="productPrice" type="number" min="0" required [value]="editandoProducto()?.price ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoP('productPrice').invalid && campoP('productPrice').touched"
+                    id="productPrice" type="number" min="0" formControlName="productPrice">
                   <div class="invalid-feedback">Ingresa el precio.</div>
                 </div>
                 <div class="col-12 col-md-2">
                   <label class="form-label" for="productStock">Stock</label>
-                  <input class="form-control" id="productStock" name="productStock" type="number" min="0" required [value]="editandoProducto()?.stock ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoP('productStock').invalid && campoP('productStock').touched"
+                    id="productStock" type="number" min="0" formControlName="productStock">
                   <div class="invalid-feedback">Ingresa el stock.</div>
                 </div>
                 <div class="col-12 col-md-2 d-flex align-items-end">
                   <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" id="productActive" name="productActive" [checked]="editandoProducto()?.active !== false">
+                    <input class="form-check-input" type="checkbox" id="productActive" formControlName="productActive">
                     <label class="form-check-label" for="productActive">Activo</label>
                   </div>
                 </div>
                 <div class="col-12">
                   <label class="form-label" for="productDescription">Descripcion</label>
-                  <textarea class="form-control" id="productDescription" name="productDescription" rows="2" required>{{ editandoProducto()?.description ?? '' }}</textarea>
+                  <textarea class="form-control" [class.is-invalid]="campoP('productDescription').invalid && campoP('productDescription').touched"
+                    id="productDescription" rows="2" formControlName="productDescription"></textarea>
                   <div class="invalid-feedback">Ingresa una descripcion.</div>
                 </div>
                 <div class="col-12 d-flex justify-content-end gap-2">
-                  <button class="btn btn-outline-light" type="reset" (click)="editandoProducto.set(null)">Limpiar</button>
+                  <button class="btn btn-outline-light" type="button" (click)="editandoProducto.set(null); formProducto.reset({ productActive: true })">Limpiar</button>
                   <button class="btn btn-brand" type="submit">Guardar producto</button>
                 </div>
               </div>
@@ -165,47 +170,52 @@
               <h2 class="h4 fw-bold mb-0">Mantenedor de clientes</h2>
               <span class="text-white-50 small">Datos de contacto y vehiculo</span>
             </div>
-            <form class="needs-validation" novalidate (submit)="guardarCliente($any($event))">
-              <input type="hidden" name="customerId" [value]="editandoCliente()?.id ?? ''">
+            <form [formGroup]="formCliente" (ngSubmit)="guardarCliente()">
+              <input type="hidden" formControlName="customerId">
               <div class="row g-3">
                 <div class="col-12 col-md-4">
                   <label class="form-label" for="customerName">Nombre</label>
-                  <input class="form-control" id="customerName" name="customerName" required [value]="editandoCliente()?.name ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoC('customerName').invalid && campoC('customerName').touched"
+                    id="customerName" formControlName="customerName">
                   <div class="invalid-feedback">Ingresa el nombre.</div>
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label" for="customerEmail">Correo</label>
-                  <input class="form-control" id="customerEmail" name="customerEmail" type="email" required [value]="editandoCliente()?.email ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoC('customerEmail').invalid && campoC('customerEmail').touched"
+                    id="customerEmail" type="email" formControlName="customerEmail">
                   <div class="invalid-feedback">Ingresa un correo valido.</div>
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label" for="customerPhone">Telefono</label>
-                  <input class="form-control" id="customerPhone" name="customerPhone" type="tel" required [value]="editandoCliente()?.phone ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoC('customerPhone').invalid && campoC('customerPhone').touched"
+                    id="customerPhone" type="tel" formControlName="customerPhone">
                   <div class="invalid-feedback">Ingresa el telefono.</div>
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label" for="customerAddress">Direccion</label>
-                  <input class="form-control" id="customerAddress" name="customerAddress" required [value]="editandoCliente()?.address ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoC('customerAddress').invalid && campoC('customerAddress').touched"
+                    id="customerAddress" formControlName="customerAddress">
                   <div class="invalid-feedback">Ingresa la direccion.</div>
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label" for="customerVehicle">Vehiculo</label>
-                  <input class="form-control" id="customerVehicle" name="customerVehicle" placeholder="SUV, Sedan, etc." required [value]="editandoCliente()?.vehicle ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoC('customerVehicle').invalid && campoC('customerVehicle').touched"
+                    id="customerVehicle" placeholder="SUV, Sedan, etc." formControlName="customerVehicle">
                   <div class="invalid-feedback">Ingresa el tipo de vehiculo.</div>
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label" for="customerStatus">Estado</label>
-                  <select class="form-select" id="customerStatus" name="customerStatus" required>
-                    <option [selected]="editandoCliente()?.status !== 'Inactivo'">Activo</option>
-                    <option [selected]="editandoCliente()?.status === 'Inactivo'">Inactivo</option>
+                  <select class="form-select" id="customerStatus" formControlName="customerStatus">
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
                   </select>
                 </div>
                 <div class="col-12">
                   <label class="form-label" for="customerNotes">Notas</label>
-                  <textarea class="form-control" id="customerNotes" name="customerNotes" rows="2">{{ editandoCliente()?.notes ?? '' }}</textarea>
+                  <textarea class="form-control" id="customerNotes" rows="2" formControlName="customerNotes"></textarea>
                 </div>
                 <div class="col-12 d-flex justify-content-end gap-2">
-                  <button class="btn btn-outline-light" type="reset" (click)="editandoCliente.set(null)">Limpiar</button>
+                  <button class="btn btn-outline-light" type="button" (click)="editandoCliente.set(null); formCliente.reset({ customerStatus: 'Activo' })">Limpiar</button>
                   <button class="btn btn-brand" type="submit">Guardar cliente</button>
                 </div>
               </div>
@@ -239,47 +249,49 @@
               <h2 class="h4 fw-bold mb-0">Mantenedor de usuarios</h2>
               <span class="text-white-50 small">Roles, acceso y estado</span>
             </div>
-            <form class="needs-validation" novalidate (submit)="guardarUsuario($any($event))">
+            <form [formGroup]="formUsuario" (ngSubmit)="guardarUsuario()">
               <div class="row g-3">
                 <div class="col-12 col-md-3">
                   <label class="form-label" for="userName">Nombre</label>
-                  <input class="form-control" id="userName" name="userName" required [value]="editandoUsuario()?.name ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoU('userName').invalid && campoU('userName').touched"
+                    id="userName" formControlName="userName">
                   <div class="invalid-feedback">Ingresa el nombre.</div>
                 </div>
                 <div class="col-12 col-md-3">
                   <label class="form-label" for="userEmail">Correo</label>
-                  <input class="form-control" id="userEmail" name="userEmail" type="email" required [value]="editandoUsuario()?.email ?? ''">
+                  <input class="form-control" [class.is-invalid]="campoU('userEmail').invalid && campoU('userEmail').touched"
+                    id="userEmail" type="email" formControlName="userEmail">
                   <div class="invalid-feedback">Ingresa un correo valido.</div>
                 </div>
                 <div class="col-12 col-md-2">
                   <label class="form-label" for="userRole">Rol</label>
-                  <select class="form-select" id="userRole" name="userRole" required>
-                    <option [selected]="!editandoUsuario() || editandoUsuario()?.role === 'Cliente'">Cliente</option>
-                    <option [selected]="editandoUsuario()?.role === 'Tecnico'">Tecnico</option>
-                    <option [selected]="editandoUsuario()?.role === 'Administrador'">Administrador</option>
+                  <select class="form-select" id="userRole" formControlName="userRole">
+                    <option value="Cliente">Cliente</option>
+                    <option value="Tecnico">Tecnico</option>
+                    <option value="Administrador">Administrador</option>
                   </select>
                 </div>
                 <div class="col-12 col-md-2">
                   <label class="form-label" for="userPhone">Telefono</label>
-                  <input class="form-control" id="userPhone" name="userPhone" [value]="editandoUsuario()?.phone ?? ''">
+                  <input class="form-control" id="userPhone" formControlName="userPhone">
                 </div>
                 <div class="col-12 col-md-2">
                   <label class="form-label" for="userStatus">Estado</label>
-                  <select class="form-select" id="userStatus" name="userStatus" required>
-                    <option [selected]="editandoUsuario()?.status !== 'Bloqueado'">Activo</option>
-                    <option [selected]="editandoUsuario()?.status === 'Bloqueado'">Bloqueado</option>
+                  <select class="form-select" id="userStatus" formControlName="userStatus">
+                    <option value="Activo">Activo</option>
+                    <option value="Bloqueado">Bloqueado</option>
                   </select>
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label" for="userAddress">Direccion</label>
-                  <input class="form-control" id="userAddress" name="userAddress" [value]="editandoUsuario()?.address ?? ''">
+                  <input class="form-control" id="userAddress" formControlName="userAddress">
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label" for="userPassword">Contrasena</label>
-                  <input class="form-control" id="userPassword" name="userPassword" type="text" placeholder="Dejar en blanco para mantener">
+                  <input class="form-control" id="userPassword" type="text" placeholder="Dejar en blanco para mantener" formControlName="userPassword">
                 </div>
                 <div class="col-12 d-flex justify-content-end gap-2">
-                  <button class="btn btn-outline-light" type="reset" (click)="editandoUsuario.set(null)">Limpiar</button>
+                  <button class="btn btn-outline-light" type="button" (click)="editandoUsuario.set(null); formUsuario.reset({ userRole: 'Cliente', userStatus: 'Activo' })">Limpiar</button>
                   <button class="btn btn-brand" type="submit">Guardar usuario</button>
                 </div>
               </div>

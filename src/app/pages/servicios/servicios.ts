@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
 import { NavbarComponent } from '../../shared/navbar/navbar';
 
@@ -25,18 +26,27 @@ interface Servicio {
 
 /**
  * Pagina de servicios de detailing.
- * Muestra el catalogo de servicios disponibles y permite agregarlos al carrito o reservar.
+ * Muestra el catalogo de servicios disponibles y permite agregarlos al carrito o reservar
+ * mediante formulario reactivo con validaciones.
  */
 @Component({
   selector: 'app-servicios',
-  imports: [RouterLink, NavbarComponent],
+  imports: [RouterLink, ReactiveFormsModule, NavbarComponent],
   templateUrl: './servicios.html',
   styleUrl: './servicios.css',
 })
 export class ServiciosComponent {
   private readonly toast = inject(ToastService);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
 
-  constructor(private router: Router) {}
+  /** Formulario reactivo de reserva de servicio */
+  form: FormGroup = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    date: ['', [Validators.required]],
+    time: ['', [Validators.required]],
+    address: ['', [Validators.required, Validators.minLength(6)]]
+  });
 
   /** Lista de servicios disponibles en el catalogo */
   readonly servicios: Servicio[] = [
@@ -78,6 +88,9 @@ export class ServiciosComponent {
     }
   ];
 
+  /** Devuelve el control del formulario por nombre */
+  campo(nombre: string): AbstractControl { return this.form.get(nombre)!; }
+
   /** Agrega el servicio al carrito en localStorage e incrementa cantidad si ya existe */
   agregarAlCarrito(servicio: Servicio): void {
     const carrito = JSON.parse(localStorage.getItem('fullgas_cart') ?? '[]');
@@ -92,16 +105,15 @@ export class ServiciosComponent {
   }
 
   /** Valida el formulario de reserva y guarda nombre y direccion en la sesion activa */
-  reservar(evento: SubmitEvent): void {
-    const form = evento.target as HTMLFormElement;
-    if (!form.checkValidity()) {
-      form.classList.add('was-validated');
+  reservar(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
-    const datos = new FormData(form);
+    const { name, address } = this.form.value as { name: string; date: string; time: string; address: string };
     const sesion = JSON.parse(localStorage.getItem('fullgas_session') ?? 'null') ?? {};
-    sesion.name = datos.get('name') as string;
-    sesion.address = datos.get('address') as string;
+    sesion.name = name.trim();
+    sesion.address = address.trim();
     localStorage.setItem('fullgas_session', JSON.stringify(sesion));
     this.router.navigate(['/carrito']);
   }

@@ -34,7 +34,7 @@
             <div class="col-12 col-lg-4">
               <img src="assets/logo.jpg" alt="Full Gas Detail" class="brand-logo brand-logo-lg mb-4">
               <h1 class="h2 fw-bold">Registro de usuarios</h1>
-              <p class="text-white-50">Formulario con validaciones para nombre, correo, telefono, direccion y contrasena. El registro crea solo clientes.</p>
+              <p class="text-white-50">Formulario con validaciones para nombre, correo, telefono, region, comuna, direccion y contrasena. El registro crea solo clientes.</p>
             </div>
 
             <div class="col-12 col-lg-8">
@@ -74,6 +74,35 @@
                         [class.is-valid]="campo('phone').valid && campo('phone').touched">
                       <div class="invalid-feedback">Ingresa 9 digitos.</div>
                     </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="form-label" for="region">Region</label>
+                    <select class="form-select" id="region" formControlName="region"
+                      [class.is-invalid]="campo('region').invalid && campo('region').touched"
+                      [class.is-valid]="campo('region').valid && campo('region').touched">
+                      <option value="" disabled>Selecciona una region</option>
+                      @for (region of regiones; track region.id) {
+                        <option [value]="region.nombre">{{ region.nombre }}</option>
+                      }
+                    </select>
+                    <div class="invalid-feedback">Selecciona tu region.</div>
+                    @if (errorRegiones) {
+                      <div class="text-warning small mt-1">No se pudieron cargar las regiones. Intenta mas tarde.</div>
+                    }
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="form-label" for="comuna">Comuna</label>
+                    <select class="form-select" id="comuna" formControlName="comuna"
+                      [class.is-invalid]="campo('comuna').invalid && campo('comuna').touched"
+                      [class.is-valid]="campo('comuna').valid && campo('comuna').touched">
+                      <option value="" disabled>Selecciona una comuna</option>
+                      @for (comuna of comunas; track comuna) {
+                        <option [value]="comuna">{{ comuna }}</option>
+                      }
+                    </select>
+                    <div class="invalid-feedback">Selecciona tu comuna.</div>
                   </div>
 
                   <div class="col-12">

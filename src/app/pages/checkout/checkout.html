@@ -7,40 +7,45 @@
         <div class="panel-card h-100">
           <h1 class="h3 fw-bold">Confirmacion de pedido</h1>
           <p class="text-white-50">Simulacion de pago exitoso para cumplir con la consigna sin integrar pasarelas reales.</p>
-          <form class="needs-validation mt-4" novalidate (submit)="simularPago($any($event))">
+          <form [formGroup]="form" (ngSubmit)="simularPago()" class="mt-4">
             <div class="row g-3">
               <div class="col-12 col-md-6">
                 <label class="form-label" for="checkoutName">Nombre</label>
-                <input class="form-control" id="checkoutName" name="name" required>
-                <div class="invalid-feedback">Ingresa tu nombre.</div>
+                <input class="form-control" [class.is-invalid]="campo('name').invalid && campo('name').touched"
+                  id="checkoutName" formControlName="name">
+                <div class="invalid-feedback">Ingresa tu nombre (minimo 3 caracteres).</div>
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="checkoutEmail">Correo</label>
-                <input class="form-control" id="checkoutEmail" name="email" type="email" required>
+                <input class="form-control" [class.is-invalid]="campo('email').invalid && campo('email').touched"
+                  id="checkoutEmail" type="email" formControlName="email">
                 <div class="invalid-feedback">Ingresa un correo valido.</div>
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="checkoutPhone">Telefono</label>
-                <input class="form-control" id="checkoutPhone" name="phone" pattern="[0-9]{9}" required>
+                <input class="form-control" [class.is-invalid]="campo('phone').invalid && campo('phone').touched"
+                  id="checkoutPhone" type="tel" inputmode="numeric" formControlName="phone">
                 <div class="invalid-feedback">Ingresa 9 digitos.</div>
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="checkoutMethod">Metodo</label>
-                <select class="form-select" id="checkoutMethod" name="method" required>
+                <select class="form-select" [class.is-invalid]="campo('method').invalid && campo('method').touched"
+                  id="checkoutMethod" formControlName="method">
                   <option value="">Selecciona</option>
-                  <option>Transferencia simulada</option>
-                  <option>Pago en entrega</option>
-                  <option>Tarjeta simulada</option>
+                  <option value="Transferencia simulada">Transferencia simulada</option>
+                  <option value="Pago en entrega">Pago en entrega</option>
+                  <option value="Tarjeta simulada">Tarjeta simulada</option>
                 </select>
-                <div class="invalid-feedback">Selecciona un metodo.</div>
+                <div class="invalid-feedback">Selecciona un metodo de pago.</div>
               </div>
               <div class="col-12">
                 <label class="form-label" for="checkoutNotes">Notas</label>
-                <textarea class="form-control" id="checkoutNotes" name="notes" rows="3"></textarea>
+                <textarea class="form-control" id="checkoutNotes" rows="3" formControlName="notes"></textarea>
               </div>
               <div class="col-12">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="invoice" required>
+                  <input class="form-check-input" [class.is-invalid]="campo('confirm').invalid && campo('confirm').touched"
+                    type="checkbox" id="invoice" formControlName="confirm">
                   <label class="form-check-label" for="invoice">Confirmo los datos del pedido</label>
                   <div class="invalid-feedback">Debes confirmar los datos.</div>
                 </div>
