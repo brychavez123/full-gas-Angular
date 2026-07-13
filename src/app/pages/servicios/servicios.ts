@@ -1,33 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
 import { NavbarComponent } from '../../shared/navbar/navbar';
-
-/**
- * Modelo de datos de un servicio de detailing ofrecido por Full Gas Detail.
- */
-interface Servicio {
-  /** Identificador unico del servicio */
-  id: string;
-  /** Nombre del servicio */
-  name: string;
-  /** Precio base en pesos chilenos */
-  price: number;
-  /** Descripcion corta del servicio */
-  descripcion: string;
-  /** URL de la imagen representativa */
-  imagen: string;
-  /** Texto alternativo para la imagen */
-  altImagen: string;
-  /** Texto de precio formateado para mostrar en pantalla */
-  precioTexto: string;
-}
+import { ServiciosService, Servicio } from '../../services/servicios.service';
 
 /**
  * Pagina de servicios de detailing.
- * Muestra el catalogo de servicios disponibles y permite agregarlos al carrito o reservar
- * mediante formulario reactivo con validaciones.
+ * Muestra el catalogo de servicios obtenido desde la API publica y permite agregarlos
+ * al carrito o reservar mediante formulario reactivo con validaciones.
  */
 @Component({
   selector: 'app-servicios',
@@ -35,10 +16,11 @@ interface Servicio {
   templateUrl: './servicios.html',
   styleUrl: './servicios.css',
 })
-export class ServiciosComponent {
+export class ServiciosComponent implements OnInit {
   private readonly toast = inject(ToastService);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
+  private readonly serviciosService = inject(ServiciosService);
 
   /** Formulario reactivo de reserva de servicio */
   form: FormGroup = this.fb.group({
@@ -48,45 +30,18 @@ export class ServiciosComponent {
     address: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  /** Lista de servicios disponibles en el catalogo */
-  readonly servicios: Servicio[] = [
-    {
-      id: 'lavado_exterior',
-      name: 'Lavado exterior',
-      price: 18000,
-      descripcion: 'Prelavado, espuma, limpieza de llantas y secado profesional.',
-      imagen: 'https://images.pexels.com/photos/6873122/pexels-photo-6873122.jpeg?cs=srgb&dl=pexels-tima-miroshnichenko-6873122.jpg&fm=jpg',
-      altImagen: 'Lavado exterior profesional',
-      precioTexto: 'Desde $18.000'
-    },
-    {
-      id: 'detalle_interior',
-      name: 'Detalle interior',
-      price: 25000,
-      descripcion: 'Aspirado, limpieza de plasticos, desinfeccion y acabados.',
-      imagen: 'https://images.pexels.com/photos/31389821/pexels-photo-31389821.jpeg?cs=srgb&dl=pexels-bulat843-1243575272-31389821.jpg&fm=jpg',
-      altImagen: 'Detalle interior de vehiculo',
-      precioTexto: 'Desde $25.000'
-    },
-    {
-      id: 'detailing_premium',
-      name: 'Detailing premium',
-      price: 32000,
-      descripcion: 'Tratamiento completo para clientes que quieren acabado superior.',
-      imagen: 'https://images.pexels.com/photos/6873132/pexels-photo-6873132.jpeg?cs=srgb&dl=pexels-tima-miroshnichenko-6873132.jpg&fm=jpg',
-      altImagen: 'Detailing premium',
-      precioTexto: 'Desde $32.000'
-    },
-    {
-      id: 'flota_empresa',
-      name: 'Flota y empresa',
-      price: 38000,
-      descripcion: 'Atencion programada para varios vehiculos con control de estado.',
-      imagen: 'https://images.pexels.com/photos/29504459/pexels-photo-29504459.jpeg?cs=srgb&dl=pexels-bulat843-1243575272-29504459.jpg&fm=jpg',
-      altImagen: 'Flota y empresa',
-      precioTexto: 'Desde $38.000'
-    }
-  ];
+  /** Lista de servicios del catalogo, cargada desde la API publica */
+  servicios: Servicio[] = [];
+
+  /** Indica si hubo un error al cargar los servicios desde la API */
+  errorServicios = false;
+
+  ngOnInit(): void {
+    this.serviciosService.getServicios().subscribe({
+      next: (servicios) => { this.servicios = servicios; },
+      error: () => { this.errorServicios = true; }
+    });
+  }
 
   /** Devuelve el control del formulario por nombre */
   campo(nombre: string): AbstractControl { return this.form.get(nombre)!; }
