@@ -1,14 +1,18 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
 import { NavbarComponent } from '../../shared/navbar/navbar';
-import { ServiciosService, Servicio } from '../../services/servicios.service';
+import { ServiciosLocalService, Servicio } from '../../services/servicios-local.service';
+import { ServiciosServerService } from '../../services/servicios-server.service';
+import type { FuenteDatos } from '../../services/fuente-datos';
 
 /**
- * Pagina de servicios de detailing.
- * Muestra el catalogo de servicios obtenido desde la API publica y permite agregarlos
- * al carrito o reservar mediante formulario reactivo con validaciones.
+ * Pagina de servicios de detailing (solo vista y reserva).
+ * Carga el catalogo segun la fuente de la ruta (/servicios/local o /servicios/server)
+ * y permite agregarlos al carrito o reservar mediante formulario reactivo.
+ * La administracion del catalogo (crear, editar, eliminar) se realiza
+ * exclusivamente desde el panel de administracion.
  */
 @Component({
   selector: 'app-servicios',
@@ -20,7 +24,12 @@ export class ServiciosComponent implements OnInit {
   private readonly toast = inject(ToastService);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
-  private readonly serviciosService = inject(ServiciosService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly serviciosLocal = inject(ServiciosLocalService);
+  private readonly serviciosServer = inject(ServiciosServerService);
+
+  /** Indica si la fuente activa es el servidor json-server */
+  private get esServer(): boolean { return this.fuente() === 'server'; }
 
   /** Formulario reactivo de reserva de servicio */
   form: FormGroup = this.fb.group({
@@ -30,20 +39,45 @@ export class ServiciosComponent implements OnInit {
     address: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  /** Lista de servicios del catalogo, cargada desde la API publica */
+  /** Lista de servicios del catalogo, cargada desde la fuente activa */
   servicios: Servicio[] = [];
 
-  /** Indica si hubo un error al cargar los servicios desde la API */
+  /** Fuente de datos activa segun la ruta: 'local' (GitHub) o 'server' (json-server) */
+  readonly fuente = signal<FuenteDatos>('local');
+
+  /** Indica si hubo un error al cargar los servicios desde la fuente */
   errorServicios = false;
 
+  /** Indica que la peticion a la fuente esta en curso */
+  cargando = false;
+
   ngOnInit(): void {
-    this.serviciosService.getServicios().subscribe({
-      next: (servicios) => { this.servicios = servicios; },
-      error: () => { this.errorServicios = true; }
+    this.route.paramMap.subscribe(params => {
+      this.fuente.set(params.get('fuente') === 'server' ? 'server' : 'local');
+      this.cargarServicios();
     });
   }
 
-  /** Devuelve el control del formulario por nombre */
+  /** Carga el catalogo desde la fuente activa, limpiando la lista anterior */
+  cargarServicios(): void {
+    this.errorServicios = false;
+    this.cargando = true;
+    this.servicios = [];
+    const peticion = this.esServer ? this.serviciosServer.getServicios() : this.serviciosLocal.getServicios();
+    peticion.subscribe({
+      next: (servicios) => {
+        this.servicios = servicios;
+        this.cargando = false;
+      },
+      error: () => {
+        this.servicios = [];
+        this.errorServicios = true;
+        this.cargando = false;
+      }
+    });
+  }
+
+  /** Devuelve el control del formulario de reserva por nombre */
   campo(nombre: string): AbstractControl { return this.form.get(nombre)!; }
 
   /** Agrega el servicio al carrito en localStorage e incrementa cantidad si ya existe */

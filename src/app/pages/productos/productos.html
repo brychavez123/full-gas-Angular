@@ -6,6 +6,9 @@
       <div class="col-12 col-lg-8">
         <span class="eyebrow">Venta de insumos</span>
         <h1 class="h2 fw-bold mt-2">Productos de limpieza para vehiculo</h1>
+        <span class="badge" [class.text-bg-warning]="fuente() === 'server'" [class.text-bg-secondary]="fuente() === 'local'">
+          Fuente: {{ fuente() === 'server' ? 'JSON Server (db.json)' : 'Local (API GitHub + localStorage)' }}
+        </span>
       </div>
       <div class="col-12 col-lg-4">
         <input
@@ -34,6 +37,28 @@
     </div>
 
     <div class="row g-4">
+      @if (errorProductos) {
+        <div class="col-12">
+          <div class="alert alert-warning mb-0 d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <span>
+              @if (fuente() === 'server') {
+                <i class="bi bi-server me-2"></i>El servidor JSON no esta encendido o no responde, por lo que no se pueden mostrar los productos.
+              } @else {
+                No se pudieron cargar los productos desde la API. Intenta mas tarde.
+              }
+            </span>
+            <button class="btn btn-outline-dark btn-sm" type="button" (click)="cargarProductos()">
+              <i class="bi bi-arrow-clockwise me-1"></i>Reintentar
+            </button>
+          </div>
+        </div>
+      }
+      @if (cargando) {
+        <div class="col-12 text-center py-5">
+          <div class="spinner-border text-warning" role="status" aria-label="Cargando"></div>
+          <p class="text-white-50 mt-3 mb-0">Cargando productos...</p>
+        </div>
+      }
       @for (producto of productosFiltrados(); track producto.id) {
         <div class="col-12 col-md-6 col-xl-3">
           <app-producto-card
@@ -43,9 +68,11 @@
         </div>
       }
       @empty {
-        <div class="col-12 text-center py-5">
-          <p class="text-white-50">No se encontraron productos.</p>
-        </div>
+        @if (!errorProductos && !cargando) {
+          <div class="col-12 text-center py-5">
+            <p class="text-white-50">No se encontraron productos.</p>
+          </div>
+        }
       }
     </div>
   </div>

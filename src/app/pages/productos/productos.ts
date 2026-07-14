@@ -1,14 +1,19 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductoCardComponent, type Producto } from '../../shared/producto-card/producto-card';
 import { ToastService } from '../../services/toast.service';
 import { NavbarComponent } from '../../shared/navbar/navbar';
+import { ProductosLocalService } from '../../services/productos-local.service';
+import { ProductosServerService } from '../../services/productos-server.service';
+import type { FuenteDatos } from '../../services/fuente-datos';
 
 /**
- * Pagina de productos de limpieza vehicular.
- * Permite filtrar por categoria y buscar por texto usando ngModel.
- * Usa ProductoCardComponent para renderizar cada tarjeta.
+ * Pagina de productos de limpieza vehicular (solo vista y compra).
+ * Carga el catalogo segun la fuente de la ruta (/productos/local o /productos/server),
+ * permite filtrar por categoria y buscar por texto usando ngModel.
+ * La administracion del catalogo (crear, editar, eliminar) se realiza
+ * exclusivamente desde el panel de administracion.
  */
 @Component({
   selector: 'app-productos',
@@ -16,19 +21,52 @@ import { NavbarComponent } from '../../shared/navbar/navbar';
   templateUrl: './productos.html',
   styleUrl: './productos.css',
 })
-export class ProductosComponent {
+export class ProductosComponent implements OnInit {
   private readonly toast = inject(ToastService);
+  private readonly productosLocal = inject(ProductosLocalService);
+  private readonly productosServer = inject(ProductosServerService);
+  private readonly route = inject(ActivatedRoute);
 
-  readonly productos: Producto[] = [
-    { id: 'p1', name: 'Shampoo neutro', category: 'limpieza', price: 8900, stock: 24, active: true, image: 'https://images.pexels.com/photos/4870731/pexels-photo-4870731.jpeg?cs=srgb&dl=pexels-karola-g-4870731.jpg&fm=jpg', description: 'Limpieza segura para pintura y superficies delicadas.' },
-    { id: 'p2', name: 'Desengrasante multiuso', category: 'limpieza', price: 12900, stock: 18, active: true, image: 'https://images.pexels.com/photos/17623850/pexels-photo-17623850.jpeg?cs=srgb&dl=pexels-malcolm-garret-3023588-17623850.jpg&fm=jpg', description: 'Ideal para llantas, motor y zonas de alta suciedad.' },
-    { id: 'p3', name: 'Cera protectora', category: 'proteccion', price: 15400, stock: 12, active: true, image: 'https://images.pexels.com/photos/33707368/pexels-photo-33707368.jpeg?cs=srgb&dl=pexels-pavel-mudrevsky-3891203-33707368.jpg&fm=jpg', description: 'Proteccion y brillo duradero para carroceria.' },
-    { id: 'p4', name: 'Microfibra premium', category: 'accesorios', price: 4900, stock: 40, active: true, image: 'https://images.pexels.com/photos/20042048/pexels-photo-20042048.jpeg?cs=srgb&dl=pexels-wavyvisuals-377312923-20042048.jpg&fm=jpg', description: 'Toalla suave para secado y detallado.' },
-    { id: 'p5', name: 'Limpiador interior', category: 'limpieza', price: 11900, stock: 16, active: true, image: 'https://images.pexels.com/photos/31389821/pexels-photo-31389821.jpeg?cs=srgb&dl=pexels-bulat843-1243575272-31389821.jpg&fm=jpg', description: 'Para plasticos, vinilos y tableros.' },
-    { id: 'p6', name: 'Shine de neumaticos', category: 'proteccion', price: 10900, stock: 20, active: true, image: 'https://images.pexels.com/photos/32667420/pexels-photo-32667420.jpeg?cs=srgb&dl=pexels-anil-chandran-876746-32667420.jpg&fm=jpg', description: 'Acabado negro satinado y proteccion extra.' },
-    { id: 'p7', name: 'Cepillo detailing', category: 'accesorios', price: 5800, stock: 30, active: true, image: 'https://images.pexels.com/photos/4870702/pexels-photo-4870702.jpeg?cs=srgb&dl=pexels-karola-g-4870702.jpg&fm=jpg', description: 'Llega a costuras, emblemas y rincones.' },
-    { id: 'p8', name: 'Aromatizante premium', category: 'accesorios', price: 6900, stock: 28, active: true, image: 'https://images.pexels.com/photos/17029947/pexels-photo-17029947.jpeg?cs=srgb&dl=pexels-lasanhasculture-17029947.jpg&fm=jpg', description: 'Aroma limpio para una experiencia completa.' }
-  ];
+  /** Indica si la fuente activa es el servidor json-server */
+  private get esServer(): boolean { return this.fuente() === 'server'; }
+
+  /** Catalogo de productos cargado desde la fuente activa */
+  readonly productos = signal<Producto[]>([]);
+
+  /** Fuente de datos activa segun la ruta: 'local' (GitHub) o 'server' (json-server) */
+  readonly fuente = signal<FuenteDatos>('local');
+
+  /** Indica si hubo un error al cargar los productos desde la fuente */
+  errorProductos = false;
+
+  /** Indica que la peticion a la fuente esta en curso */
+  cargando = false;
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.fuente.set(params.get('fuente') === 'server' ? 'server' : 'local');
+      this.cargarProductos();
+    });
+  }
+
+  /** Carga el catalogo desde la fuente activa, limpiando la lista anterior */
+  cargarProductos(): void {
+    this.errorProductos = false;
+    this.cargando = true;
+    this.productos.set([]);
+    const peticion = this.esServer ? this.productosServer.getProductos() : this.productosLocal.getProductos();
+    peticion.subscribe({
+      next: (productos) => {
+        this.productos.set(productos);
+        this.cargando = false;
+      },
+      error: () => {
+        this.productos.set([]);
+        this.errorProductos = true;
+        this.cargando = false;
+      }
+    });
+  }
 
   filtroActivo = signal('all');
   textoBusqueda = signal('');
@@ -40,7 +78,7 @@ export class ProductosComponent {
   productosFiltrados = computed(() => {
     const filtro = this.filtroActivo();
     const texto = this.textoBusqueda().toLowerCase().trim();
-    return this.productos.filter(p => {
+    return this.productos().filter(p => {
       const coincideFiltro = filtro === 'all' || p.category === filtro;
       const coincideBusqueda = !texto || p.name.toLowerCase().includes(texto) || p.description.toLowerCase().includes(texto);
       return coincideFiltro && coincideBusqueda && p.active;

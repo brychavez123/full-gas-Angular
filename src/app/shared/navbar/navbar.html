@@ -13,11 +13,21 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/inicio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            routerLinkActive="active" style="cursor: pointer;">Servicios</a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" routerLink="/servicios/local" routerLinkActive="active">Local</a></li>
+            <li><a class="dropdown-item" routerLink="/servicios/server" routerLinkActive="active">JSON Server</a></li>
+          </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/productos" routerLinkActive="active">Productos</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            routerLinkActive="active" style="cursor: pointer;">Productos</a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" routerLink="/productos/local" routerLinkActive="active">Local</a></li>
+            <li><a class="dropdown-item" routerLink="/productos/server" routerLinkActive="active">JSON Server</a></li>
+          </ul>
         </li>
         @if (session.sesion()?.role === 'Administrador' || session.sesion()?.role === 'Tecnico') {
           <li class="nav-item">
