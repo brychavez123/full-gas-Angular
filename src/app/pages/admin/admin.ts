@@ -5,6 +5,10 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { CurrencyClPipe } from '../../shared/pipes/currency-cl.pipe';
 import { FechaClPipe } from '../../shared/pipes/fecha-cl.pipe';
 import { ToastService } from '../../services/toast.service';
+import type { Observable } from 'rxjs';
+import { ProductosServerService } from '../../services/productos-server.service';
+import { ServiciosServerService } from '../../services/servicios-server.service';
+import type { Servicio } from '../../services/servicios-local.service';
 
 interface Producto { id: string; name: string; category: string; price: number; stock: number; active: boolean; description: string; image: string; }
 interface Cliente { id: string; name: string; email: string; phone: string; address: string; vehicle: string; notes: string; status: string; }
@@ -43,6 +47,8 @@ export class AdminComponent implements OnInit {
   private readonly toast = inject(ToastService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly fb = inject(FormBuilder);
+  private readonly productosServer = inject(ProductosServerService);
+  private readonly serviciosServer = inject(ServiciosServerService);
 
   panelActivo = signal('overview');
   productos = signal<Producto[]>([]);
@@ -53,6 +59,21 @@ export class AdminComponent implements OnInit {
   editandoProducto = signal<Producto | null>(null);
   editandoCliente = signal<Cliente | null>(null);
   editandoUsuario = signal<Usuario | null>(null);
+
+  /** Productos leidos desde la API json-server */
+  productosNginx = signal<Producto[]>([]);
+  /** Servicios leidos desde la API json-server */
+  serviciosNginx = signal<Servicio[]>([]);
+  /** Errores de conexion con el servidor json-server */
+  errorNginxProductos = signal(false);
+  errorNginxServicios = signal(false);
+  /** Ids en edicion en los mantenedores json-server (null = modo crear) */
+  editandoProductoNginx = signal<string | null>(null);
+  editandoServicioNginx = signal<string | null>(null);
+
+  /** Visibilidad de los modales de crear/editar contra json-server */
+  modalProductoAbierto = signal(false);
+  modalServicioAbierto = signal(false);
 
   stats = computed(() => ({
     productos: this.productos().length,
@@ -68,6 +89,10 @@ export class AdminComponent implements OnInit {
   formCliente!: FormGroup;
   /** Formulario reactivo para el mantenedor de usuarios */
   formUsuario!: FormGroup;
+  /** Formulario reactivo para el mantenedor de productos de json-server */
+  formProductoNginx!: FormGroup;
+  /** Formulario reactivo para el mantenedor de servicios de json-server */
+  formServicioNginx!: FormGroup;
 
   ngOnInit(): void {
     this.formProducto = this.fb.group({
@@ -101,6 +126,23 @@ export class AdminComponent implements OnInit {
       userPassword: ['']
     });
 
+    this.formProductoNginx = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      category: ['limpieza', [Validators.required]],
+      price: ['', [Validators.required, Validators.min(1)]],
+      stock: ['', [Validators.required, Validators.min(0)]],
+      active: [true],
+      image: ['', [Validators.required]],
+      description: ['', [Validators.required, Validators.minLength(5)]]
+    });
+
+    this.formServicioNginx = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      price: ['', [Validators.required, Validators.min(1)]],
+      descripcion: ['', [Validators.required, Validators.minLength(5)]],
+      imagen: ['', [Validators.required]]
+    });
+
     if (!isPlatformBrowser(this.platformId)) return;
     if (!localStorage.getItem('fullgas_products')) localStorage.setItem('fullgas_products', JSON.stringify(PRODUCTOS_DEFAULT));
     if (!localStorage.getItem('fullgas_customers')) localStorage.setItem('fullgas_customers', JSON.stringify(CLIENTES_DEFAULT));
@@ -110,6 +152,8 @@ export class AdminComponent implements OnInit {
       { name: 'Admin Principal', email: 'admin@fullgasdetail.cl', phone: '934567891', address: 'Coronel, Concepcion', role: 'Administrador', password: 'Admin123!' }
     ]));
     this.cargarTodo();
+    this.cargarProductosNginx();
+    this.cargarServiciosNginx();
   }
 
   private cargarTodo(): void {
@@ -242,4 +286,163 @@ export class AdminComponent implements OnInit {
   }
 
   itemsCount(items: unknown[]): number { return Array.isArray(items) ? items.length : 0; }
+
+  // ------------------------------------------------------------------
+  // Mantenedor de productos contra json-server (GET, POST, PUT, DELETE)
+  // ------------------------------------------------------------------
+
+  /** Devuelve el control de formProductoNginx por nombre */
+  campoPN(nombre: string): AbstractControl { return this.formProductoNginx.get(nombre)!; }
+  /** Devuelve el control de formServicioNginx por nombre */
+  campoSN(nombre: string): AbstractControl { return this.formServicioNginx.get(nombre)!; }
+
+  /** GET: carga los productos desde json-server */
+  cargarProductosNginx(): void {
+    this.errorNginxProductos.set(false);
+    this.productosNginx.set([]);
+    this.productosServer.getProductos().subscribe({
+      next: (productos) => { this.productosNginx.set(productos); },
+      error: () => { this.errorNginxProductos.set(true); }
+    });
+  }
+
+  /** POST (crear) o PUT (actualizar) del producto del formulario en json-server */
+  guardarProductoNginx(): void {
+    if (this.formProductoNginx.invalid) { this.formProductoNginx.markAllAsTouched(); return; }
+    const datos = this.formProductoNginx.value as Omit<Producto, 'id'>;
+    const idEdicion = this.editandoProductoNginx();
+    if (idEdicion) {
+      const producto: Producto = { ...datos, id: idEdicion, price: Number(datos.price), stock: Number(datos.stock) };
+      this.finalizarProductoNginx(this.productosServer.actualizarProducto(producto), 'Producto actualizado en el servidor JSON.');
+    } else {
+      const producto: Producto = { ...datos, id: `p${Date.now()}`, price: Number(datos.price), stock: Number(datos.stock) };
+      this.finalizarProductoNginx(this.productosServer.crearProducto(producto), 'Producto creado en el servidor JSON.');
+    }
+  }
+
+  /** Abre el modal en modo crear producto */
+  abrirModalProducto(): void {
+    this.cancelarProductoNginx();
+    this.modalProductoAbierto.set(true);
+  }
+
+  /** Cierra el modal de producto y limpia el formulario */
+  cerrarModalProducto(): void {
+    this.modalProductoAbierto.set(false);
+    this.cancelarProductoNginx();
+  }
+
+  /** Abre el modal con los datos de un producto de json-server para editarlo */
+  editarProductoNginx(producto: Producto): void {
+    this.editandoProductoNginx.set(producto.id);
+    this.formProductoNginx.patchValue(producto);
+    this.modalProductoAbierto.set(true);
+  }
+
+  /** DELETE: elimina un producto de json-server */
+  eliminarProductoNginx(producto: Producto): void {
+    this.finalizarProductoNginx(this.productosServer.eliminarProducto(producto.id), `${producto.name} eliminado del servidor JSON.`);
+  }
+
+  /** Limpia el formulario del mantenedor de productos json-server */
+  cancelarProductoNginx(): void {
+    this.editandoProductoNginx.set(null);
+    this.formProductoNginx.reset({ category: 'limpieza', active: true });
+  }
+
+  /**
+   * Ejecuta la peticion a json-server y recarga la tabla si tuvo exito
+   * (json-server asigna sus propios ids al crear).
+   */
+  private finalizarProductoNginx(peticion: Observable<unknown>, mensaje: string): void {
+    peticion.subscribe({
+      next: () => {
+        this.cargarProductosNginx();
+        this.cerrarModalProducto();
+        this.toast.mostrar(mensaje);
+      },
+      error: () => { this.toast.mostrar('No se pudo guardar: el servidor JSON no responde.'); }
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // Mantenedor de servicios contra json-server (GET, POST, PUT, DELETE)
+  // ------------------------------------------------------------------
+
+  /** GET: carga los servicios desde json-server */
+  cargarServiciosNginx(): void {
+    this.errorNginxServicios.set(false);
+    this.serviciosNginx.set([]);
+    this.serviciosServer.getServicios().subscribe({
+      next: (servicios) => { this.serviciosNginx.set(servicios); },
+      error: () => { this.errorNginxServicios.set(true); }
+    });
+  }
+
+  /** POST (crear) o PUT (actualizar) del servicio del formulario en json-server */
+  guardarServicioNginx(): void {
+    if (this.formServicioNginx.invalid) { this.formServicioNginx.markAllAsTouched(); return; }
+    const { name, price, descripcion, imagen } = this.formServicioNginx.value as { name: string; price: number; descripcion: string; imagen: string };
+    const datos = {
+      name: name.trim(),
+      price: Number(price),
+      descripcion: descripcion.trim(),
+      imagen: imagen.trim(),
+      altImagen: name.trim(),
+      precioTexto: `Desde $${Number(price).toLocaleString('es-CL')}`
+    };
+    const idEdicion = this.editandoServicioNginx();
+    if (idEdicion) {
+      const servicio: Servicio = { ...datos, id: idEdicion };
+      this.finalizarServicioNginx(this.serviciosServer.actualizarServicio(servicio), 'Servicio actualizado en el servidor JSON.');
+    } else {
+      const servicio: Servicio = { ...datos, id: `s${Date.now()}` };
+      this.finalizarServicioNginx(this.serviciosServer.crearServicio(servicio), 'Servicio creado en el servidor JSON.');
+    }
+  }
+
+  /** Abre el modal en modo crear servicio */
+  abrirModalServicio(): void {
+    this.cancelarServicioNginx();
+    this.modalServicioAbierto.set(true);
+  }
+
+  /** Cierra el modal de servicio y limpia el formulario */
+  cerrarModalServicio(): void {
+    this.modalServicioAbierto.set(false);
+    this.cancelarServicioNginx();
+  }
+
+  /** Abre el modal con los datos de un servicio de json-server para editarlo */
+  editarServicioNginx(servicio: Servicio): void {
+    this.editandoServicioNginx.set(servicio.id);
+    this.formServicioNginx.patchValue(servicio);
+    this.modalServicioAbierto.set(true);
+  }
+
+  /** DELETE: elimina un servicio de json-server */
+  eliminarServicioNginx(servicio: Servicio): void {
+    this.finalizarServicioNginx(this.serviciosServer.eliminarServicio(servicio.id), `${servicio.name} eliminado del servidor JSON.`);
+  }
+
+  /** Limpia el formulario del mantenedor de servicios json-server */
+  cancelarServicioNginx(): void {
+    this.editandoServicioNginx.set(null);
+    this.formServicioNginx.reset();
+  }
+
+  /**
+   * Ejecuta la peticion a json-server y recarga la tabla si tuvo exito
+   * (json-server asigna sus propios ids al crear).
+   */
+  private finalizarServicioNginx(peticion: Observable<unknown>, mensaje: string): void {
+    peticion.subscribe({
+      next: () => {
+        this.cargarServiciosNginx();
+        this.cerrarModalServicio();
+        this.toast.mostrar(mensaje);
+      },
+      error: () => { this.toast.mostrar('No se pudo guardar: el servidor JSON no responde.'); }
+    });
+  }
 }

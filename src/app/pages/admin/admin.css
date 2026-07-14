@@ -12,8 +12,10 @@
   animation: slideInLeft 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* fill-mode "backwards" (no "both"): si el transform quedara aplicado tras la
+   animacion, el contenedor capturaria los modales con position fixed */
 .dashboard-content {
-  animation: fadeSlideUp 0.45s 0.1s ease both;
+  animation: fadeSlideUp 0.45s 0.1s ease backwards;
 }
 
 .stat-card {
