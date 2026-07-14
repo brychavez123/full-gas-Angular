@@ -1,0 +1,23 @@
+services:
+  # Aplicacion Angular compilada, servida como archivos estaticos por nginx
+  web:
+    build: .
+    image: full-gas-web
+    container_name: full-gas-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+
+  # Backend simulado: json-server exponiendo la BD db.json como API REST
+  # (GET, POST, PUT y DELETE sobre /productos y /servicios).
+  # El volumen monta db.json para que los cambios del CRUD queden
+  # guardados en el archivo del proyecto.
+  api:
+    build: ./api-backend
+    image: full-gas-api
+    container_name: full-gas-api
+    # Sin "ports": el navegador accede a la API via nginx (/api/...),
+    # por lo que el puerto 3000 solo se expone dentro de la red de Docker.
+    volumes:
+      - ./api-backend/data:/app/data

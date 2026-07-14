@@ -1,0 +1,9 @@
+node_modules
+dist
+docs
+.angular
+.git
+.vscode
+.claude
+api-backend
+*.md
