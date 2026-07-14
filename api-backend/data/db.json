@@ -1,0 +1,35 @@
+{
+  "productos": [
+    {
+      "id": "p1",
+      "name": "Shampoo neutro",
+      "category": "limpieza",
+      "price": 8900,
+      "stock": 24,
+      "active": true,
+      "image": "https://images.pexels.com/photos/4870731/pexels-photo-4870731.jpeg?cs=srgb&dl=pexels-karola-g-4870731.jpg&fm=jpg",
+      "description": "Limpieza segura para pintura y superficies delicadas."
+    }
+  ],
+  "servicios": [
+    {
+      "id": "lavado_exterior",
+      "name": "Lavado exterior",
+      "price": 18000,
+      "descripcion": "Prelavado, espuma, limpieza de llantas y secado profesional.",
+      "imagen": "https://images.pexels.com/photos/6873122/pexels-photo-6873122.jpeg?cs=srgb&dl=pexels-tima-miroshnichenko-6873122.jpg&fm=jpg",
+      "altImagen": "Lavado exterior profesional",
+      "precioTexto": "Desde $18.000"
+    },
+    {
+      "name": "Servicio Full Aspirado",
+      "price": 30000,
+      "descripcion": "Servicio de aspirado full chileno",
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0qhapI99yMG-ggLxkrFprurqmUmLXyKYY0U5SDthGSGHWRc0c8kEPDi8h&s=10",
+      "altImagen": "Servicio Full Aspirado",
+      "precioTexto": "Desde $30.000",
+      "id": "kXA9ESTs65Y"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
